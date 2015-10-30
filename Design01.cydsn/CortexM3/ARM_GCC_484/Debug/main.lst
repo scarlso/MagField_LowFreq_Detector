@@ -1,0 +1,1815 @@
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"main.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.comm	DMA_1_Chan,1,1
+  19              		.comm	DMA_1_TD,1,4
+  20              		.comm	DMA_2_Chan,1,1
+  21              		.comm	DMA_2_TD,1,4
+  22              		.comm	ADC2Filter_DMA_Chan,1,1
+  23              		.comm	ADC2Filter_DMA_TD,2,4
+  24              		.comm	DMA_3_Chan,1,1
+  25              		.comm	DMA_3_TD,1,4
+  26              		.comm	DMA_4_Chan,1,1
+  27              		.comm	DMA_4_TD,1,4
+  28              		.comm	LPF_samples,2048,4
+  29              		.comm	LPF_buffer,2048,4
+  30              		.comm	Buffer_samples,2048,4
+  31              		.comm	ADC_samples,2048,4
+  32              		.comm	magoutput,1024,4
+  33              		.data
+  34              		.align	2
+  35              		.type	fftlength, %object
+  36              		.size	fftlength, 4
+  37              	fftlength:
+  38 0000 00020000 		.word	512
+  39              		.bss
+  40              	isr_BC_flag:
+  41 0000 00       		.space	1
+  42              	isr_LPF_buffer_complete_flag:
+  43 0001 00       		.space	1
+  44              		.section	.text.Buffer_complete,"ax",%progbits
+  45              		.align	2
+  46              		.global	Buffer_complete
+  47              		.thumb
+  48              		.thumb_func
+  49              		.type	Buffer_complete, %function
+  50              	Buffer_complete:
+  51              	.LFB118:
+  52              		.file 1 ".\\main.c"
+   1:.\main.c      **** /* ----------------------------------------------------------------------
+   2:.\main.c      **** ** Include Files
+   3:.\main.c      **** ** ------------------------------------------------------------------- */
+   4:.\main.c      **** #include <project.h>
+   5:.\main.c      **** #include "arm_math.h"
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 2
+
+
+   6:.\main.c      **** #include "arm_const_structs.h"
+   7:.\main.c      **** #include "math_helper.h"
+   8:.\main.c      **** 
+   9:.\main.c      **** 
+  10:.\main.c      **** /* ----------------------------------------------------------------------
+  11:.\main.c      ****  * DMA Definitions
+  12:.\main.c      ****  * ------------------------------------------------------------------- */
+  13:.\main.c      **** /*First buffer*/
+  14:.\main.c      **** uint8 DMA_1_Chan;
+  15:.\main.c      **** uint8 DMA_1_TD[1];
+  16:.\main.c      **** 
+  17:.\main.c      **** uint8 DMA_2_Chan;
+  18:.\main.c      **** uint8 DMA_2_TD[1];
+  19:.\main.c      **** 
+  20:.\main.c      **** uint8 ADC2Filter_DMA_Chan;
+  21:.\main.c      **** uint8 ADC2Filter_DMA_TD[2];
+  22:.\main.c      **** 
+  23:.\main.c      **** uint8 DMA_3_Chan;
+  24:.\main.c      **** uint8 DMA_3_TD[1];
+  25:.\main.c      **** 
+  26:.\main.c      **** uint8 DMA_4_Chan;
+  27:.\main.c      **** uint8 DMA_4_TD[1];
+  28:.\main.c      **** 
+  29:.\main.c      **** #define buffer_size 1024
+  30:.\main.c      **** /* Definitions */
+  31:.\main.c      **** #define DMA_1_BYTES_PER_BURST 2
+  32:.\main.c      **** #define DMA_1_REQUEST_PER_BURST 1
+  33:.\main.c      **** #define DMA_1_SRC_BASE (CYDEV_PERIPH_BASE)
+  34:.\main.c      **** #define DMA_1_DST_BASE (CYDEV_SRAM_BASE)
+  35:.\main.c      **** #define buffersize buffer_size*DMA_1_BYTES_PER_BURST
+  36:.\main.c      **** /*Second buffer*/
+  37:.\main.c      **** 
+  38:.\main.c      **** #define DMA_2_BYTES_PER_BURST 2
+  39:.\main.c      **** #define DMA_2_REQUEST_PER_BURST 0
+  40:.\main.c      **** #define DMA_2_SRC_BASE (CYDEV_SRAM_BASE)
+  41:.\main.c      **** #define DMA_2_DST_BASE (CYDEV_SRAM_BASE)
+  42:.\main.c      **** 
+  43:.\main.c      **** #define ADC2Filter_DMA_BYTES_PER_BURST 2
+  44:.\main.c      **** #define ADC2Filter_DMA_REQUEST_PER_BURST 1
+  45:.\main.c      **** #define ADC2Filter_DMA_SRC_BASE (CYDEV_PERIPH_BASE)
+  46:.\main.c      **** #define ADC2Filter_DMA_DST_BASE (CYDEV_PERIPH_BASE)
+  47:.\main.c      **** 
+  48:.\main.c      **** #define DMA_3_BYTES_PER_BURST 2
+  49:.\main.c      **** #define DMA_3_REQUEST_PER_BURST 1
+  50:.\main.c      **** #define DMA_3_SRC_BASE (CYDEV_PERIPH_BASE)
+  51:.\main.c      **** #define DMA_3_DST_BASE (CYDEV_SRAM_BASE)
+  52:.\main.c      **** 
+  53:.\main.c      **** #define DMA_4_BYTES_PER_BURST 2
+  54:.\main.c      **** #define DMA_4_REQUEST_PER_BURST 0
+  55:.\main.c      **** #define DMA_4_SRC_BASE (CYDEV_SRAM_BASE)
+  56:.\main.c      **** #define DMA_4_DST_BASE (CYDEV_SRAM_BASE)
+  57:.\main.c      **** 
+  58:.\main.c      **** /*global vairables*/
+  59:.\main.c      **** 
+  60:.\main.c      **** int16 LPF_samples[buffer_size];
+  61:.\main.c      **** int16 LPF_buffer[buffer_size];
+  62:.\main.c      **** int16 Buffer_samples[buffer_size];
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 3
+
+
+  63:.\main.c      **** int16 ADC_samples[buffer_size];
+  64:.\main.c      **** q15_t magoutput[buffer_size/2];
+  65:.\main.c      **** static uint32 fftlength=buffer_size/2;
+  66:.\main.c      **** 
+  67:.\main.c      **** static volatile CYBIT isr_BC_flag = 0;
+  68:.\main.c      **** static volatile CYBIT isr_LPF_buffer_complete_flag = 0;
+  69:.\main.c      **** //MultAcc_1_ARRAY CYCODE accumulatee[windowsize];
+  70:.\main.c      **** /*functions*/
+  71:.\main.c      **** void Configure_DMA();
+  72:.\main.c      **** //uint32 moving_average(uint32 *specflux);
+  73:.\main.c      **** 
+  74:.\main.c      **** /*ISR routine*/
+  75:.\main.c      **** CY_ISR_PROTO(Buffer_complete);
+  76:.\main.c      **** CY_ISR(Buffer_complete){
+  53              		.loc 1 76 0
+  54              		.cfi_startproc
+  55              		@ args = 0, pretend = 0, frame = 0
+  56              		@ frame_needed = 1, uses_anonymous_args = 0
+  57              		@ link register save eliminated.
+  58 0000 80B4     		push	{r7}
+  59              		.cfi_def_cfa_offset 4
+  60              		.cfi_offset 7, -4
+  61 0002 00AF     		add	r7, sp, #0
+  62              		.cfi_def_cfa_register 7
+  77:.\main.c      ****     isr_BC_flag=1;
+  63              		.loc 1 77 0
+  64 0004 034B     		ldr	r3, .L2
+  65 0006 0122     		movs	r2, #1
+  66 0008 1A70     		strb	r2, [r3]
+  78:.\main.c      **** }
+  67              		.loc 1 78 0
+  68 000a BD46     		mov	sp, r7
+  69              		@ sp needed
+  70 000c 5DF8047B 		ldr	r7, [sp], #4
+  71 0010 7047     		bx	lr
+  72              	.L3:
+  73 0012 00BF     		.align	2
+  74              	.L2:
+  75 0014 00000000 		.word	isr_BC_flag
+  76              		.cfi_endproc
+  77              	.LFE118:
+  78              		.size	Buffer_complete, .-Buffer_complete
+  79              		.section	.text.LPF_buffer_complete,"ax",%progbits
+  80              		.align	2
+  81              		.global	LPF_buffer_complete
+  82              		.thumb
+  83              		.thumb_func
+  84              		.type	LPF_buffer_complete, %function
+  85              	LPF_buffer_complete:
+  86              	.LFB119:
+  79:.\main.c      **** CY_ISR_PROTO(LPF_buffer_complete);
+  80:.\main.c      **** CY_ISR(LPF_buffer_complete){
+  87              		.loc 1 80 0
+  88              		.cfi_startproc
+  89              		@ args = 0, pretend = 0, frame = 0
+  90              		@ frame_needed = 1, uses_anonymous_args = 0
+  91 0000 80B5     		push	{r7, lr}
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 4
+
+
+  92              		.cfi_def_cfa_offset 8
+  93              		.cfi_offset 7, -8
+  94              		.cfi_offset 14, -4
+  95 0002 00AF     		add	r7, sp, #0
+  96              		.cfi_def_cfa_register 7
+  81:.\main.c      ****     isr_LPF_buffer_complete_flag=1;
+  97              		.loc 1 81 0
+  98 0004 044B     		ldr	r3, .L5
+  99 0006 0122     		movs	r2, #1
+ 100 0008 1A70     		strb	r2, [r3]
+  82:.\main.c      ****     CyDmaChEnable(DMA_4_Chan, 1);
+ 101              		.loc 1 82 0
+ 102 000a 044B     		ldr	r3, .L5+4
+ 103 000c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 104 000e 1846     		mov	r0, r3
+ 105 0010 0121     		movs	r1, #1
+ 106 0012 FFF7FEFF 		bl	CyDmaChEnable
+  83:.\main.c      **** }
+ 107              		.loc 1 83 0
+ 108 0016 80BD     		pop	{r7, pc}
+ 109              	.L6:
+ 110              		.align	2
+ 111              	.L5:
+ 112 0018 01000000 		.word	isr_LPF_buffer_complete_flag
+ 113 001c 00000000 		.word	DMA_4_Chan
+ 114              		.cfi_endproc
+ 115              	.LFE119:
+ 116              		.size	LPF_buffer_complete, .-LPF_buffer_complete
+ 117              		.section	.text.main,"ax",%progbits
+ 118              		.align	2
+ 119              		.global	main
+ 120              		.thumb
+ 121              		.thumb_func
+ 122              		.type	main, %function
+ 123              	main:
+ 124              	.LFB120:
+  84:.\main.c      **** 
+  85:.\main.c      **** /*main*/
+  86:.\main.c      **** void main(void)
+  87:.\main.c      **** {   
+ 125              		.loc 1 87 0
+ 126              		.cfi_startproc
+ 127              		@ args = 0, pretend = 0, frame = 0
+ 128              		@ frame_needed = 1, uses_anonymous_args = 0
+ 129 0000 80B5     		push	{r7, lr}
+ 130              		.cfi_def_cfa_offset 8
+ 131              		.cfi_offset 7, -8
+ 132              		.cfi_offset 14, -4
+ 133 0002 00AF     		add	r7, sp, #0
+ 134              		.cfi_def_cfa_register 7
+  88:.\main.c      ****     /*Preliminary parts not important*/  
+  89:.\main.c      ****     LCD_Char_1_Start();
+ 135              		.loc 1 89 0
+ 136 0004 FFF7FEFF 		bl	LCD_Char_1_Start
+  90:.\main.c      ****     ADC_DelSig_1_Start();
+ 137              		.loc 1 90 0
+ 138 0008 FFF7FEFF 		bl	ADC_DelSig_1_Start
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 5
+
+
+  91:.\main.c      ****     ADC_DelSig_1_StartConvert();
+ 139              		.loc 1 91 0
+ 140 000c FFF7FEFF 		bl	ADC_DelSig_1_StartConvert
+  92:.\main.c      **** 
+  93:.\main.c      ****     Configure_DMA(); 
+ 141              		.loc 1 93 0
+ 142 0010 FFF7FEFF 		bl	Configure_DMA
+  94:.\main.c      ****     isr_1_StartEx(Buffer_complete);
+ 143              		.loc 1 94 0
+ 144 0014 2948     		ldr	r0, .L10
+ 145 0016 FFF7FEFF 		bl	isr_1_StartEx
+  95:.\main.c      ****     isr_2_StartEx(LPF_buffer_complete);
+ 146              		.loc 1 95 0
+ 147 001a 2948     		ldr	r0, .L10+4
+ 148 001c FFF7FEFF 		bl	isr_2_StartEx
+  96:.\main.c      ****     
+  97:.\main.c      ****     ADC_DelSig_1_SetCoherency(ADC_DelSig_1_COHER_MID);   
+ 149              		.loc 1 97 0
+ 150 0020 0220     		movs	r0, #2
+ 151 0022 FFF7FEFF 		bl	ADC_DelSig_1_SetCoherency
+  98:.\main.c      ****     
+  99:.\main.c      ****     Filter_SetDalign(Filter_STAGEA_DALIGN,Filter_ENABLED);
+ 152              		.loc 1 99 0
+ 153 0026 0120     		movs	r0, #1
+ 154 0028 0121     		movs	r1, #1
+ 155 002a FFF7FEFF 		bl	Filter_SetDalign
+ 100:.\main.c      ****     Filter_SetDalign(Filter_HOLDA_DALIGN,Filter_ENABLED);
+ 156              		.loc 1 100 0
+ 157 002e 0420     		movs	r0, #4
+ 158 0030 0121     		movs	r1, #1
+ 159 0032 FFF7FEFF 		bl	Filter_SetDalign
+ 101:.\main.c      ****     Filter_SetCoherency(Filter_STAGEA_COHER,Filter_KEY_MID);
+ 160              		.loc 1 101 0
+ 161 0036 0320     		movs	r0, #3
+ 162 0038 0121     		movs	r1, #1
+ 163 003a FFF7FEFF 		bl	Filter_SetCoherency
+ 102:.\main.c      ****     Filter_SetCoherency(Filter_HOLDA_COHER,Filter_KEY_MID);
+ 164              		.loc 1 102 0
+ 165 003e 3020     		movs	r0, #48
+ 166 0040 0121     		movs	r1, #1
+ 167 0042 FFF7FEFF 		bl	Filter_SetCoherency
+ 103:.\main.c      ****     Filter_SetCoherency(Filter_CHANNEL_A,Filter_KEY_MID);  
+ 168              		.loc 1 103 0
+ 169 0046 0020     		movs	r0, #0
+ 170 0048 0121     		movs	r1, #1
+ 171 004a FFF7FEFF 		bl	Filter_SetCoherency
+ 104:.\main.c      ****     
+ 105:.\main.c      ****     Filter_SetDalign(Filter_STAGEB_DALIGN,Filter_ENABLED);
+ 172              		.loc 1 105 0
+ 173 004e 0220     		movs	r0, #2
+ 174 0050 0121     		movs	r1, #1
+ 175 0052 FFF7FEFF 		bl	Filter_SetDalign
+ 106:.\main.c      ****     Filter_SetDalign(Filter_HOLDB_DALIGN,Filter_ENABLED);
+ 176              		.loc 1 106 0
+ 177 0056 0820     		movs	r0, #8
+ 178 0058 0121     		movs	r1, #1
+ 179 005a FFF7FEFF 		bl	Filter_SetDalign
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 6
+
+
+ 107:.\main.c      ****     Filter_SetCoherency(Filter_STAGEB_COHER,Filter_KEY_MID);
+ 180              		.loc 1 107 0
+ 181 005e 0C20     		movs	r0, #12
+ 182 0060 0121     		movs	r1, #1
+ 183 0062 FFF7FEFF 		bl	Filter_SetCoherency
+ 108:.\main.c      ****     Filter_SetCoherency(Filter_HOLDB_COHER,Filter_KEY_MID);
+ 184              		.loc 1 108 0
+ 185 0066 C020     		movs	r0, #192
+ 186 0068 0121     		movs	r1, #1
+ 187 006a FFF7FEFF 		bl	Filter_SetCoherency
+ 109:.\main.c      ****     Filter_SetCoherency(Filter_CHANNEL_B,Filter_KEY_MID);
+ 188              		.loc 1 109 0
+ 189 006e 0120     		movs	r0, #1
+ 190 0070 0121     		movs	r1, #1
+ 191 0072 FFF7FEFF 		bl	Filter_SetCoherency
+ 110:.\main.c      **** 
+ 111:.\main.c      ****     CyGlobalIntEnable;
+ 192              		.loc 1 111 0
+ 193              	@ 111 ".\main.c" 1
+ 194 0076 62B6     		CPSIE   i
+ 195              	@ 0 "" 2
+ 112:.\main.c      **** 
+ 113:.\main.c      ****     Filter_Start();
+ 196              		.loc 1 113 0
+ 197              		.thumb
+ 198 0078 FFF7FEFF 		bl	Filter_Start
+ 199              	.L9:
+ 114:.\main.c      **** 
+ 115:.\main.c      ****     /*Writes ADC values to ADC_samples array*/
+ 116:.\main.c      ****     while(1){
+ 117:.\main.c      ****     if (isr_BC_flag==1){        
+ 200              		.loc 1 117 0
+ 201 007c 114B     		ldr	r3, .L10+8
+ 202 007e 1B78     		ldrb	r3, [r3]
+ 203 0080 DBB2     		uxtb	r3, r3
+ 204 0082 012B     		cmp	r3, #1
+ 205 0084 18D1     		bne	.L8
+ 118:.\main.c      ****         arm_cfft_q15(&arm_cfft_sR_q15_len256, Buffer_samples, 0, 1); 
+ 206              		.loc 1 118 0
+ 207 0086 1048     		ldr	r0, .L10+12
+ 208 0088 1049     		ldr	r1, .L10+16
+ 209 008a 0022     		movs	r2, #0
+ 210 008c 0123     		movs	r3, #1
+ 211 008e FFF7FEFF 		bl	arm_cfft_q15
+ 119:.\main.c      ****         arm_cmplx_mag_q15(Buffer_samples, magoutput, fftlength); 
+ 212              		.loc 1 119 0
+ 213 0092 0F4B     		ldr	r3, .L10+20
+ 214 0094 1B68     		ldr	r3, [r3]
+ 215 0096 0D48     		ldr	r0, .L10+16
+ 216 0098 0E49     		ldr	r1, .L10+24
+ 217 009a 1A46     		mov	r2, r3
+ 218 009c FFF7FEFF 		bl	arm_cmplx_mag_q15
+ 120:.\main.c      ****         CyDmaChEnable(DMA_2_Chan, 1);
+ 219              		.loc 1 120 0
+ 220 00a0 0D4B     		ldr	r3, .L10+28
+ 221 00a2 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 222 00a4 1846     		mov	r0, r3
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 7
+
+
+ 223 00a6 0121     		movs	r1, #1
+ 224 00a8 FFF7FEFF 		bl	CyDmaChEnable
+ 121:.\main.c      ****         
+ 122:.\main.c      ****         isr_BC_flag=0;
+ 225              		.loc 1 122 0
+ 226 00ac 054B     		ldr	r3, .L10+8
+ 227 00ae 0022     		movs	r2, #0
+ 228 00b0 1A70     		strb	r2, [r3]
+ 123:.\main.c      ****         isr_1_ClearPending();
+ 229              		.loc 1 123 0
+ 230 00b2 FFF7FEFF 		bl	isr_1_ClearPending
+ 124:.\main.c      ****     }
+ 125:.\main.c      **** }
+ 231              		.loc 1 125 0
+ 232 00b6 E1E7     		b	.L9
+ 233              	.L8:
+ 234 00b8 E0E7     		b	.L9
+ 235              	.L11:
+ 236 00ba 00BF     		.align	2
+ 237              	.L10:
+ 238 00bc 00000000 		.word	Buffer_complete
+ 239 00c0 00000000 		.word	LPF_buffer_complete
+ 240 00c4 00000000 		.word	isr_BC_flag
+ 241 00c8 00000000 		.word	arm_cfft_sR_q15_len256
+ 242 00cc 00000000 		.word	Buffer_samples
+ 243 00d0 00000000 		.word	fftlength
+ 244 00d4 00000000 		.word	magoutput
+ 245 00d8 00000000 		.word	DMA_2_Chan
+ 246              		.cfi_endproc
+ 247              	.LFE120:
+ 248              		.size	main, .-main
+ 249              		.section	.text.Configure_DMA,"ax",%progbits
+ 250              		.align	2
+ 251              		.global	Configure_DMA
+ 252              		.thumb
+ 253              		.thumb_func
+ 254              		.type	Configure_DMA, %function
+ 255              	Configure_DMA:
+ 256              	.LFB121:
+ 126:.\main.c      **** }
+ 127:.\main.c      **** 
+ 128:.\main.c      **** void Configure_DMA(){
+ 257              		.loc 1 128 0
+ 258              		.cfi_startproc
+ 259              		@ args = 0, pretend = 0, frame = 0
+ 260              		@ frame_needed = 1, uses_anonymous_args = 0
+ 261 0000 80B5     		push	{r7, lr}
+ 262              		.cfi_def_cfa_offset 8
+ 263              		.cfi_offset 7, -8
+ 264              		.cfi_offset 14, -4
+ 265 0002 00AF     		add	r7, sp, #0
+ 266              		.cfi_def_cfa_register 7
+ 129:.\main.c      **** 
+ 130:.\main.c      **** ADC2Filter_DMA_Chan = ADC2Filter_DMA_DmaInitialize(ADC2Filter_DMA_BYTES_PER_BURST, ADC2Filter_DMA_R
+ 267              		.loc 1 130 0
+ 268 0004 0220     		movs	r0, #2
+ 269 0006 0121     		movs	r1, #1
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 8
+
+
+ 270 0008 4FF48042 		mov	r2, #16384
+ 271 000c 4FF48043 		mov	r3, #16384
+ 272 0010 FFF7FEFF 		bl	ADC2Filter_DMA_DmaInitialize
+ 273 0014 0346     		mov	r3, r0
+ 274 0016 1A46     		mov	r2, r3
+ 275 0018 8A4B     		ldr	r3, .L13
+ 276 001a 1A70     		strb	r2, [r3]
+ 131:.\main.c      ****     HI16(ADC2Filter_DMA_SRC_BASE), HI16(ADC2Filter_DMA_DST_BASE));
+ 132:.\main.c      **** ADC2Filter_DMA_TD[0] = CyDmaTdAllocate();
+ 277              		.loc 1 132 0
+ 278 001c FFF7FEFF 		bl	CyDmaTdAllocate
+ 279 0020 0346     		mov	r3, r0
+ 280 0022 1A46     		mov	r2, r3
+ 281 0024 884B     		ldr	r3, .L13+4
+ 282 0026 1A70     		strb	r2, [r3]
+ 133:.\main.c      **** ADC2Filter_DMA_TD[1] = CyDmaTdAllocate();
+ 283              		.loc 1 133 0
+ 284 0028 FFF7FEFF 		bl	CyDmaTdAllocate
+ 285 002c 0346     		mov	r3, r0
+ 286 002e 1A46     		mov	r2, r3
+ 287 0030 854B     		ldr	r3, .L13+4
+ 288 0032 5A70     		strb	r2, [r3, #1]
+ 134:.\main.c      **** CyDmaTdSetConfiguration(ADC2Filter_DMA_TD[0], 2, ADC2Filter_DMA_TD[1], TD_AUTO_EXEC_NEXT);
+ 289              		.loc 1 134 0
+ 290 0034 844B     		ldr	r3, .L13+4
+ 291 0036 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 292 0038 834B     		ldr	r3, .L13+4
+ 293 003a 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 294 003c 1046     		mov	r0, r2
+ 295 003e 0221     		movs	r1, #2
+ 296 0040 1A46     		mov	r2, r3
+ 297 0042 2023     		movs	r3, #32
+ 298 0044 FFF7FEFF 		bl	CyDmaTdSetConfiguration
+ 135:.\main.c      **** CyDmaTdSetConfiguration(ADC2Filter_DMA_TD[1], 2, ADC2Filter_DMA_TD[0], ADC2Filter_DMA__TD_TERMOUT_E
+ 299              		.loc 1 135 0
+ 300 0048 7F4B     		ldr	r3, .L13+4
+ 301 004a 5A78     		ldrb	r2, [r3, #1]	@ zero_extendqisi2
+ 302 004c 7E4B     		ldr	r3, .L13+4
+ 303 004e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 304 0050 1046     		mov	r0, r2
+ 305 0052 0221     		movs	r1, #2
+ 306 0054 1A46     		mov	r2, r3
+ 307 0056 0423     		movs	r3, #4
+ 308 0058 FFF7FEFF 		bl	CyDmaTdSetConfiguration
+ 136:.\main.c      **** CyDmaTdSetAddress(ADC2Filter_DMA_TD[0], LO16((uint32)ADC_DelSig_1_DEC_SAMP_PTR), LO16((uint32)Filte
+ 309              		.loc 1 136 0
+ 310 005c 7A4B     		ldr	r3, .L13+4
+ 311 005e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 312 0060 1846     		mov	r0, r3
+ 313 0062 44F61061 		movw	r1, #19984
+ 314 0066 4CF2A072 		movw	r2, #51104
+ 315 006a FFF7FEFF 		bl	CyDmaTdSetAddress
+ 137:.\main.c      **** CyDmaTdSetAddress(ADC2Filter_DMA_TD[1], LO16((uint32)ADC_DelSig_1_DEC_SAMP_PTR), LO16((uint32)Filte
+ 316              		.loc 1 137 0
+ 317 006e 764B     		ldr	r3, .L13+4
+ 318 0070 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 319 0072 1846     		mov	r0, r3
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 9
+
+
+ 320 0074 44F61061 		movw	r1, #19984
+ 321 0078 4CF2A472 		movw	r2, #51108
+ 322 007c FFF7FEFF 		bl	CyDmaTdSetAddress
+ 138:.\main.c      **** CyDmaChSetInitialTd(ADC2Filter_DMA_Chan, ADC2Filter_DMA_TD[0]);
+ 323              		.loc 1 138 0
+ 324 0080 704B     		ldr	r3, .L13
+ 325 0082 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 326 0084 704B     		ldr	r3, .L13+4
+ 327 0086 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 328 0088 1046     		mov	r0, r2
+ 329 008a 1946     		mov	r1, r3
+ 330 008c FFF7FEFF 		bl	CyDmaChSetInitialTd
+ 139:.\main.c      **** CyDmaChEnable(ADC2Filter_DMA_Chan, 1);
+ 331              		.loc 1 139 0
+ 332 0090 6C4B     		ldr	r3, .L13
+ 333 0092 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 334 0094 1846     		mov	r0, r3
+ 335 0096 0121     		movs	r1, #1
+ 336 0098 FFF7FEFF 		bl	CyDmaChEnable
+ 140:.\main.c      **** 
+ 141:.\main.c      **** 
+ 142:.\main.c      **** /*Second buffer*/
+ 143:.\main.c      **** DMA_2_Chan = DMA_2_DmaInitialize(DMA_2_BYTES_PER_BURST, DMA_2_REQUEST_PER_BURST, 
+ 337              		.loc 1 143 0
+ 338 009c 0220     		movs	r0, #2
+ 339 009e 0021     		movs	r1, #0
+ 340 00a0 41F6FF72 		movw	r2, #8191
+ 341 00a4 41F6FF73 		movw	r3, #8191
+ 342 00a8 FFF7FEFF 		bl	DMA_2_DmaInitialize
+ 343 00ac 0346     		mov	r3, r0
+ 344 00ae 1A46     		mov	r2, r3
+ 345 00b0 664B     		ldr	r3, .L13+8
+ 346 00b2 1A70     		strb	r2, [r3]
+ 144:.\main.c      ****     HI16(DMA_2_SRC_BASE), HI16(DMA_2_DST_BASE));
+ 145:.\main.c      **** DMA_2_TD[0] = CyDmaTdAllocate();
+ 347              		.loc 1 145 0
+ 348 00b4 FFF7FEFF 		bl	CyDmaTdAllocate
+ 349 00b8 0346     		mov	r3, r0
+ 350 00ba 1A46     		mov	r2, r3
+ 351 00bc 644B     		ldr	r3, .L13+12
+ 352 00be 1A70     		strb	r2, [r3]
+ 146:.\main.c      **** CyDmaTdSetConfiguration(DMA_2_TD[0], buffersize, CY_DMA_DISABLE_TD /* DMA_2_TD[0]*/, DMA_2__TD_TERM
+ 353              		.loc 1 146 0
+ 354 00c0 634B     		ldr	r3, .L13+12
+ 355 00c2 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 356 00c4 1846     		mov	r0, r3
+ 357 00c6 4FF40061 		mov	r1, #2048
+ 358 00ca FE22     		movs	r2, #254
+ 359 00cc 0723     		movs	r3, #7
+ 360 00ce FFF7FEFF 		bl	CyDmaTdSetConfiguration
+ 147:.\main.c      **** CyDmaTdSetAddress(DMA_2_TD[0], LO16((uint32)ADC_samples), LO16((uint32)Buffer_samples));
+ 361              		.loc 1 147 0
+ 362 00d2 5F4B     		ldr	r3, .L13+12
+ 363 00d4 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
+ 364 00d6 5F4B     		ldr	r3, .L13+16
+ 365 00d8 9AB2     		uxth	r2, r3
+ 366 00da 5F4B     		ldr	r3, .L13+20
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 10
+
+
+ 367 00dc 9BB2     		uxth	r3, r3
+ 368 00de 0846     		mov	r0, r1
+ 369 00e0 1146     		mov	r1, r2
+ 370 00e2 1A46     		mov	r2, r3
+ 371 00e4 FFF7FEFF 		bl	CyDmaTdSetAddress
+ 148:.\main.c      **** CyDmaChSetInitialTd(DMA_2_Chan, DMA_2_TD[0]);
+ 372              		.loc 1 148 0
+ 373 00e8 584B     		ldr	r3, .L13+8
+ 374 00ea 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 375 00ec 584B     		ldr	r3, .L13+12
+ 376 00ee 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 377 00f0 1046     		mov	r0, r2
+ 378 00f2 1946     		mov	r1, r3
+ 379 00f4 FFF7FEFF 		bl	CyDmaChSetInitialTd
+ 149:.\main.c      **** CyDmaChEnable(DMA_2_Chan, 1);
+ 380              		.loc 1 149 0
+ 381 00f8 544B     		ldr	r3, .L13+8
+ 382 00fa 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 383 00fc 1846     		mov	r0, r3
+ 384 00fe 0121     		movs	r1, #1
+ 385 0100 FFF7FEFF 		bl	CyDmaChEnable
+ 150:.\main.c      **** 
+ 151:.\main.c      **** /*First buffer*/
+ 152:.\main.c      **** DMA_1_Chan = DMA_1_DmaInitialize(DMA_1_BYTES_PER_BURST, DMA_1_REQUEST_PER_BURST, 
+ 386              		.loc 1 152 0
+ 387 0104 0220     		movs	r0, #2
+ 388 0106 0121     		movs	r1, #1
+ 389 0108 4FF48042 		mov	r2, #16384
+ 390 010c 41F6FF73 		movw	r3, #8191
+ 391 0110 FFF7FEFF 		bl	DMA_1_DmaInitialize
+ 392 0114 0346     		mov	r3, r0
+ 393 0116 1A46     		mov	r2, r3
+ 394 0118 504B     		ldr	r3, .L13+24
+ 395 011a 1A70     		strb	r2, [r3]
+ 153:.\main.c      ****     HI16(DMA_1_SRC_BASE), HI16(DMA_1_DST_BASE));
+ 154:.\main.c      **** DMA_1_TD[0] = CyDmaTdAllocate();
+ 396              		.loc 1 154 0
+ 397 011c FFF7FEFF 		bl	CyDmaTdAllocate
+ 398 0120 0346     		mov	r3, r0
+ 399 0122 1A46     		mov	r2, r3
+ 400 0124 4E4B     		ldr	r3, .L13+28
+ 401 0126 1A70     		strb	r2, [r3]
+ 155:.\main.c      **** CyDmaTdSetConfiguration(DMA_1_TD[0], buffersize,/* CY_DMA_DISABLE_TD*/ DMA_1_TD[0], DMA_1__TD_TERMO
+ 402              		.loc 1 155 0
+ 403 0128 4D4B     		ldr	r3, .L13+28
+ 404 012a 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 405 012c 4C4B     		ldr	r3, .L13+28
+ 406 012e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 407 0130 1046     		mov	r0, r2
+ 408 0132 4FF40061 		mov	r1, #2048
+ 409 0136 1A46     		mov	r2, r3
+ 410 0138 0623     		movs	r3, #6
+ 411 013a FFF7FEFF 		bl	CyDmaTdSetConfiguration
+ 156:.\main.c      **** CyDmaTdSetAddress(DMA_1_TD[0], LO16((uint32)Filter_HOLDA_PTR), LO16((uint32)ADC_samples));
+ 412              		.loc 1 156 0
+ 413 013e 484B     		ldr	r3, .L13+28
+ 414 0140 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 11
+
+
+ 415 0142 444B     		ldr	r3, .L13+16
+ 416 0144 9BB2     		uxth	r3, r3
+ 417 0146 1046     		mov	r0, r2
+ 418 0148 4CF2A871 		movw	r1, #51112
+ 419 014c 1A46     		mov	r2, r3
+ 420 014e FFF7FEFF 		bl	CyDmaTdSetAddress
+ 157:.\main.c      **** CyDmaChSetInitialTd(DMA_1_Chan, DMA_1_TD[0]);
+ 421              		.loc 1 157 0
+ 422 0152 424B     		ldr	r3, .L13+24
+ 423 0154 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 424 0156 424B     		ldr	r3, .L13+28
+ 425 0158 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 426 015a 1046     		mov	r0, r2
+ 427 015c 1946     		mov	r1, r3
+ 428 015e FFF7FEFF 		bl	CyDmaChSetInitialTd
+ 158:.\main.c      **** CyDmaChEnable(DMA_1_Chan, 1);
+ 429              		.loc 1 158 0
+ 430 0162 3E4B     		ldr	r3, .L13+24
+ 431 0164 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 432 0166 1846     		mov	r0, r3
+ 433 0168 0121     		movs	r1, #1
+ 434 016a FFF7FEFF 		bl	CyDmaChEnable
+ 159:.\main.c      **** 
+ 160:.\main.c      **** DMA_3_Chan = DMA_3_DmaInitialize(DMA_3_BYTES_PER_BURST, DMA_3_REQUEST_PER_BURST, 
+ 435              		.loc 1 160 0
+ 436 016e 0220     		movs	r0, #2
+ 437 0170 0121     		movs	r1, #1
+ 438 0172 4FF48042 		mov	r2, #16384
+ 439 0176 41F6FF73 		movw	r3, #8191
+ 440 017a FFF7FEFF 		bl	DMA_3_DmaInitialize
+ 441 017e 0346     		mov	r3, r0
+ 442 0180 1A46     		mov	r2, r3
+ 443 0182 384B     		ldr	r3, .L13+32
+ 444 0184 1A70     		strb	r2, [r3]
+ 161:.\main.c      ****     HI16(DMA_3_SRC_BASE), HI16(DMA_3_DST_BASE));
+ 162:.\main.c      **** DMA_3_TD[0] = CyDmaTdAllocate();
+ 445              		.loc 1 162 0
+ 446 0186 FFF7FEFF 		bl	CyDmaTdAllocate
+ 447 018a 0346     		mov	r3, r0
+ 448 018c 1A46     		mov	r2, r3
+ 449 018e 364B     		ldr	r3, .L13+36
+ 450 0190 1A70     		strb	r2, [r3]
+ 163:.\main.c      **** CyDmaTdSetConfiguration(DMA_3_TD[0], buffersize, DMA_3_TD[0], DMA_3__TD_TERMOUT_EN | TD_INC_DST_ADR
+ 451              		.loc 1 163 0
+ 452 0192 354B     		ldr	r3, .L13+36
+ 453 0194 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 454 0196 344B     		ldr	r3, .L13+36
+ 455 0198 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 456 019a 1046     		mov	r0, r2
+ 457 019c 4FF40061 		mov	r1, #2048
+ 458 01a0 1A46     		mov	r2, r3
+ 459 01a2 0623     		movs	r3, #6
+ 460 01a4 FFF7FEFF 		bl	CyDmaTdSetConfiguration
+ 164:.\main.c      **** CyDmaTdSetAddress(DMA_3_TD[0], LO16((uint32)Filter_HOLDB_PTR), LO16((uint32)LPF_samples));
+ 461              		.loc 1 164 0
+ 462 01a8 2F4B     		ldr	r3, .L13+36
+ 463 01aa 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 12
+
+
+ 464 01ac 2F4B     		ldr	r3, .L13+40
+ 465 01ae 9BB2     		uxth	r3, r3
+ 466 01b0 1046     		mov	r0, r2
+ 467 01b2 4CF2AC71 		movw	r1, #51116
+ 468 01b6 1A46     		mov	r2, r3
+ 469 01b8 FFF7FEFF 		bl	CyDmaTdSetAddress
+ 165:.\main.c      **** CyDmaChSetInitialTd(DMA_3_Chan, DMA_3_TD[0]);
+ 470              		.loc 1 165 0
+ 471 01bc 294B     		ldr	r3, .L13+32
+ 472 01be 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 473 01c0 294B     		ldr	r3, .L13+36
+ 474 01c2 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 475 01c4 1046     		mov	r0, r2
+ 476 01c6 1946     		mov	r1, r3
+ 477 01c8 FFF7FEFF 		bl	CyDmaChSetInitialTd
+ 166:.\main.c      **** CyDmaChEnable(DMA_3_Chan, 1);
+ 478              		.loc 1 166 0
+ 479 01cc 254B     		ldr	r3, .L13+32
+ 480 01ce 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 481 01d0 1846     		mov	r0, r3
+ 482 01d2 0121     		movs	r1, #1
+ 483 01d4 FFF7FEFF 		bl	CyDmaChEnable
+ 167:.\main.c      **** 
+ 168:.\main.c      **** DMA_4_Chan = DMA_4_DmaInitialize(DMA_4_BYTES_PER_BURST, DMA_4_REQUEST_PER_BURST, 
+ 484              		.loc 1 168 0
+ 485 01d8 0220     		movs	r0, #2
+ 486 01da 0021     		movs	r1, #0
+ 487 01dc 41F6FF72 		movw	r2, #8191
+ 488 01e0 41F6FF73 		movw	r3, #8191
+ 489 01e4 FFF7FEFF 		bl	DMA_4_DmaInitialize
+ 490 01e8 0346     		mov	r3, r0
+ 491 01ea 1A46     		mov	r2, r3
+ 492 01ec 204B     		ldr	r3, .L13+44
+ 493 01ee 1A70     		strb	r2, [r3]
+ 169:.\main.c      ****     HI16(DMA_4_SRC_BASE), HI16(DMA_4_DST_BASE));
+ 170:.\main.c      **** DMA_4_TD[0] = CyDmaTdAllocate();
+ 494              		.loc 1 170 0
+ 495 01f0 FFF7FEFF 		bl	CyDmaTdAllocate
+ 496 01f4 0346     		mov	r3, r0
+ 497 01f6 1A46     		mov	r2, r3
+ 498 01f8 1E4B     		ldr	r3, .L13+48
+ 499 01fa 1A70     		strb	r2, [r3]
+ 171:.\main.c      **** CyDmaTdSetConfiguration(DMA_4_TD[0], buffersize, CY_DMA_DISABLE_TD /*DMA_4_TD[0]*/, DMA_4__TD_TERMO
+ 500              		.loc 1 171 0
+ 501 01fc 1D4B     		ldr	r3, .L13+48
+ 502 01fe 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 503 0200 1846     		mov	r0, r3
+ 504 0202 4FF40061 		mov	r1, #2048
+ 505 0206 FE22     		movs	r2, #254
+ 506 0208 0723     		movs	r3, #7
+ 507 020a FFF7FEFF 		bl	CyDmaTdSetConfiguration
+ 172:.\main.c      **** CyDmaTdSetAddress(DMA_4_TD[0], LO16((uint32)LPF_samples), LO16((uint32)LPF_buffer));
+ 508              		.loc 1 172 0
+ 509 020e 194B     		ldr	r3, .L13+48
+ 510 0210 1978     		ldrb	r1, [r3]	@ zero_extendqisi2
+ 511 0212 164B     		ldr	r3, .L13+40
+ 512 0214 9AB2     		uxth	r2, r3
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 13
+
+
+ 513 0216 184B     		ldr	r3, .L13+52
+ 514 0218 9BB2     		uxth	r3, r3
+ 515 021a 0846     		mov	r0, r1
+ 516 021c 1146     		mov	r1, r2
+ 517 021e 1A46     		mov	r2, r3
+ 518 0220 FFF7FEFF 		bl	CyDmaTdSetAddress
+ 173:.\main.c      **** CyDmaChSetInitialTd(DMA_4_Chan, DMA_4_TD[0]);
+ 519              		.loc 1 173 0
+ 520 0224 124B     		ldr	r3, .L13+44
+ 521 0226 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 522 0228 124B     		ldr	r3, .L13+48
+ 523 022a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 524 022c 1046     		mov	r0, r2
+ 525 022e 1946     		mov	r1, r3
+ 526 0230 FFF7FEFF 		bl	CyDmaChSetInitialTd
+ 174:.\main.c      **** CyDmaChEnable(DMA_4_Chan, 1);
+ 527              		.loc 1 174 0
+ 528 0234 0E4B     		ldr	r3, .L13+44
+ 529 0236 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 530 0238 1846     		mov	r0, r3
+ 531 023a 0121     		movs	r1, #1
+ 532 023c FFF7FEFF 		bl	CyDmaChEnable
+ 175:.\main.c      **** 
+ 176:.\main.c      **** }...
+ 533              		.loc 1 176 0
+ 534 0240 80BD     		pop	{r7, pc}
+ 535              	.L14:
+ 536 0242 00BF     		.align	2
+ 537              	.L13:
+ 538 0244 00000000 		.word	ADC2Filter_DMA_Chan
+ 539 0248 00000000 		.word	ADC2Filter_DMA_TD
+ 540 024c 00000000 		.word	DMA_2_Chan
+ 541 0250 00000000 		.word	DMA_2_TD
+ 542 0254 00000000 		.word	ADC_samples
+ 543 0258 00000000 		.word	Buffer_samples
+ 544 025c 00000000 		.word	DMA_1_Chan
+ 545 0260 00000000 		.word	DMA_1_TD
+ 546 0264 00000000 		.word	DMA_3_Chan
+ 547 0268 00000000 		.word	DMA_3_TD
+ 548 026c 00000000 		.word	LPF_samples
+ 549 0270 00000000 		.word	DMA_4_Chan
+ 550 0274 00000000 		.word	DMA_4_TD
+ 551 0278 00000000 		.word	LPF_buffer
+ 552              		.cfi_endproc
+ 553              	.LFE121:
+ 554              		.size	Configure_DMA, .-Configure_DMA
+ 555              		.text
+ 556              	.Letext0:
+ 557              		.file 2 "c:\\program files\\cypress\\psoc creator\\3.2\\psoc creator\\import\\gnu\\arm\\4.8.4\\arm
+ 558              		.file 3 "c:\\program files\\cypress\\psoc creator\\3.2\\psoc creator\\import\\gnu\\arm\\4.8.4\\arm
+ 559              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 560              		.file 5 "Z:\\scottcarlson On My Mac\\Code\\repos\\LED_controller\\CMSISfile\\CMSIS\\Include/arm_ma
+ 561              		.file 6 "Z:\\scottcarlson On My Mac\\Code\\repos\\LED_controller\\CMSISfile\\CMSIS\\Include/core_c
+ 562              		.file 7 "Z:\\scottcarlson On My Mac\\Code\\repos\\LED_controller\\CMSISfile\\CMSIS\\Include/arm_co
+ 563              		.section	.debug_info,"",%progbits
+ 564              	.Ldebug_info0:
+ 565 0000 4F030000 		.4byte	0x34f
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 14
+
+
+ 566 0004 0400     		.2byte	0x4
+ 567 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 568 000a 04       		.byte	0x4
+ 569 000b 01       		.uleb128 0x1
+ 570 000c CF010000 		.4byte	.LASF54
+ 571 0010 01       		.byte	0x1
+ 572 0011 8A000000 		.4byte	.LASF55
+ 573 0015 84020000 		.4byte	.LASF56
+ 574 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 575 001d 00000000 		.4byte	0
+ 576 0021 00000000 		.4byte	.Ldebug_line0
+ 577 0025 02       		.uleb128 0x2
+ 578 0026 01       		.byte	0x1
+ 579 0027 06       		.byte	0x6
+ 580 0028 36030000 		.4byte	.LASF0
+ 581 002c 02       		.uleb128 0x2
+ 582 002d 01       		.byte	0x1
+ 583 002e 08       		.byte	0x8
+ 584 002f AA000000 		.4byte	.LASF1
+ 585 0033 03       		.uleb128 0x3
+ 586 0034 2C000000 		.4byte	.LASF3
+ 587 0038 02       		.byte	0x2
+ 588 0039 25       		.byte	0x25
+ 589 003a 3E000000 		.4byte	0x3e
+ 590 003e 02       		.uleb128 0x2
+ 591 003f 02       		.byte	0x2
+ 592 0040 05       		.byte	0x5
+ 593 0041 05030000 		.4byte	.LASF2
+ 594 0045 03       		.uleb128 0x3
+ 595 0046 49010000 		.4byte	.LASF4
+ 596 004a 02       		.byte	0x2
+ 597 004b 26       		.byte	0x26
+ 598 004c 50000000 		.4byte	0x50
+ 599 0050 02       		.uleb128 0x2
+ 600 0051 02       		.byte	0x2
+ 601 0052 07       		.byte	0x7
+ 602 0053 64000000 		.4byte	.LASF5
+ 603 0057 03       		.uleb128 0x3
+ 604 0058 5A000000 		.4byte	.LASF6
+ 605 005c 02       		.byte	0x2
+ 606 005d 37       		.byte	0x37
+ 607 005e 62000000 		.4byte	0x62
+ 608 0062 02       		.uleb128 0x2
+ 609 0063 04       		.byte	0x4
+ 610 0064 05       		.byte	0x5
+ 611 0065 21030000 		.4byte	.LASF7
+ 612 0069 02       		.uleb128 0x2
+ 613 006a 04       		.byte	0x4
+ 614 006b 07       		.byte	0x7
+ 615 006c E9000000 		.4byte	.LASF8
+ 616 0070 02       		.uleb128 0x2
+ 617 0071 08       		.byte	0x8
+ 618 0072 05       		.byte	0x5
+ 619 0073 68020000 		.4byte	.LASF9
+ 620 0077 02       		.uleb128 0x2
+ 621 0078 08       		.byte	0x8
+ 622 0079 07       		.byte	0x7
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 15
+
+
+ 623 007a 91010000 		.4byte	.LASF10
+ 624 007e 04       		.uleb128 0x4
+ 625 007f 04       		.byte	0x4
+ 626 0080 05       		.byte	0x5
+ 627 0081 696E7400 		.ascii	"int\000"
+ 628 0085 02       		.uleb128 0x2
+ 629 0086 04       		.byte	0x4
+ 630 0087 07       		.byte	0x7
+ 631 0088 84010000 		.4byte	.LASF11
+ 632 008c 03       		.uleb128 0x3
+ 633 008d C7010000 		.4byte	.LASF12
+ 634 0091 03       		.byte	0x3
+ 635 0092 35       		.byte	0x35
+ 636 0093 33000000 		.4byte	0x33
+ 637 0097 03       		.uleb128 0x3
+ 638 0098 18030000 		.4byte	.LASF13
+ 639 009c 03       		.byte	0x3
+ 640 009d 36       		.byte	0x36
+ 641 009e 45000000 		.4byte	0x45
+ 642 00a2 03       		.uleb128 0x3
+ 643 00a3 57020000 		.4byte	.LASF14
+ 644 00a7 03       		.byte	0x3
+ 645 00a8 41       		.byte	0x41
+ 646 00a9 57000000 		.4byte	0x57
+ 647 00ad 03       		.uleb128 0x3
+ 648 00ae 77000000 		.4byte	.LASF15
+ 649 00b2 04       		.byte	0x4
+ 650 00b3 A1       		.byte	0xa1
+ 651 00b4 2C000000 		.4byte	0x2c
+ 652 00b8 03       		.uleb128 0x3
+ 653 00b9 6A010000 		.4byte	.LASF16
+ 654 00bd 04       		.byte	0x4
+ 655 00be A2       		.byte	0xa2
+ 656 00bf 50000000 		.4byte	0x50
+ 657 00c3 03       		.uleb128 0x3
+ 658 00c4 7D010000 		.4byte	.LASF17
+ 659 00c8 04       		.byte	0x4
+ 660 00c9 A3       		.byte	0xa3
+ 661 00ca 69000000 		.4byte	0x69
+ 662 00ce 03       		.uleb128 0x3
+ 663 00cf E3000000 		.4byte	.LASF18
+ 664 00d3 04       		.byte	0x4
+ 665 00d4 A5       		.byte	0xa5
+ 666 00d5 3E000000 		.4byte	0x3e
+ 667 00d9 02       		.uleb128 0x2
+ 668 00da 04       		.byte	0x4
+ 669 00db 04       		.byte	0x4
+ 670 00dc 99000000 		.4byte	.LASF19
+ 671 00e0 02       		.uleb128 0x2
+ 672 00e1 08       		.byte	0x8
+ 673 00e2 04       		.byte	0x4
+ 674 00e3 54010000 		.4byte	.LASF20
+ 675 00e7 02       		.uleb128 0x2
+ 676 00e8 01       		.byte	0x1
+ 677 00e9 08       		.byte	0x8
+ 678 00ea 7F020000 		.4byte	.LASF21
+ 679 00ee 05       		.uleb128 0x5
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 16
+
+
+ 680 00ef CA000000 		.4byte	.LASF22
+ 681 00f3 04       		.byte	0x4
+ 682 00f4 4B01     		.2byte	0x14b
+ 683 00f6 FA000000 		.4byte	0xfa
+ 684 00fa 06       		.uleb128 0x6
+ 685 00fb AD000000 		.4byte	0xad
+ 686 00ff 02       		.uleb128 0x2
+ 687 0100 04       		.byte	0x4
+ 688 0101 07       		.byte	0x7
+ 689 0102 5F020000 		.4byte	.LASF23
+ 690 0106 02       		.uleb128 0x2
+ 691 0107 08       		.byte	0x8
+ 692 0108 04       		.byte	0x4
+ 693 0109 2A030000 		.4byte	.LASF24
+ 694 010d 05       		.uleb128 0x5
+ 695 010e 93000000 		.4byte	.LASF25
+ 696 0112 05       		.byte	0x5
+ 697 0113 8101     		.2byte	0x181
+ 698 0115 8C000000 		.4byte	0x8c
+ 699 0119 07       		.uleb128 0x7
+ 700 011a 10       		.byte	0x10
+ 701 011b 05       		.byte	0x5
+ 702 011c AD08     		.2byte	0x8ad
+ 703 011e 57010000 		.4byte	0x157
+ 704 0122 08       		.uleb128 0x8
+ 705 0123 11010000 		.4byte	.LASF26
+ 706 0127 05       		.byte	0x5
+ 707 0128 AF08     		.2byte	0x8af
+ 708 012a 97000000 		.4byte	0x97
+ 709 012e 00       		.byte	0
+ 710 012f 08       		.uleb128 0x8
+ 711 0130 36000000 		.4byte	.LASF27
+ 712 0134 05       		.byte	0x5
+ 713 0135 B008     		.2byte	0x8b0
+ 714 0137 57010000 		.4byte	0x157
+ 715 013b 04       		.byte	0x4
+ 716 013c 08       		.uleb128 0x8
+ 717 013d 7D000000 		.4byte	.LASF28
+ 718 0141 05       		.byte	0x5
+ 719 0142 B108     		.2byte	0x8b1
+ 720 0144 62010000 		.4byte	0x162
+ 721 0148 08       		.byte	0x8
+ 722 0149 08       		.uleb128 0x8
+ 723 014a 3F000000 		.4byte	.LASF29
+ 724 014e 05       		.byte	0x5
+ 725 014f B208     		.2byte	0x8b2
+ 726 0151 97000000 		.4byte	0x97
+ 727 0155 0C       		.byte	0xc
+ 728 0156 00       		.byte	0
+ 729 0157 09       		.uleb128 0x9
+ 730 0158 04       		.byte	0x4
+ 731 0159 5D010000 		.4byte	0x15d
+ 732 015d 0A       		.uleb128 0xa
+ 733 015e 0D010000 		.4byte	0x10d
+ 734 0162 09       		.uleb128 0x9
+ 735 0163 04       		.byte	0x4
+ 736 0164 68010000 		.4byte	0x168
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 17
+
+
+ 737 0168 0A       		.uleb128 0xa
+ 738 0169 97000000 		.4byte	0x97
+ 739 016d 05       		.uleb128 0x5
+ 740 016e FB000000 		.4byte	.LASF30
+ 741 0172 05       		.byte	0x5
+ 742 0173 B308     		.2byte	0x8b3
+ 743 0175 19010000 		.4byte	0x119
+ 744 0179 0A       		.uleb128 0xa
+ 745 017a 6D010000 		.4byte	0x16d
+ 746 017e 0B       		.uleb128 0xb
+ 747 017f E1020000 		.4byte	.LASF31
+ 748 0183 01       		.byte	0x1
+ 749 0184 4C       		.byte	0x4c
+ 750 0185 00000000 		.4byte	.LFB118
+ 751 0189 18000000 		.4byte	.LFE118-.LFB118
+ 752 018d 01       		.uleb128 0x1
+ 753 018e 9C       		.byte	0x9c
+ 754 018f 0C       		.uleb128 0xc
+ 755 0190 F1020000 		.4byte	.LASF32
+ 756 0194 01       		.byte	0x1
+ 757 0195 50       		.byte	0x50
+ 758 0196 00000000 		.4byte	.LFB119
+ 759 019a 20000000 		.4byte	.LFE119-.LFB119
+ 760 019e 01       		.uleb128 0x1
+ 761 019f 9C       		.byte	0x9c
+ 762 01a0 0C       		.uleb128 0xc
+ 763 01a1 65010000 		.4byte	.LASF33
+ 764 01a5 01       		.byte	0x1
+ 765 01a6 56       		.byte	0x56
+ 766 01a7 00000000 		.4byte	.LFB120
+ 767 01ab DC000000 		.4byte	.LFE120-.LFB120
+ 768 01af 01       		.uleb128 0x1
+ 769 01b0 9C       		.byte	0x9c
+ 770 01b1 0D       		.uleb128 0xd
+ 771 01b2 4C000000 		.4byte	.LASF57
+ 772 01b6 01       		.byte	0x1
+ 773 01b7 80       		.byte	0x80
+ 774 01b8 00000000 		.4byte	.LFB121
+ 775 01bc 7C020000 		.4byte	.LFE121-.LFB121
+ 776 01c0 01       		.uleb128 0x1
+ 777 01c1 9C       		.byte	0x9c
+ 778 01c2 0E       		.uleb128 0xe
+ 779 01c3 17000000 		.4byte	.LASF34
+ 780 01c7 01       		.byte	0x1
+ 781 01c8 41       		.byte	0x41
+ 782 01c9 C3000000 		.4byte	0xc3
+ 783 01cd 05       		.uleb128 0x5
+ 784 01ce 03       		.byte	0x3
+ 785 01cf 00000000 		.4byte	fftlength
+ 786 01d3 0E       		.uleb128 0xe
+ 787 01d4 71010000 		.4byte	.LASF35
+ 788 01d8 01       		.byte	0x1
+ 789 01d9 43       		.byte	0x43
+ 790 01da FA000000 		.4byte	0xfa
+ 791 01de 05       		.uleb128 0x5
+ 792 01df 03       		.byte	0x3
+ 793 01e0 00000000 		.4byte	isr_BC_flag
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 18
+
+
+ 794 01e4 0E       		.uleb128 0xe
+ 795 01e5 42030000 		.4byte	.LASF36
+ 796 01e9 01       		.byte	0x1
+ 797 01ea 44       		.byte	0x44
+ 798 01eb FA000000 		.4byte	0xfa
+ 799 01ef 05       		.uleb128 0x5
+ 800 01f0 03       		.byte	0x3
+ 801 01f1 01000000 		.4byte	isr_LPF_buffer_complete_flag
+ 802 01f5 0F       		.uleb128 0xf
+ 803 01f6 30010000 		.4byte	.LASF37
+ 804 01fa 06       		.byte	0x6
+ 805 01fb 5506     		.2byte	0x655
+ 806 01fd 01020000 		.4byte	0x201
+ 807 0201 06       		.uleb128 0x6
+ 808 0202 A2000000 		.4byte	0xa2
+ 809 0206 10       		.uleb128 0x10
+ 810 0207 00000000 		.4byte	.LASF38
+ 811 020b 07       		.byte	0x7
+ 812 020c 49       		.byte	0x49
+ 813 020d 79010000 		.4byte	0x179
+ 814 0211 11       		.uleb128 0x11
+ 815 0212 21000000 		.4byte	.LASF39
+ 816 0216 01       		.byte	0x1
+ 817 0217 0E       		.byte	0xe
+ 818 0218 AD000000 		.4byte	0xad
+ 819 021c 05       		.uleb128 0x5
+ 820 021d 03       		.byte	0x3
+ 821 021e 00000000 		.4byte	DMA_1_Chan
+ 822 0222 12       		.uleb128 0x12
+ 823 0223 AD000000 		.4byte	0xad
+ 824 0227 32020000 		.4byte	0x232
+ 825 022b 13       		.uleb128 0x13
+ 826 022c FF000000 		.4byte	0xff
+ 827 0230 00       		.byte	0
+ 828 0231 00       		.byte	0
+ 829 0232 11       		.uleb128 0x11
+ 830 0233 18010000 		.4byte	.LASF40
+ 831 0237 01       		.byte	0x1
+ 832 0238 0F       		.byte	0xf
+ 833 0239 22020000 		.4byte	0x222
+ 834 023d 05       		.uleb128 0x5
+ 835 023e 03       		.byte	0x3
+ 836 023f 00000000 		.4byte	DMA_1_TD
+ 837 0243 11       		.uleb128 0x11
+ 838 0244 9F000000 		.4byte	.LASF41
+ 839 0248 01       		.byte	0x1
+ 840 0249 11       		.byte	0x11
+ 841 024a AD000000 		.4byte	0xad
+ 842 024e 05       		.uleb128 0x5
+ 843 024f 03       		.byte	0x3
+ 844 0250 00000000 		.4byte	DMA_2_Chan
+ 845 0254 11       		.uleb128 0x11
+ 846 0255 A8010000 		.4byte	.LASF42
+ 847 0259 01       		.byte	0x1
+ 848 025a 12       		.byte	0x12
+ 849 025b 22020000 		.4byte	0x222
+ 850 025f 05       		.uleb128 0x5
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 19
+
+
+ 851 0260 03       		.byte	0x3
+ 852 0261 00000000 		.4byte	DMA_2_TD
+ 853 0265 11       		.uleb128 0x11
+ 854 0266 CF000000 		.4byte	.LASF43
+ 855 026a 01       		.byte	0x1
+ 856 026b 14       		.byte	0x14
+ 857 026c AD000000 		.4byte	0xad
+ 858 0270 05       		.uleb128 0x5
+ 859 0271 03       		.byte	0x3
+ 860 0272 00000000 		.4byte	ADC2Filter_DMA_Chan
+ 861 0276 12       		.uleb128 0x12
+ 862 0277 AD000000 		.4byte	0xad
+ 863 027b 86020000 		.4byte	0x286
+ 864 027f 13       		.uleb128 0x13
+ 865 0280 FF000000 		.4byte	0xff
+ 866 0284 01       		.byte	0x1
+ 867 0285 00       		.byte	0
+ 868 0286 11       		.uleb128 0x11
+ 869 0287 B8000000 		.4byte	.LASF44
+ 870 028b 01       		.byte	0x1
+ 871 028c 15       		.byte	0x15
+ 872 028d 76020000 		.4byte	0x276
+ 873 0291 05       		.uleb128 0x5
+ 874 0292 03       		.byte	0x3
+ 875 0293 00000000 		.4byte	ADC2Filter_DMA_TD
+ 876 0297 11       		.uleb128 0x11
+ 877 0298 BC010000 		.4byte	.LASF45
+ 878 029c 01       		.byte	0x1
+ 879 029d 17       		.byte	0x17
+ 880 029e AD000000 		.4byte	0xad
+ 881 02a2 05       		.uleb128 0x5
+ 882 02a3 03       		.byte	0x3
+ 883 02a4 00000000 		.4byte	DMA_3_Chan
+ 884 02a8 11       		.uleb128 0x11
+ 885 02a9 0F030000 		.4byte	.LASF46
+ 886 02ad 01       		.byte	0x1
+ 887 02ae 18       		.byte	0x18
+ 888 02af 22020000 		.4byte	0x222
+ 889 02b3 05       		.uleb128 0x5
+ 890 02b4 03       		.byte	0x3
+ 891 02b5 00000000 		.4byte	DMA_3_TD
+ 892 02b9 11       		.uleb128 0x11
+ 893 02ba 5F030000 		.4byte	.LASF47
+ 894 02be 01       		.byte	0x1
+ 895 02bf 1A       		.byte	0x1a
+ 896 02c0 AD000000 		.4byte	0xad
+ 897 02c4 05       		.uleb128 0x5
+ 898 02c5 03       		.byte	0x3
+ 899 02c6 00000000 		.4byte	DMA_4_Chan
+ 900 02ca 11       		.uleb128 0x11
+ 901 02cb 76020000 		.4byte	.LASF48
+ 902 02cf 01       		.byte	0x1
+ 903 02d0 1B       		.byte	0x1b
+ 904 02d1 22020000 		.4byte	0x222
+ 905 02d5 05       		.uleb128 0x5
+ 906 02d6 03       		.byte	0x3
+ 907 02d7 00000000 		.4byte	DMA_4_TD
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 20
+
+
+ 908 02db 12       		.uleb128 0x12
+ 909 02dc CE000000 		.4byte	0xce
+ 910 02e0 EC020000 		.4byte	0x2ec
+ 911 02e4 14       		.uleb128 0x14
+ 912 02e5 FF000000 		.4byte	0xff
+ 913 02e9 FF03     		.2byte	0x3ff
+ 914 02eb 00       		.byte	0
+ 915 02ec 11       		.uleb128 0x11
+ 916 02ed 4B020000 		.4byte	.LASF49
+ 917 02f1 01       		.byte	0x1
+ 918 02f2 3C       		.byte	0x3c
+ 919 02f3 DB020000 		.4byte	0x2db
+ 920 02f7 05       		.uleb128 0x5
+ 921 02f8 03       		.byte	0x3
+ 922 02f9 00000000 		.4byte	LPF_samples
+ 923 02fd 11       		.uleb128 0x11
+ 924 02fe B1010000 		.4byte	.LASF50
+ 925 0302 01       		.byte	0x1
+ 926 0303 3D       		.byte	0x3d
+ 927 0304 DB020000 		.4byte	0x2db
+ 928 0308 05       		.uleb128 0x5
+ 929 0309 03       		.byte	0x3
+ 930 030a 00000000 		.4byte	LPF_buffer
+ 931 030e 11       		.uleb128 0x11
+ 932 030f 21010000 		.4byte	.LASF51
+ 933 0313 01       		.byte	0x1
+ 934 0314 3E       		.byte	0x3e
+ 935 0315 DB020000 		.4byte	0x2db
+ 936 0319 05       		.uleb128 0x5
+ 937 031a 03       		.byte	0x3
+ 938 031b 00000000 		.4byte	Buffer_samples
+ 939 031f 11       		.uleb128 0x11
+ 940 0320 3D010000 		.4byte	.LASF52
+ 941 0324 01       		.byte	0x1
+ 942 0325 3F       		.byte	0x3f
+ 943 0326 DB020000 		.4byte	0x2db
+ 944 032a 05       		.uleb128 0x5
+ 945 032b 03       		.byte	0x3
+ 946 032c 00000000 		.4byte	ADC_samples
+ 947 0330 12       		.uleb128 0x12
+ 948 0331 0D010000 		.4byte	0x10d
+ 949 0335 41030000 		.4byte	0x341
+ 950 0339 14       		.uleb128 0x14
+ 951 033a FF000000 		.4byte	0xff
+ 952 033e FF01     		.2byte	0x1ff
+ 953 0340 00       		.byte	0
+ 954 0341 11       		.uleb128 0x11
+ 955 0342 5B010000 		.4byte	.LASF53
+ 956 0346 01       		.byte	0x1
+ 957 0347 40       		.byte	0x40
+ 958 0348 30030000 		.4byte	0x330
+ 959 034c 05       		.uleb128 0x5
+ 960 034d 03       		.byte	0x3
+ 961 034e 00000000 		.4byte	magoutput
+ 962 0352 00       		.byte	0
+ 963              		.section	.debug_abbrev,"",%progbits
+ 964              	.Ldebug_abbrev0:
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 21
+
+
+ 965 0000 01       		.uleb128 0x1
+ 966 0001 11       		.uleb128 0x11
+ 967 0002 01       		.byte	0x1
+ 968 0003 25       		.uleb128 0x25
+ 969 0004 0E       		.uleb128 0xe
+ 970 0005 13       		.uleb128 0x13
+ 971 0006 0B       		.uleb128 0xb
+ 972 0007 03       		.uleb128 0x3
+ 973 0008 0E       		.uleb128 0xe
+ 974 0009 1B       		.uleb128 0x1b
+ 975 000a 0E       		.uleb128 0xe
+ 976 000b 55       		.uleb128 0x55
+ 977 000c 17       		.uleb128 0x17
+ 978 000d 11       		.uleb128 0x11
+ 979 000e 01       		.uleb128 0x1
+ 980 000f 10       		.uleb128 0x10
+ 981 0010 17       		.uleb128 0x17
+ 982 0011 00       		.byte	0
+ 983 0012 00       		.byte	0
+ 984 0013 02       		.uleb128 0x2
+ 985 0014 24       		.uleb128 0x24
+ 986 0015 00       		.byte	0
+ 987 0016 0B       		.uleb128 0xb
+ 988 0017 0B       		.uleb128 0xb
+ 989 0018 3E       		.uleb128 0x3e
+ 990 0019 0B       		.uleb128 0xb
+ 991 001a 03       		.uleb128 0x3
+ 992 001b 0E       		.uleb128 0xe
+ 993 001c 00       		.byte	0
+ 994 001d 00       		.byte	0
+ 995 001e 03       		.uleb128 0x3
+ 996 001f 16       		.uleb128 0x16
+ 997 0020 00       		.byte	0
+ 998 0021 03       		.uleb128 0x3
+ 999 0022 0E       		.uleb128 0xe
+ 1000 0023 3A       		.uleb128 0x3a
+ 1001 0024 0B       		.uleb128 0xb
+ 1002 0025 3B       		.uleb128 0x3b
+ 1003 0026 0B       		.uleb128 0xb
+ 1004 0027 49       		.uleb128 0x49
+ 1005 0028 13       		.uleb128 0x13
+ 1006 0029 00       		.byte	0
+ 1007 002a 00       		.byte	0
+ 1008 002b 04       		.uleb128 0x4
+ 1009 002c 24       		.uleb128 0x24
+ 1010 002d 00       		.byte	0
+ 1011 002e 0B       		.uleb128 0xb
+ 1012 002f 0B       		.uleb128 0xb
+ 1013 0030 3E       		.uleb128 0x3e
+ 1014 0031 0B       		.uleb128 0xb
+ 1015 0032 03       		.uleb128 0x3
+ 1016 0033 08       		.uleb128 0x8
+ 1017 0034 00       		.byte	0
+ 1018 0035 00       		.byte	0
+ 1019 0036 05       		.uleb128 0x5
+ 1020 0037 16       		.uleb128 0x16
+ 1021 0038 00       		.byte	0
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 22
+
+
+ 1022 0039 03       		.uleb128 0x3
+ 1023 003a 0E       		.uleb128 0xe
+ 1024 003b 3A       		.uleb128 0x3a
+ 1025 003c 0B       		.uleb128 0xb
+ 1026 003d 3B       		.uleb128 0x3b
+ 1027 003e 05       		.uleb128 0x5
+ 1028 003f 49       		.uleb128 0x49
+ 1029 0040 13       		.uleb128 0x13
+ 1030 0041 00       		.byte	0
+ 1031 0042 00       		.byte	0
+ 1032 0043 06       		.uleb128 0x6
+ 1033 0044 35       		.uleb128 0x35
+ 1034 0045 00       		.byte	0
+ 1035 0046 49       		.uleb128 0x49
+ 1036 0047 13       		.uleb128 0x13
+ 1037 0048 00       		.byte	0
+ 1038 0049 00       		.byte	0
+ 1039 004a 07       		.uleb128 0x7
+ 1040 004b 13       		.uleb128 0x13
+ 1041 004c 01       		.byte	0x1
+ 1042 004d 0B       		.uleb128 0xb
+ 1043 004e 0B       		.uleb128 0xb
+ 1044 004f 3A       		.uleb128 0x3a
+ 1045 0050 0B       		.uleb128 0xb
+ 1046 0051 3B       		.uleb128 0x3b
+ 1047 0052 05       		.uleb128 0x5
+ 1048 0053 01       		.uleb128 0x1
+ 1049 0054 13       		.uleb128 0x13
+ 1050 0055 00       		.byte	0
+ 1051 0056 00       		.byte	0
+ 1052 0057 08       		.uleb128 0x8
+ 1053 0058 0D       		.uleb128 0xd
+ 1054 0059 00       		.byte	0
+ 1055 005a 03       		.uleb128 0x3
+ 1056 005b 0E       		.uleb128 0xe
+ 1057 005c 3A       		.uleb128 0x3a
+ 1058 005d 0B       		.uleb128 0xb
+ 1059 005e 3B       		.uleb128 0x3b
+ 1060 005f 05       		.uleb128 0x5
+ 1061 0060 49       		.uleb128 0x49
+ 1062 0061 13       		.uleb128 0x13
+ 1063 0062 38       		.uleb128 0x38
+ 1064 0063 0B       		.uleb128 0xb
+ 1065 0064 00       		.byte	0
+ 1066 0065 00       		.byte	0
+ 1067 0066 09       		.uleb128 0x9
+ 1068 0067 0F       		.uleb128 0xf
+ 1069 0068 00       		.byte	0
+ 1070 0069 0B       		.uleb128 0xb
+ 1071 006a 0B       		.uleb128 0xb
+ 1072 006b 49       		.uleb128 0x49
+ 1073 006c 13       		.uleb128 0x13
+ 1074 006d 00       		.byte	0
+ 1075 006e 00       		.byte	0
+ 1076 006f 0A       		.uleb128 0xa
+ 1077 0070 26       		.uleb128 0x26
+ 1078 0071 00       		.byte	0
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 23
+
+
+ 1079 0072 49       		.uleb128 0x49
+ 1080 0073 13       		.uleb128 0x13
+ 1081 0074 00       		.byte	0
+ 1082 0075 00       		.byte	0
+ 1083 0076 0B       		.uleb128 0xb
+ 1084 0077 2E       		.uleb128 0x2e
+ 1085 0078 00       		.byte	0
+ 1086 0079 3F       		.uleb128 0x3f
+ 1087 007a 19       		.uleb128 0x19
+ 1088 007b 03       		.uleb128 0x3
+ 1089 007c 0E       		.uleb128 0xe
+ 1090 007d 3A       		.uleb128 0x3a
+ 1091 007e 0B       		.uleb128 0xb
+ 1092 007f 3B       		.uleb128 0x3b
+ 1093 0080 0B       		.uleb128 0xb
+ 1094 0081 27       		.uleb128 0x27
+ 1095 0082 19       		.uleb128 0x19
+ 1096 0083 11       		.uleb128 0x11
+ 1097 0084 01       		.uleb128 0x1
+ 1098 0085 12       		.uleb128 0x12
+ 1099 0086 06       		.uleb128 0x6
+ 1100 0087 40       		.uleb128 0x40
+ 1101 0088 18       		.uleb128 0x18
+ 1102 0089 9742     		.uleb128 0x2117
+ 1103 008b 19       		.uleb128 0x19
+ 1104 008c 00       		.byte	0
+ 1105 008d 00       		.byte	0
+ 1106 008e 0C       		.uleb128 0xc
+ 1107 008f 2E       		.uleb128 0x2e
+ 1108 0090 00       		.byte	0
+ 1109 0091 3F       		.uleb128 0x3f
+ 1110 0092 19       		.uleb128 0x19
+ 1111 0093 03       		.uleb128 0x3
+ 1112 0094 0E       		.uleb128 0xe
+ 1113 0095 3A       		.uleb128 0x3a
+ 1114 0096 0B       		.uleb128 0xb
+ 1115 0097 3B       		.uleb128 0x3b
+ 1116 0098 0B       		.uleb128 0xb
+ 1117 0099 27       		.uleb128 0x27
+ 1118 009a 19       		.uleb128 0x19
+ 1119 009b 11       		.uleb128 0x11
+ 1120 009c 01       		.uleb128 0x1
+ 1121 009d 12       		.uleb128 0x12
+ 1122 009e 06       		.uleb128 0x6
+ 1123 009f 40       		.uleb128 0x40
+ 1124 00a0 18       		.uleb128 0x18
+ 1125 00a1 9642     		.uleb128 0x2116
+ 1126 00a3 19       		.uleb128 0x19
+ 1127 00a4 00       		.byte	0
+ 1128 00a5 00       		.byte	0
+ 1129 00a6 0D       		.uleb128 0xd
+ 1130 00a7 2E       		.uleb128 0x2e
+ 1131 00a8 00       		.byte	0
+ 1132 00a9 3F       		.uleb128 0x3f
+ 1133 00aa 19       		.uleb128 0x19
+ 1134 00ab 03       		.uleb128 0x3
+ 1135 00ac 0E       		.uleb128 0xe
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 24
+
+
+ 1136 00ad 3A       		.uleb128 0x3a
+ 1137 00ae 0B       		.uleb128 0xb
+ 1138 00af 3B       		.uleb128 0x3b
+ 1139 00b0 0B       		.uleb128 0xb
+ 1140 00b1 11       		.uleb128 0x11
+ 1141 00b2 01       		.uleb128 0x1
+ 1142 00b3 12       		.uleb128 0x12
+ 1143 00b4 06       		.uleb128 0x6
+ 1144 00b5 40       		.uleb128 0x40
+ 1145 00b6 18       		.uleb128 0x18
+ 1146 00b7 9642     		.uleb128 0x2116
+ 1147 00b9 19       		.uleb128 0x19
+ 1148 00ba 00       		.byte	0
+ 1149 00bb 00       		.byte	0
+ 1150 00bc 0E       		.uleb128 0xe
+ 1151 00bd 34       		.uleb128 0x34
+ 1152 00be 00       		.byte	0
+ 1153 00bf 03       		.uleb128 0x3
+ 1154 00c0 0E       		.uleb128 0xe
+ 1155 00c1 3A       		.uleb128 0x3a
+ 1156 00c2 0B       		.uleb128 0xb
+ 1157 00c3 3B       		.uleb128 0x3b
+ 1158 00c4 0B       		.uleb128 0xb
+ 1159 00c5 49       		.uleb128 0x49
+ 1160 00c6 13       		.uleb128 0x13
+ 1161 00c7 02       		.uleb128 0x2
+ 1162 00c8 18       		.uleb128 0x18
+ 1163 00c9 00       		.byte	0
+ 1164 00ca 00       		.byte	0
+ 1165 00cb 0F       		.uleb128 0xf
+ 1166 00cc 34       		.uleb128 0x34
+ 1167 00cd 00       		.byte	0
+ 1168 00ce 03       		.uleb128 0x3
+ 1169 00cf 0E       		.uleb128 0xe
+ 1170 00d0 3A       		.uleb128 0x3a
+ 1171 00d1 0B       		.uleb128 0xb
+ 1172 00d2 3B       		.uleb128 0x3b
+ 1173 00d3 05       		.uleb128 0x5
+ 1174 00d4 49       		.uleb128 0x49
+ 1175 00d5 13       		.uleb128 0x13
+ 1176 00d6 3F       		.uleb128 0x3f
+ 1177 00d7 19       		.uleb128 0x19
+ 1178 00d8 3C       		.uleb128 0x3c
+ 1179 00d9 19       		.uleb128 0x19
+ 1180 00da 00       		.byte	0
+ 1181 00db 00       		.byte	0
+ 1182 00dc 10       		.uleb128 0x10
+ 1183 00dd 34       		.uleb128 0x34
+ 1184 00de 00       		.byte	0
+ 1185 00df 03       		.uleb128 0x3
+ 1186 00e0 0E       		.uleb128 0xe
+ 1187 00e1 3A       		.uleb128 0x3a
+ 1188 00e2 0B       		.uleb128 0xb
+ 1189 00e3 3B       		.uleb128 0x3b
+ 1190 00e4 0B       		.uleb128 0xb
+ 1191 00e5 49       		.uleb128 0x49
+ 1192 00e6 13       		.uleb128 0x13
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 25
+
+
+ 1193 00e7 3F       		.uleb128 0x3f
+ 1194 00e8 19       		.uleb128 0x19
+ 1195 00e9 3C       		.uleb128 0x3c
+ 1196 00ea 19       		.uleb128 0x19
+ 1197 00eb 00       		.byte	0
+ 1198 00ec 00       		.byte	0
+ 1199 00ed 11       		.uleb128 0x11
+ 1200 00ee 34       		.uleb128 0x34
+ 1201 00ef 00       		.byte	0
+ 1202 00f0 03       		.uleb128 0x3
+ 1203 00f1 0E       		.uleb128 0xe
+ 1204 00f2 3A       		.uleb128 0x3a
+ 1205 00f3 0B       		.uleb128 0xb
+ 1206 00f4 3B       		.uleb128 0x3b
+ 1207 00f5 0B       		.uleb128 0xb
+ 1208 00f6 49       		.uleb128 0x49
+ 1209 00f7 13       		.uleb128 0x13
+ 1210 00f8 3F       		.uleb128 0x3f
+ 1211 00f9 19       		.uleb128 0x19
+ 1212 00fa 02       		.uleb128 0x2
+ 1213 00fb 18       		.uleb128 0x18
+ 1214 00fc 00       		.byte	0
+ 1215 00fd 00       		.byte	0
+ 1216 00fe 12       		.uleb128 0x12
+ 1217 00ff 01       		.uleb128 0x1
+ 1218 0100 01       		.byte	0x1
+ 1219 0101 49       		.uleb128 0x49
+ 1220 0102 13       		.uleb128 0x13
+ 1221 0103 01       		.uleb128 0x1
+ 1222 0104 13       		.uleb128 0x13
+ 1223 0105 00       		.byte	0
+ 1224 0106 00       		.byte	0
+ 1225 0107 13       		.uleb128 0x13
+ 1226 0108 21       		.uleb128 0x21
+ 1227 0109 00       		.byte	0
+ 1228 010a 49       		.uleb128 0x49
+ 1229 010b 13       		.uleb128 0x13
+ 1230 010c 2F       		.uleb128 0x2f
+ 1231 010d 0B       		.uleb128 0xb
+ 1232 010e 00       		.byte	0
+ 1233 010f 00       		.byte	0
+ 1234 0110 14       		.uleb128 0x14
+ 1235 0111 21       		.uleb128 0x21
+ 1236 0112 00       		.byte	0
+ 1237 0113 49       		.uleb128 0x49
+ 1238 0114 13       		.uleb128 0x13
+ 1239 0115 2F       		.uleb128 0x2f
+ 1240 0116 05       		.uleb128 0x5
+ 1241 0117 00       		.byte	0
+ 1242 0118 00       		.byte	0
+ 1243 0119 00       		.byte	0
+ 1244              		.section	.debug_aranges,"",%progbits
+ 1245 0000 34000000 		.4byte	0x34
+ 1246 0004 0200     		.2byte	0x2
+ 1247 0006 00000000 		.4byte	.Ldebug_info0
+ 1248 000a 04       		.byte	0x4
+ 1249 000b 00       		.byte	0
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 26
+
+
+ 1250 000c 0000     		.2byte	0
+ 1251 000e 0000     		.2byte	0
+ 1252 0010 00000000 		.4byte	.LFB118
+ 1253 0014 18000000 		.4byte	.LFE118-.LFB118
+ 1254 0018 00000000 		.4byte	.LFB119
+ 1255 001c 20000000 		.4byte	.LFE119-.LFB119
+ 1256 0020 00000000 		.4byte	.LFB120
+ 1257 0024 DC000000 		.4byte	.LFE120-.LFB120
+ 1258 0028 00000000 		.4byte	.LFB121
+ 1259 002c 7C020000 		.4byte	.LFE121-.LFB121
+ 1260 0030 00000000 		.4byte	0
+ 1261 0034 00000000 		.4byte	0
+ 1262              		.section	.debug_ranges,"",%progbits
+ 1263              	.Ldebug_ranges0:
+ 1264 0000 00000000 		.4byte	.LFB118
+ 1265 0004 18000000 		.4byte	.LFE118
+ 1266 0008 00000000 		.4byte	.LFB119
+ 1267 000c 20000000 		.4byte	.LFE119
+ 1268 0010 00000000 		.4byte	.LFB120
+ 1269 0014 DC000000 		.4byte	.LFE120
+ 1270 0018 00000000 		.4byte	.LFB121
+ 1271 001c 7C020000 		.4byte	.LFE121
+ 1272 0020 00000000 		.4byte	0
+ 1273 0024 00000000 		.4byte	0
+ 1274              		.section	.debug_line,"",%progbits
+ 1275              	.Ldebug_line0:
+ 1276 0000 35020000 		.section	.debug_str,"MS",%progbits,1
+ 1276      0200AE01 
+ 1276      00000201 
+ 1276      FB0E0D00 
+ 1276      01010101 
+ 1277              	.LASF38:
+ 1278 0000 61726D5F 		.ascii	"arm_cfft_sR_q15_len256\000"
+ 1278      63666674 
+ 1278      5F73525F 
+ 1278      7131355F 
+ 1278      6C656E32 
+ 1279              	.LASF34:
+ 1280 0017 6666746C 		.ascii	"fftlength\000"
+ 1280      656E6774 
+ 1280      6800
+ 1281              	.LASF39:
+ 1282 0021 444D415F 		.ascii	"DMA_1_Chan\000"
+ 1282      315F4368 
+ 1282      616E00
+ 1283              	.LASF3:
+ 1284 002c 5F5F696E 		.ascii	"__int16_t\000"
+ 1284      7431365F 
+ 1284      7400
+ 1285              	.LASF27:
+ 1286 0036 70547769 		.ascii	"pTwiddle\000"
+ 1286      64646C65 
+ 1286      00
+ 1287              	.LASF29:
+ 1288 003f 62697452 		.ascii	"bitRevLength\000"
+ 1288      65764C65 
+ 1288      6E677468 
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 27
+
+
+ 1288      00
+ 1289              	.LASF57:
+ 1290 004c 436F6E66 		.ascii	"Configure_DMA\000"
+ 1290      69677572 
+ 1290      655F444D 
+ 1290      4100
+ 1291              	.LASF6:
+ 1292 005a 5F5F696E 		.ascii	"__int32_t\000"
+ 1292      7433325F 
+ 1292      7400
+ 1293              	.LASF5:
+ 1294 0064 73686F72 		.ascii	"short unsigned int\000"
+ 1294      7420756E 
+ 1294      7369676E 
+ 1294      65642069 
+ 1294      6E7400
+ 1295              	.LASF15:
+ 1296 0077 75696E74 		.ascii	"uint8\000"
+ 1296      3800
+ 1297              	.LASF28:
+ 1298 007d 70426974 		.ascii	"pBitRevTable\000"
+ 1298      52657654 
+ 1298      61626C65 
+ 1298      00
+ 1299              	.LASF55:
+ 1300 008a 2E5C6D61 		.ascii	".\\main.c\000"
+ 1300      696E2E63 
+ 1300      00
+ 1301              	.LASF25:
+ 1302 0093 7131355F 		.ascii	"q15_t\000"
+ 1302      7400
+ 1303              	.LASF19:
+ 1304 0099 666C6F61 		.ascii	"float\000"
+ 1304      7400
+ 1305              	.LASF41:
+ 1306 009f 444D415F 		.ascii	"DMA_2_Chan\000"
+ 1306      325F4368 
+ 1306      616E00
+ 1307              	.LASF1:
+ 1308 00aa 756E7369 		.ascii	"unsigned char\000"
+ 1308      676E6564 
+ 1308      20636861 
+ 1308      7200
+ 1309              	.LASF44:
+ 1310 00b8 41444332 		.ascii	"ADC2Filter_DMA_TD\000"
+ 1310      46696C74 
+ 1310      65725F44 
+ 1310      4D415F54 
+ 1310      4400
+ 1311              	.LASF22:
+ 1312 00ca 72656738 		.ascii	"reg8\000"
+ 1312      00
+ 1313              	.LASF43:
+ 1314 00cf 41444332 		.ascii	"ADC2Filter_DMA_Chan\000"
+ 1314      46696C74 
+ 1314      65725F44 
+ 1314      4D415F43 
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 28
+
+
+ 1314      68616E00 
+ 1315              	.LASF18:
+ 1316 00e3 696E7431 		.ascii	"int16\000"
+ 1316      3600
+ 1317              	.LASF8:
+ 1318 00e9 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1318      20756E73 
+ 1318      69676E65 
+ 1318      6420696E 
+ 1318      7400
+ 1319              	.LASF30:
+ 1320 00fb 61726D5F 		.ascii	"arm_cfft_instance_q15\000"
+ 1320      63666674 
+ 1320      5F696E73 
+ 1320      74616E63 
+ 1320      655F7131 
+ 1321              	.LASF26:
+ 1322 0111 6666744C 		.ascii	"fftLen\000"
+ 1322      656E00
+ 1323              	.LASF40:
+ 1324 0118 444D415F 		.ascii	"DMA_1_TD\000"
+ 1324      315F5444 
+ 1324      00
+ 1325              	.LASF51:
+ 1326 0121 42756666 		.ascii	"Buffer_samples\000"
+ 1326      65725F73 
+ 1326      616D706C 
+ 1326      657300
+ 1327              	.LASF37:
+ 1328 0130 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1328      52784275 
+ 1328      66666572 
+ 1328      00
+ 1329              	.LASF52:
+ 1330 013d 4144435F 		.ascii	"ADC_samples\000"
+ 1330      73616D70 
+ 1330      6C657300 
+ 1331              	.LASF4:
+ 1332 0149 5F5F7569 		.ascii	"__uint16_t\000"
+ 1332      6E743136 
+ 1332      5F7400
+ 1333              	.LASF20:
+ 1334 0154 646F7562 		.ascii	"double\000"
+ 1334      6C6500
+ 1335              	.LASF53:
+ 1336 015b 6D61676F 		.ascii	"magoutput\000"
+ 1336      75747075 
+ 1336      7400
+ 1337              	.LASF33:
+ 1338 0165 6D61696E 		.ascii	"main\000"
+ 1338      00
+ 1339              	.LASF16:
+ 1340 016a 75696E74 		.ascii	"uint16\000"
+ 1340      313600
+ 1341              	.LASF35:
+ 1342 0171 6973725F 		.ascii	"isr_BC_flag\000"
+ 1342      42435F66 
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 29
+
+
+ 1342      6C616700 
+ 1343              	.LASF17:
+ 1344 017d 75696E74 		.ascii	"uint32\000"
+ 1344      333200
+ 1345              	.LASF11:
+ 1346 0184 756E7369 		.ascii	"unsigned int\000"
+ 1346      676E6564 
+ 1346      20696E74 
+ 1346      00
+ 1347              	.LASF10:
+ 1348 0191 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1348      206C6F6E 
+ 1348      6720756E 
+ 1348      7369676E 
+ 1348      65642069 
+ 1349              	.LASF42:
+ 1350 01a8 444D415F 		.ascii	"DMA_2_TD\000"
+ 1350      325F5444 
+ 1350      00
+ 1351              	.LASF50:
+ 1352 01b1 4C50465F 		.ascii	"LPF_buffer\000"
+ 1352      62756666 
+ 1352      657200
+ 1353              	.LASF45:
+ 1354 01bc 444D415F 		.ascii	"DMA_3_Chan\000"
+ 1354      335F4368 
+ 1354      616E00
+ 1355              	.LASF12:
+ 1356 01c7 696E7431 		.ascii	"int16_t\000"
+ 1356      365F7400 
+ 1357              	.LASF54:
+ 1358 01cf 474E5520 		.ascii	"GNU C 4.8.4 20140526 (release) [ARM/embedded-4_8-br"
+ 1358      4320342E 
+ 1358      382E3420 
+ 1358      32303134 
+ 1358      30353236 
+ 1359 0202 616E6368 		.ascii	"anch revision 211358] -mcpu=cortex-m3 -mthumb -g -O"
+ 1359      20726576 
+ 1359      6973696F 
+ 1359      6E203231 
+ 1359      31333538 
+ 1360 0235 30202D66 		.ascii	"0 -ffunction-sections\000"
+ 1360      66756E63 
+ 1360      74696F6E 
+ 1360      2D736563 
+ 1360      74696F6E 
+ 1361              	.LASF49:
+ 1362 024b 4C50465F 		.ascii	"LPF_samples\000"
+ 1362      73616D70 
+ 1362      6C657300 
+ 1363              	.LASF14:
+ 1364 0257 696E7433 		.ascii	"int32_t\000"
+ 1364      325F7400 
+ 1365              	.LASF23:
+ 1366 025f 73697A65 		.ascii	"sizetype\000"
+ 1366      74797065 
+ 1366      00
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 30
+
+
+ 1367              	.LASF9:
+ 1368 0268 6C6F6E67 		.ascii	"long long int\000"
+ 1368      206C6F6E 
+ 1368      6720696E 
+ 1368      7400
+ 1369              	.LASF48:
+ 1370 0276 444D415F 		.ascii	"DMA_4_TD\000"
+ 1370      345F5444 
+ 1370      00
+ 1371              	.LASF21:
+ 1372 027f 63686172 		.ascii	"char\000"
+ 1372      00
+ 1373              	.LASF56:
+ 1374 0284 5C5C766D 		.ascii	"\\\\vmware-host\\Shared Folders\\scottcarlson On My"
+ 1374      77617265 
+ 1374      2D686F73 
+ 1374      745C5368 
+ 1374      61726564 
+ 1375 02b3 204D6163 		.ascii	" Mac\\Code\\repos\\LED_controller\\Design01.cydsn\000"
+ 1375      5C436F64 
+ 1375      655C7265 
+ 1375      706F735C 
+ 1375      4C45445F 
+ 1376              	.LASF31:
+ 1377 02e1 42756666 		.ascii	"Buffer_complete\000"
+ 1377      65725F63 
+ 1377      6F6D706C 
+ 1377      65746500 
+ 1378              	.LASF32:
+ 1379 02f1 4C50465F 		.ascii	"LPF_buffer_complete\000"
+ 1379      62756666 
+ 1379      65725F63 
+ 1379      6F6D706C 
+ 1379      65746500 
+ 1380              	.LASF2:
+ 1381 0305 73686F72 		.ascii	"short int\000"
+ 1381      7420696E 
+ 1381      7400
+ 1382              	.LASF46:
+ 1383 030f 444D415F 		.ascii	"DMA_3_TD\000"
+ 1383      335F5444 
+ 1383      00
+ 1384              	.LASF13:
+ 1385 0318 75696E74 		.ascii	"uint16_t\000"
+ 1385      31365F74 
+ 1385      00
+ 1386              	.LASF7:
+ 1387 0321 6C6F6E67 		.ascii	"long int\000"
+ 1387      20696E74 
+ 1387      00
+ 1388              	.LASF24:
+ 1389 032a 6C6F6E67 		.ascii	"long double\000"
+ 1389      20646F75 
+ 1389      626C6500 
+ 1390              	.LASF0:
+ 1391 0336 7369676E 		.ascii	"signed char\000"
+ 1391      65642063 
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccN9vdOk.s 			page 31
+
+
+ 1391      68617200 
+ 1392              	.LASF36:
+ 1393 0342 6973725F 		.ascii	"isr_LPF_buffer_complete_flag\000"
+ 1393      4C50465F 
+ 1393      62756666 
+ 1393      65725F63 
+ 1393      6F6D706C 
+ 1394              	.LASF47:
+ 1395 035f 444D415F 		.ascii	"DMA_4_Chan\000"
+ 1395      345F4368 
+ 1395      616E00
+ 1396              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.8.4 20140526 (release) [ARM/embedded-4_8-br
