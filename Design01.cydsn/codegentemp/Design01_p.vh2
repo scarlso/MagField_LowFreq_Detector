@@ -1,5 +1,5 @@
 -- Project:   Design01
--- Generated: 10/30/2015 14:41:12
+-- Generated: 10/30/2015 17:08:54
 -- PSoC Creator  3.2 SP1
 
 ENTITY Design01 IS
@@ -42,11 +42,11 @@ ARCHITECTURE __DEFAULT__ OF Design01 IS
     SIGNAL ClockBlock_PLL_OUT : bit;
     SIGNAL ClockBlock_XTAL : bit;
     SIGNAL ClockBlock_XTAL_32KHZ : bit;
-    SIGNAL Net_399 : bit;
+    SIGNAL Net_1188 : bit;
+    SIGNAL Net_1189 : bit;
     SIGNAL Net_427 : bit;
     SIGNAL Net_557 : bit;
     SIGNAL Net_617 : bit;
-    SIGNAL Net_635 : bit;
     SIGNAL Net_791 : bit;
     SIGNAL Net_974 : bit;
     SIGNAL Net_976 : bit;
@@ -360,7 +360,7 @@ BEGIN
         PORT MAP(
             dmareq => Net_617,
             termin => '0',
-            termout => Net_635,
+            termout => Net_1189,
             clock => ClockBlock_BUS_CLK);
 
     ClockBlock:clockblockcell
@@ -411,7 +411,7 @@ BEGIN
             drq_type => "00",
             num_tds => 0)
         PORT MAP(
-            dmareq => Net_399,
+            dmareq => Net_617,
             termin => '0',
             termout => Net_974,
             clock => ClockBlock_BUS_CLK);
@@ -595,7 +595,7 @@ BEGIN
         PORT MAP(
             pa_out => Pin_1(0)__PA,
             oe => open,
-            pin_input => Net_635,
+            pin_input => Net_1189,
             pad_out => Pin_1(0)_PAD,
             pad_in => Pin_1(0)_PAD,
             in_clock => open,
@@ -959,7 +959,7 @@ BEGIN
         PORT MAP(
             pa_out => Pin_5(0)__PA,
             oe => open,
-            pin_input => Net_399,
+            pin_input => Net_617,
             pad_out => Pin_5(0)_PAD,
             pad_in => Pin_5(0)_PAD,
             in_clock => open,
@@ -1258,7 +1258,7 @@ BEGIN
     \ADC_DelSig_1:DSM\:dsmodcell
         GENERIC MAP(
             cy_registers => "",
-            resolution => 16)
+            resolution => 18)
         PORT MAP(
             aclock => \ClockBlock.aclk_glb_ff_0__sig\,
             reset_udb => open,
@@ -1294,7 +1294,7 @@ BEGIN
             out_1 => \Filter:Net_8\,
             out_2 => \Filter:Net_9\,
             dmareq_1 => Net_983,
-            dmareq_2 => Net_399,
+            dmareq_2 => Net_1188,
             interrupt => Net_791);
 
     \LCD_Char_1:LCDPort(0)\:iocell

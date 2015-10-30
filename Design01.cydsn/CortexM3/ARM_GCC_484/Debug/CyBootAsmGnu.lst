@@ -11359,14 +11359,14 @@ ARM GAS  .\Generated_Source\PSoC5\CyBootAsmGnu.s 			page 1
   60              	.set DMA_2__TERMOUT1_SEL, 0
   61              	
   62              	/* DMA_3 */
-  63              	.set DMA_3__DRQ_CTL, CYREG_IDMUX_DRQ_CTL2
-  64              	.set DMA_3__DRQ_NUMBER, 9
+  63              	.set DMA_3__DRQ_CTL, CYREG_IDMUX_DRQ_CTL0
+  64              	.set DMA_3__DRQ_NUMBER, 2
   65              	.set DMA_3__NUMBEROF_TDS, 0
   66              	.set DMA_3__PRIORITY, 2
   67              	.set DMA_3__TERMIN_EN, 0
   68              	.set DMA_3__TERMIN_SEL, 0
   69              	.set DMA_3__TERMOUT0_EN, 1
-  70              	.set DMA_3__TERMOUT0_SEL, 9
+  70              	.set DMA_3__TERMOUT0_SEL, 2
   71              	.set DMA_3__TERMOUT1_EN, 0
   72              	.set DMA_3__TERMOUT1_SEL, 0
   73              	
@@ -12049,7 +12049,7 @@ ARM GAS  .\Generated_Source\PSoC5\CyBootAsmGnu.s 			page 1
  717              	.set CYIPBLOCK_S8_SAR_VERSION, 0
  718              	.set CYIPBLOCK_S8_SIO_VERSION, 0
  719              	.set CYIPBLOCK_S8_UDB_VERSION, 0
- 720              	.set DMA_CHANNELS_USED__MASK0, 0x00000703
+ 720              	.set DMA_CHANNELS_USED__MASK0, 0x00000507
  721              	.set CYDEV_BOOTLOADER_ENABLE, 0
  722              	.endif
   16              	

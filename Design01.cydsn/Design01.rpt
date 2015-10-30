@@ -1,13 +1,13 @@
-Loading plugins phase: Elapsed time ==> 0s.438ms
+Loading plugins phase: Elapsed time ==> 0s.296ms
 Initializing data phase: Elapsed time ==> 0s.000ms
 <CYPRESSTAG name="CyDsfit arguments...">
 cydsfit arguments: -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -p \\vmware-host\Shared Folders\scottcarlson On My Mac\Code\repos\LED_controller\Design01.cydsn\Design01.cyprj -d CY8C5868AXI-LP035 -s \\vmware-host\Shared Folders\scottcarlson On My Mac\Code\repos\LED_controller\Design01.cydsn\Generated_Source\PSoC5 -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE</CYPRESSTAG>
 <CYPRESSTAG name="Design elaboration results...">
 </CYPRESSTAG>
-Elaboration phase: Elapsed time ==> 2s.891ms
+Elaboration phase: Elapsed time ==> 2s.153ms
 <CYPRESSTAG name="HDL generation results...">
 </CYPRESSTAG>
-HDL generation phase: Elapsed time ==> 0s.124ms
+HDL generation phase: Elapsed time ==> 0s.093ms
 <CYPRESSTAG name="Synthesis results...">
 
      | | | | | | |
@@ -41,7 +41,7 @@ Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=\\vmware-host\
 ======================================================================
 
 vlogfe V6.3 IR 41:  Verilog parser
-Fri Oct 30 14:41:09 2015
+Fri Oct 30 17:08:52 2015
 
 
 ======================================================================
@@ -51,7 +51,7 @@ Options  :    -yv2 -q10 Design01.v
 ======================================================================
 
 vpp V6.3 IR 41:  Verilog Pre-Processor
-Fri Oct 30 14:41:09 2015
+Fri Oct 30 17:08:52 2015
 
 Flattening file 'C:\Program Files\Cypress\PSoC Creator\3.2\PSoC Creator\warp\..\psoc\content\cyprimitives\CyPrimitives.cylib\cy_vref_v1_60\cy_vref_v1_60.v'
 Flattening file 'C:\Program Files\Cypress\PSoC Creator\3.2\PSoC Creator\warp\..\psoc\content\cyprimitives\CyPrimitives.cylib\cy_analog_virtualmux_v1_0\cy_analog_virtualmux_v1_0.v'
@@ -88,7 +88,7 @@ Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=\\vmware-host\
 ======================================================================
 
 tovif V6.3 IR 41:  High-level synthesis
-Fri Oct 30 14:41:09 2015
+Fri Oct 30 17:08:53 2015
 
 Linking 'C:\Program Files\Cypress\PSoC Creator\3.2\PSoC Creator\warp\lib\common\std.vhd'.
 Linking 'C:\Program Files\Cypress\PSoC Creator\3.2\PSoC Creator\warp\lib\common\cypress.vhd'.
@@ -120,7 +120,7 @@ Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=\\vmware-host\
 ======================================================================
 
 topld V6.3 IR 41:  Synthesis and optimization
-Fri Oct 30 14:41:09 2015
+Fri Oct 30 17:08:53 2015
 
 Linking 'C:\Program Files\Cypress\PSoC Creator\3.2\PSoC Creator\warp\lib\common\std.vhd'.
 Linking 'C:\Program Files\Cypress\PSoC Creator\3.2\PSoC Creator\warp\lib\common\cypress.vhd'.
@@ -193,9 +193,9 @@ Removing Lhs of wire \ADC_DelSig_1:Net_252\[78] = zero[10]
 Removing Lhs of wire \ADC_DelSig_1:soc\[80] = one[26]
 Removing Lhs of wire tmpOE__P0_0_net_0[84] = one[26]
 Removing Lhs of wire tmpOE__Pin_5_net_0[94] = one[26]
-Removing Lhs of wire \Filter:Net_1\[100] = zero[10]
-Removing Lhs of wire \Filter:Net_4\[102] = zero[10]
-Removing Lhs of wire \Filter:Net_5\[103] = zero[10]
+Removing Lhs of wire \Filter:Net_1\[99] = zero[10]
+Removing Lhs of wire \Filter:Net_4\[101] = zero[10]
+Removing Lhs of wire \Filter:Net_5\[102] = zero[10]
 Removing Lhs of wire tmpOE__Pin_1_net_0[110] = one[26]
 Removing Lhs of wire tmpOE__Pin_2_net_0[116] = one[26]
 Removing Lhs of wire tmpOE__Pin_3_net_0[122] = one[26]
@@ -229,14 +229,14 @@ CYPRESS_DIR    : C:\Program Files\Cypress\PSoC Creator\3.2\PSoC Creator\warp
 Warp Program   : C:\Program Files\Cypress\PSoC Creator\3.2\PSoC Creator\warp\bin/warp.exe
 Warp Arguments : -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya "-.fftprj=\\vmware-host\Shared Folders\scottcarlson On My Mac\Code\repos\LED_controller\Design01.cydsn\Design01.cyprj" -dcpsoc3 Design01.v -verilog
 </CYPRESSTAG>
-Warp synthesis phase: Elapsed time ==> 0s.828ms
+Warp synthesis phase: Elapsed time ==> 0s.609ms
 <CYPRESSTAG name="Fitter results...">
 <CYPRESSTAG name="Fitter startup details...">
-cyp3fit: V3.2.0.6175, Family: PSoC3, Started at: Friday, 30 October 2015 14:41:10
+cyp3fit: V3.2.0.6175, Family: PSoC3, Started at: Friday, 30 October 2015 17:08:53
 Options: -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=\\vmware-host\Shared Folders\scottcarlson On My Mac\Code\repos\LED_controller\Design01.cydsn\Design01.cyprj -d CY8C5868AXI-LP035 Design01.v -verilog
 </CYPRESSTAG>
 <CYPRESSTAG name="Design parsing">
-Design parsing phase: Elapsed time ==> 0s.046ms
+Design parsing phase: Elapsed time ==> 0s.031ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Tech mapping">
 <CYPRESSTAG name="Initial Mapping" icon="FILE_RPT_TECHM">
@@ -339,7 +339,7 @@ Design Equations
             IO Voltage: 0
         PORT MAP (
             pa_out => Pin_1(0)__PA ,
-            input => Net_635 ,
+            input => Net_1189 ,
             pad => Pin_1(0)_PAD );
         Properties:
         {
@@ -495,7 +495,7 @@ Design Equations
             IO Voltage: 0
         PORT MAP (
             pa_out => Pin_5(0)__PA ,
-            input => Net_399 ,
+            input => Net_617 ,
             pad => Pin_5(0)_PAD );
 
     Pin : Name = Pin_6(0)
@@ -913,7 +913,7 @@ Design Equations
         PORT MAP (
             dmareq => Net_617 ,
             termin => zero ,
-            termout => Net_635 );
+            termout => Net_1189 );
         Properties:
         {
             drq_type = "00"
@@ -944,7 +944,7 @@ Design Equations
 
     drqcell: Name =DMA_3
         PORT MAP (
-            dmareq => Net_399 ,
+            dmareq => Net_617 ,
             termin => zero ,
             termout => Net_974 );
         Properties:
@@ -1030,8 +1030,8 @@ EMIF Fixed Blocks             :    0 :    1 :    1 :   0.00%
 LPF Fixed Blocks              :    0 :    2 :    2 :   0.00%
 SAR Fixed Blocks              :    0 :    2 :    2 :   0.00%
 </CYPRESSTAG>
-Technology Mapping: Elapsed time ==> 1s.027ms
-Tech mapping phase: Elapsed time ==> 1s.232ms
+Technology Mapping: Elapsed time ==> 0s.795ms
+Tech mapping phase: Elapsed time ==> 0s.951ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Analog Placement">
 Info: apr.M0002: Analog signal "\ADC_DelSig_1:Net_690\" is connected to one terminal only. (App=cydsfit)
@@ -1071,7 +1071,7 @@ Vref[6]@[FFB(Vref,6)] : \ADC_DelSig_1:vRef_2\
 Analog Placement phase: Elapsed time ==> 0s.062ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Analog Routing">
-Analog Routing phase: Elapsed time ==> 0s.015ms
+Analog Routing phase: Elapsed time ==> 0s.000ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Analog Code Generation">
 ============ Analog Final Answer Routes ============
@@ -1149,11 +1149,11 @@ Dump of CyP35AnalogRoutingResultsDB
 IsVddaHalfUsedForComp = False
 IsVddaHalfUsedForSar0 = False
 IsVddaHalfUsedForSar1 = False
-Analog Code Generation phase: Elapsed time ==> 0s.062ms
+Analog Code Generation phase: Elapsed time ==> 0s.031ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Digital Placement">
 <CYPRESSTAG name="Detailed placement messages">
-I2076: Total run-time: 0.8 sec.
+I2076: Total run-time: 0.7 sec.
 
 </CYPRESSTAG>
 <CYPRESSTAG name="PLD Packing">
@@ -1184,13 +1184,13 @@ PLD Packing: Elapsed time ==> 0s.000ms
 Initial Partitioning Summary not displayed at this verbose level.</CYPRESSTAG>
 <CYPRESSTAG name="Final Partitioning Summary">
 Final Partitioning Summary not displayed at this verbose level.</CYPRESSTAG>
-Partitioning: Elapsed time ==> 0s.046ms
+Partitioning: Elapsed time ==> 0s.031ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Simulated Annealing">
-Annealing: Elapsed time ==> 0s.000ms
+Annealing: Elapsed time ==> 0s.015ms
 <CYPRESSTAG name="Simulated Annealing Results">
 The seed used for moves was 114161200.
-Inital cost was 63, final cost is 63 (0.00% improvement).</CYPRESSTAG>
+Inital cost was 66, final cost is 66 (0.00% improvement).</CYPRESSTAG>
 </CYPRESSTAG>
 <CYPRESSTAG name="Final Placement Summary">
 
@@ -1299,6 +1299,17 @@ Drq hod @ [DrqHod=(0)]:
             drq_type = "00"
             num_tds = 0
         }
+  Dma@ [DrqHod=(0)][DrqId=(2)] 
+    drqcell: Name =DMA_3
+        PORT MAP (
+            dmareq => Net_617 ,
+            termin => zero ,
+            termout => Net_974 );
+        Properties:
+        {
+            drq_type = "00"
+            num_tds = 0
+        }
   Dma@ [DrqHod=(0)][DrqId=(8)] 
     drqcell: Name =DMA_1
         PORT MAP (
@@ -1310,23 +1321,12 @@ Drq hod @ [DrqHod=(0)]:
             drq_type = "00"
             num_tds = 0
         }
-  Dma@ [DrqHod=(0)][DrqId=(9)] 
-    drqcell: Name =DMA_3
-        PORT MAP (
-            dmareq => Net_399 ,
-            termin => zero ,
-            termout => Net_974 );
-        Properties:
-        {
-            drq_type = "00"
-            num_tds = 0
-        }
   Dma@ [DrqHod=(0)][DrqId=(10)] 
     drqcell: Name =ADC2Filter_DMA
         PORT MAP (
             dmareq => Net_617 ,
             termin => zero ,
-            termout => Net_635 );
+            termout => Net_1189 );
         Properties:
         {
             drq_type = "00"
@@ -1407,7 +1407,7 @@ Pin : Name = Pin_1(0)
         IO Voltage: 0
     PORT MAP (
         pa_out => Pin_1(0)__PA ,
-        input => Net_635 ,
+        input => Net_1189 ,
         pad => Pin_1(0)_PAD );
     Properties:
     {
@@ -1647,7 +1647,7 @@ Pin : Name = Pin_5(0)
         IO Voltage: 0
     PORT MAP (
         pa_out => Pin_5(0)__PA ,
-        input => Net_399 ,
+        input => Net_617 ,
         pad => Pin_5(0)_PAD );
     Properties:
     {
@@ -2009,7 +2009,7 @@ DFB Fixed Block group 0:
             out_1 => \Filter:Net_8\ ,
             out_2 => \Filter:Net_9\ ,
             dmareq_1 => Net_983 ,
-            dmareq_2 => Net_399 ,
+            dmareq_2 => Net_1188 ,
             interrupt => Net_791 );
         Properties:
         {
@@ -2044,7 +2044,7 @@ DSM Fixed Block group 0:
         Properties:
         {
             cy_registers = ""
-            resolution = 16
+            resolution = 18
         }
 Decimator Fixed Block group 0: 
     Decimator Block @ [FFB(Decimator,0)]: 
@@ -2116,13 +2116,13 @@ Port Configuration report
 Port | Pin | Fixed |      Type |       Drive Mode |                    Name | Connections
 -----+-----+-------+-----------+------------------+-------------------------+----------------
    0 |   0 |     * |      NONE |      HI_Z_ANALOG |                 P0_0(0) | Analog(Net_250)
-     |   1 |     * |      NONE |         CMOS_OUT |                Pin_1(0) | In(Net_635)
+     |   1 |     * |      NONE |         CMOS_OUT |                Pin_1(0) | In(Net_1189)
      |   2 |     * |      NONE |         CMOS_OUT |                Pin_2(0) | In(Net_983)
      |   3 |     * |      NONE |         CMOS_OUT |                Pin_3(0) | In(Net_557)
      |   4 |     * |      NONE |         CMOS_OUT |                Pin_4(0) | In(Net_427)
      |   5 |       |      NONE |         CMOS_OUT |                Pin_6(0) | In(Net_974)
      |   6 |       |      NONE |         CMOS_OUT |                Pin_7(0) | In(Net_976)
-     |   7 |       |      NONE |         CMOS_OUT |                Pin_5(0) | In(Net_399)
+     |   7 |       |      NONE |         CMOS_OUT |                Pin_5(0) | In(Net_617)
 -----+-----+-------+-----------+------------------+-------------------------+----------------
    2 |   0 |     * |      NONE |         CMOS_OUT | \LCD_Char_1:LCDPort(0)\ | 
      |   1 |     * |      NONE |         CMOS_OUT | \LCD_Char_1:LCDPort(1)\ | 
@@ -2137,31 +2137,31 @@ Port | Pin | Fixed |      Type |       Drive Mode |                    Name | Co
 </CYPRESSTAG>
 </CYPRESSTAG>
 Digital component placer commit/Report: Elapsed time ==> 0s.000ms
-Digital Placement phase: Elapsed time ==> 1s.396ms
+Digital Placement phase: Elapsed time ==> 1s.168ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Digital Routing">
 Routing successful.
-Digital Routing phase: Elapsed time ==> 2s.298ms
+Digital Routing phase: Elapsed time ==> 2s.144ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Bitstream and API generation">
-Bitstream and API generation phase: Elapsed time ==> 0s.639ms
+Bitstream and API generation phase: Elapsed time ==> 1s.060ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Bitstream verification">
-Bitstream verification phase: Elapsed time ==> 0s.093ms
+Bitstream verification phase: Elapsed time ==> 0s.077ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Static timing analysis">
 Timing report is in Design01_timing.html.
-Static timing analysis phase: Elapsed time ==> 0s.422ms
+Static timing analysis phase: Elapsed time ==> 0s.592ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Data reporting">
-Data reporting phase: Elapsed time ==> 0s.000ms
+Data reporting phase: Elapsed time ==> 0s.015ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Database update...">
-Design database save phase: Elapsed time ==> 0s.366ms
+Design database save phase: Elapsed time ==> 0s.561ms
 </CYPRESSTAG>
-cydsfit: Elapsed time ==> 6s.683ms
+cydsfit: Elapsed time ==> 6s.775ms
 </CYPRESSTAG>
-Fitter phase: Elapsed time ==> 6s.808ms
-API generation phase: Elapsed time ==> 3s.687ms
+Fitter phase: Elapsed time ==> 6s.860ms
+API generation phase: Elapsed time ==> 4s.300ms
 Dependency generation phase: Elapsed time ==> 0s.031ms
-Cleanup phase: Elapsed time ==> 0s.015ms
+Cleanup phase: Elapsed time ==> 0s.000ms

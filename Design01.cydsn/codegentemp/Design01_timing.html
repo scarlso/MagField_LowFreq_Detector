@@ -539,7 +539,7 @@ function getElementsByClass(rootNode, elemName, className)
 <tr> <td class="prop"> Project :</td>
 <td class="proptext"> Design01</td></tr>
 <tr> <td class="prop"> Build Time :</td>
-<td class="proptext"> 10/30/15 14:41:16</td></tr>
+<td class="proptext"> 10/30/15 17:08:59</td></tr>
 <tr> <td class="prop"> Device :</td>
 <td class="proptext"> CY8C5868AXI-LP035</td></tr>
 <tr> <td class="prop"> Temperature :</td>
@@ -615,8 +615,8 @@ Clock Summary Section</span>
 <tr> 
  <td class = "text_info">ADC_DelSig_1_theACLK(fixed-function)</td>
  <td class = "text_info">ADC_DelSig_1_theACLK(fixed-function)</td>
- <td class = "number">192.025&nbsp;kHz</td>
- <td class = "number">192.025&nbsp;kHz</td>
+ <td class = "number">3.130&nbsp;MHz</td>
+ <td class = "number">3.295&nbsp;MHz</td>
  <td class = "number"> N/A </td>
  <td class = "text_info"> </td>
 </tr>
@@ -655,8 +655,8 @@ Clock Summary Section</span>
 <tr> 
  <td class = "text_info">ADC_DelSig_1_theACLK</td>
  <td class = "text_info">CyMASTER_CLK</td>
- <td class = "number">192.025&nbsp;kHz</td>
- <td class = "number">192.025&nbsp;kHz</td>
+ <td class = "number">3.130&nbsp;MHz</td>
+ <td class = "number">3.295&nbsp;MHz</td>
  <td class = "number"> N/A </td>
  <td class = "text_info"> </td>
 </tr>
@@ -709,6 +709,144 @@ CyBUS_CLK</span>
 </tr>
 </thead> 
 <tbody>
+<tr> 
+ <td class = "text_info">DMA_1/termout</td>
+ <td class = "text_info">Pin_3(0)_PAD</td>
+ <td class = "number">30.472</td>
+</tr>
+<tr class="sta_path">
+<td class="sta_path"  colspan="3">
+<table class="sta_path">
+ <thead> 
+<tr> 
+<th>Type</th>
+<th>Location</th>
+<th>Fanout</th>
+<th>Instance/Net</th>
+<th>Source</th>
+<th>Dest</th>
+<th>Delay (ns)</th>
+</tr>
+</thead> 
+<tbody>
+<tr> 
+ <td class = "text_info">drqcell2</td>
+ <td class = "text_info">[DrqHod=(0)][DrqId=(8)]</td>
+ <td class = "number">1</td>
+ <td class = "text_info">DMA_1</td>
+ <td class = "text_info">DMA_1/clock</td>
+ <td class = "text_info">DMA_1/termout</td>
+ <td class = "number">9.000</td>
+</tr>
+<tr> 
+ <td class = "text_info">Route</td>
+ <td class = "text_info"></td>
+ <td class = "number">1</td>
+ <td class = "text_info">Net_557</td>
+ <td class = "text_info">DMA_1/termout</td>
+ <td class = "text_info">Pin_3(0)/pin_input</td>
+ <td class = "number">5.728</td>
+</tr>
+<tr> 
+ <td class = "text_info">iocell4</td>
+ <td class = "text_info">P0[3]</td>
+ <td class = "number">1</td>
+ <td class = "text_info">Pin_3(0)</td>
+ <td class = "text_info">Pin_3(0)/pin_input</td>
+ <td class = "text_info">Pin_3(0)/pad_out</td>
+ <td class = "number">15.744</td>
+</tr>
+<tr> 
+ <td class = "text_info">Route</td>
+ <td class = "text_info"></td>
+ <td class = "number">1</td>
+ <td class = "text_info">Pin_3(0)_PAD</td>
+ <td class = "text_info">Pin_3(0)/pad_out</td>
+ <td class = "text_info">Pin_3(0)_PAD</td>
+ <td class = "number">0.000</td>
+</tr>
+<tr> 
+ <td class = "text_info">Clock</td>
+ <td class = "text_info"> </td>
+ <td class = "text_info"></td>
+ <td class = "text_info"></td>
+ <td class = "text_info"></td>
+ <td class = "text_info">Clock path delay</td>
+ <td class = "number">0.000</td>
+</tr>
+</tbody>
+ </table> 
+</td>
+</tr>
+<tr> 
+ <td class = "text_info">DMA_3/termout</td>
+ <td class = "text_info">Pin_6(0)_PAD</td>
+ <td class = "number">27.440</td>
+</tr>
+<tr class="sta_path">
+<td class="sta_path"  colspan="3">
+<table class="sta_path">
+ <thead> 
+<tr> 
+<th>Type</th>
+<th>Location</th>
+<th>Fanout</th>
+<th>Instance/Net</th>
+<th>Source</th>
+<th>Dest</th>
+<th>Delay (ns)</th>
+</tr>
+</thead> 
+<tbody>
+<tr> 
+ <td class = "text_info">drqcell4</td>
+ <td class = "text_info">[DrqHod=(0)][DrqId=(2)]</td>
+ <td class = "number">1</td>
+ <td class = "text_info">DMA_3</td>
+ <td class = "text_info">DMA_3/clock</td>
+ <td class = "text_info">DMA_3/termout</td>
+ <td class = "number">9.000</td>
+</tr>
+<tr> 
+ <td class = "text_info">Route</td>
+ <td class = "text_info"></td>
+ <td class = "number">1</td>
+ <td class = "text_info">Net_974</td>
+ <td class = "text_info">DMA_3/termout</td>
+ <td class = "text_info">Pin_6(0)/pin_input</td>
+ <td class = "number">3.417</td>
+</tr>
+<tr> 
+ <td class = "text_info">iocell7</td>
+ <td class = "text_info">P0[5]</td>
+ <td class = "number">1</td>
+ <td class = "text_info">Pin_6(0)</td>
+ <td class = "text_info">Pin_6(0)/pin_input</td>
+ <td class = "text_info">Pin_6(0)/pad_out</td>
+ <td class = "number">15.023</td>
+</tr>
+<tr> 
+ <td class = "text_info">Route</td>
+ <td class = "text_info"></td>
+ <td class = "number">1</td>
+ <td class = "text_info">Pin_6(0)_PAD</td>
+ <td class = "text_info">Pin_6(0)/pad_out</td>
+ <td class = "text_info">Pin_6(0)_PAD</td>
+ <td class = "number">0.000</td>
+</tr>
+<tr> 
+ <td class = "text_info">Clock</td>
+ <td class = "text_info"> </td>
+ <td class = "text_info"></td>
+ <td class = "text_info"></td>
+ <td class = "text_info"></td>
+ <td class = "text_info">Clock path delay</td>
+ <td class = "number">0.000</td>
+</tr>
+</tbody>
+ </table> 
+</td>
+</tr>
 <tr> 
  <td class = "text_info">DMA_4/termout</td>
  <td class = "text_info">Pin_7(0)_PAD</td>
@@ -781,7 +919,7 @@ CyBUS_CLK</span>
 <tr> 
  <td class = "text_info">ADC2Filter_DMA/termout</td>
  <td class = "text_info">Pin_1(0)_PAD</td>
- <td class = "number">27.289</td>
+ <td class = "number">27.343</td>
 </tr>
 <tr class="sta_path">
 <td class="sta_path"  colspan="3">
@@ -811,10 +949,10 @@ CyBUS_CLK</span>
  <td class = "text_info">Route</td>
  <td class = "text_info"></td>
  <td class = "number">1</td>
- <td class = "text_info">Net_635</td>
+ <td class = "text_info">Net_1189</td>
  <td class = "text_info">ADC2Filter_DMA/termout</td>
  <td class = "text_info">Pin_1(0)/pin_input</td>
- <td class = "number">2.487</td>
+ <td class = "number">2.541</td>
 </tr>
 <tr> 
  <td class = "text_info">iocell2</td>
@@ -848,147 +986,9 @@ CyBUS_CLK</span>
 </td>
 </tr>
 <tr> 
- <td class = "text_info">DMA_1/termout</td>
- <td class = "text_info">Pin_3(0)_PAD</td>
- <td class = "number">27.276</td>
-</tr>
-<tr class="sta_path">
-<td class="sta_path"  colspan="3">
-<table class="sta_path">
- <thead> 
-<tr> 
-<th>Type</th>
-<th>Location</th>
-<th>Fanout</th>
-<th>Instance/Net</th>
-<th>Source</th>
-<th>Dest</th>
-<th>Delay (ns)</th>
-</tr>
-</thead> 
-<tbody>
-<tr> 
- <td class = "text_info">drqcell2</td>
- <td class = "text_info">[DrqHod=(0)][DrqId=(8)]</td>
- <td class = "number">1</td>
- <td class = "text_info">DMA_1</td>
- <td class = "text_info">DMA_1/clock</td>
- <td class = "text_info">DMA_1/termout</td>
- <td class = "number">9.000</td>
-</tr>
-<tr> 
- <td class = "text_info">Route</td>
- <td class = "text_info"></td>
- <td class = "number">1</td>
- <td class = "text_info">Net_557</td>
- <td class = "text_info">DMA_1/termout</td>
- <td class = "text_info">Pin_3(0)/pin_input</td>
- <td class = "number">2.532</td>
-</tr>
-<tr> 
- <td class = "text_info">iocell4</td>
- <td class = "text_info">P0[3]</td>
- <td class = "number">1</td>
- <td class = "text_info">Pin_3(0)</td>
- <td class = "text_info">Pin_3(0)/pin_input</td>
- <td class = "text_info">Pin_3(0)/pad_out</td>
- <td class = "number">15.744</td>
-</tr>
-<tr> 
- <td class = "text_info">Route</td>
- <td class = "text_info"></td>
- <td class = "number">1</td>
- <td class = "text_info">Pin_3(0)_PAD</td>
- <td class = "text_info">Pin_3(0)/pad_out</td>
- <td class = "text_info">Pin_3(0)_PAD</td>
- <td class = "number">0.000</td>
-</tr>
-<tr> 
- <td class = "text_info">Clock</td>
- <td class = "text_info"> </td>
- <td class = "text_info"></td>
- <td class = "text_info"></td>
- <td class = "text_info"></td>
- <td class = "text_info">Clock path delay</td>
- <td class = "number">0.000</td>
-</tr>
-</tbody>
- </table> 
-</td>
-</tr>
-<tr> 
- <td class = "text_info">DMA_3/termout</td>
- <td class = "text_info">Pin_6(0)_PAD</td>
- <td class = "number">26.795</td>
-</tr>
-<tr class="sta_path">
-<td class="sta_path"  colspan="3">
-<table class="sta_path">
- <thead> 
-<tr> 
-<th>Type</th>
-<th>Location</th>
-<th>Fanout</th>
-<th>Instance/Net</th>
-<th>Source</th>
-<th>Dest</th>
-<th>Delay (ns)</th>
-</tr>
-</thead> 
-<tbody>
-<tr> 
- <td class = "text_info">drqcell4</td>
- <td class = "text_info">[DrqHod=(0)][DrqId=(9)]</td>
- <td class = "number">1</td>
- <td class = "text_info">DMA_3</td>
- <td class = "text_info">DMA_3/clock</td>
- <td class = "text_info">DMA_3/termout</td>
- <td class = "number">9.000</td>
-</tr>
-<tr> 
- <td class = "text_info">Route</td>
- <td class = "text_info"></td>
- <td class = "number">1</td>
- <td class = "text_info">Net_974</td>
- <td class = "text_info">DMA_3/termout</td>
- <td class = "text_info">Pin_6(0)/pin_input</td>
- <td class = "number">2.772</td>
-</tr>
-<tr> 
- <td class = "text_info">iocell7</td>
- <td class = "text_info">P0[5]</td>
- <td class = "number">1</td>
- <td class = "text_info">Pin_6(0)</td>
- <td class = "text_info">Pin_6(0)/pin_input</td>
- <td class = "text_info">Pin_6(0)/pad_out</td>
- <td class = "number">15.023</td>
-</tr>
-<tr> 
- <td class = "text_info">Route</td>
- <td class = "text_info"></td>
- <td class = "number">1</td>
- <td class = "text_info">Pin_6(0)_PAD</td>
- <td class = "text_info">Pin_6(0)/pad_out</td>
- <td class = "text_info">Pin_6(0)_PAD</td>
- <td class = "number">0.000</td>
-</tr>
-<tr> 
- <td class = "text_info">Clock</td>
- <td class = "text_info"> </td>
- <td class = "text_info"></td>
- <td class = "text_info"></td>
- <td class = "text_info"></td>
- <td class = "text_info">Clock path delay</td>
- <td class = "number">0.000</td>
-</tr>
-</tbody>
- </table> 
-</td>
-</tr>
-<tr> 
  <td class = "text_info">DMA_2/termout</td>
  <td class = "text_info">Pin_4(0)_PAD</td>
- <td class = "number">26.740</td>
+ <td class = "number">26.742</td>
 </tr>
 <tr class="sta_path">
 <td class="sta_path"  colspan="3">
@@ -1021,7 +1021,7 @@ CyBUS_CLK</span>
  <td class = "text_info">Net_427</td>
  <td class = "text_info">DMA_2/termout</td>
  <td class = "text_info">Pin_4(0)/pin_input</td>
- <td class = "number">2.860</td>
+ <td class = "number">2.862</td>
 </tr>
 <tr> 
  <td class = "text_info">iocell5</td>
@@ -1076,7 +1076,7 @@ CyBUS_CLK</span>
 <tr> 
  <td class = "text_info">\ADC_DelSig_1:DEC\/interrupt</td>
  <td class = "text_info">Pin_8(0)_PAD</td>
- <td class = "number">24.883</td>
+ <td class = "number">26.155</td>
 </tr>
 <tr class="sta_path">
 <td class="sta_path"  colspan="3">
@@ -1109,7 +1109,7 @@ CyBUS_CLK</span>
  <td class = "text_info">Net_617</td>
  <td class = "text_info">\ADC_DelSig_1:DEC\/interrupt</td>
  <td class = "text_info">Pin_8(0)/pin_input</td>
- <td class = "number">9.009</td>
+ <td class = "number">10.281</td>
 </tr>
 <tr> 
  <td class = "text_info">iocell9</td>
@@ -1127,6 +1127,75 @@ CyBUS_CLK</span>
  <td class = "text_info">Pin_8(0)_PAD</td>
  <td class = "text_info">Pin_8(0)/pad_out</td>
  <td class = "text_info">Pin_8(0)_PAD</td>
+ <td class = "number">0.000</td>
+</tr>
+<tr> 
+ <td class = "text_info">Clock</td>
+ <td class = "text_info"> </td>
+ <td class = "text_info"></td>
+ <td class = "text_info"></td>
+ <td class = "text_info"></td>
+ <td class = "text_info">Clock path delay</td>
+ <td class = "number">0.000</td>
+</tr>
+</tbody>
+ </table> 
+</td>
+</tr>
+<tr> 
+ <td class = "text_info">\ADC_DelSig_1:DEC\/interrupt</td>
+ <td class = "text_info">Pin_5(0)_PAD</td>
+ <td class = "number">23.610</td>
+</tr>
+<tr class="sta_path">
+<td class="sta_path"  colspan="3">
+<table class="sta_path">
+ <thead> 
+<tr> 
+<th>Type</th>
+<th>Location</th>
+<th>Fanout</th>
+<th>Instance/Net</th>
+<th>Source</th>
+<th>Dest</th>
+<th>Delay (ns)</th>
+</tr>
+</thead> 
+<tbody>
+<tr> 
+ <td class = "text_info">decimatorcell</td>
+ <td class = "text_info">F(Decimator,0)</td>
+ <td class = "number">1</td>
+ <td class = "text_info">\ADC_DelSig_1:DEC\</td>
+ <td class = "text_info">\ADC_DelSig_1:DEC\/aclock</td>
+ <td class = "text_info">\ADC_DelSig_1:DEC\/interrupt</td>
+ <td class = "number">1.000</td>
+</tr>
+<tr> 
+ <td class = "text_info">Route</td>
+ <td class = "text_info"></td>
+ <td class = "number">1</td>
+ <td class = "text_info">Net_617</td>
+ <td class = "text_info">\ADC_DelSig_1:DEC\/interrupt</td>
+ <td class = "text_info">Pin_5(0)/pin_input</td>
+ <td class = "number">7.115</td>
+</tr>
+<tr> 
+ <td class = "text_info">iocell6</td>
+ <td class = "text_info">P0[7]</td>
+ <td class = "number">1</td>
+ <td class = "text_info">Pin_5(0)</td>
+ <td class = "text_info">Pin_5(0)/pin_input</td>
+ <td class = "text_info">Pin_5(0)/pad_out</td>
+ <td class = "number">15.495</td>
+</tr>
+<tr> 
+ <td class = "text_info">Route</td>
+ <td class = "text_info"></td>
+ <td class = "number">1</td>
+ <td class = "text_info">Pin_5(0)_PAD</td>
+ <td class = "text_info">Pin_5(0)/pad_out</td>
+ <td class = "text_info">Pin_5(0)_PAD</td>
  <td class = "number">0.000</td>
 </tr>
 <tr> 

@@ -1,26 +1,27 @@
---------------- Build Started: 10/30/2015 14:41:02 Project: Design01, Configuration: ARM GCC 4.8.4 Debug ---------------
-cydsfit.exe -.appdatapath "C:\Users\Scott Carlson\AppData\Local\Cypress Semiconductor\PSoC Creator\3.2" -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -p "\\vmware-host\Shared Folders\scottcarlson On My Mac\Code\repos\LED_controller\Design01.cydsn\Design01.cyprj" -d CY8C5868AXI-LP035 -s "\\vmware-host\Shared Folders\scottcarlson On My Mac\Code\repos\LED_controller\Design01.cydsn\Generated_Source\PSoC5" -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE
-Elaborating Design...
-HDL Generation ...
-Synthesis ...
-Place and Route ...
-Tech mapping ...
-ADD: pft.M0040: information: The following 3 pin(s) will be assigned a location by the fitter: Pin_5(0), Pin_6(0), Pin_7(0)
-Analog Placement ...
-Info: apr.M0002: Analog signal "\ADC_DelSig_1:Net_690\" is connected to one terminal only. (App=cydsfit)
-Analog Routing ...
-Analog Code Generation ...
-Digital Placement ...
-Digital Routing ...
-Bitstream Generation ...
-Static timing analysis ...
-API Generation ...
-Dependency Generation ...
-Clean Temporary Files ...
-The compile step is up to date, no work needs to be done.
-The link step is up to date, no work needs to be done.
+--------------- Build Started: 10/30/2015 17:21:00 Project: Design01, Configuration: ARM GCC 4.8.4 Debug ---------------
+The code generation step is up to date.
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main "-IZ:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Include" -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_484\Debug/main.lst -g -D DEBUG -D ARM_MATH_CM3 -Wall -ffunction-sections -O0 -c .\main.c -o .\CortexM3\ARM_GCC_484\Debug\main.o
+.\main.c: In function 'main':
+.\main.c:120:5: warning: passing argument 1 of 'LCD_Char_1_PrintInt32' makes integer from pointer without a cast [enabled by default]
+     LCD_Char_1_PrintInt32(LPF_samples);
+     ^
+In file included from Generated_Source\PSoC5/project.h:23:0,
+                 from .\main.c:4:
+Generated_Source\PSoC5/LCD_Char_1.h:95:10: note: expected 'uint32' but argument is of type 'int32 *'
+     void LCD_Char_1_PrintInt32(uint32 value) ;
+          ^
+.\main.c:122:9: warning: passing argument 1 of 'arm_cfft_q31' from incompatible pointer type [enabled by default]
+         arm_cfft_q31(&arm_cfft_sR_q15_len256, Buffer_samples, 0, 1); 
+         ^
+In file included from .\main.c:5:0:
+Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Include/arm_math.h:2247:6: note: expected 'const struct arm_cfft_instance_q31 *' but argument is of type 'const struct arm_cfft_instance_q15 *'
+ void arm_cfft_q31( 
+      ^
+arm-none-eabi-ar.exe -rs .\CortexM3\ARM_GCC_484\Debug\Design01.a .\CortexM3\ARM_GCC_484\Debug\cyfitter_cfg.o .\CortexM3\ARM_GCC_484\Debug\CyBootAsmGnu.o .\CortexM3\ARM_GCC_484\Debug\CyDmac.o .\CortexM3\ARM_GCC_484\Debug\CyFlash.o .\CortexM3\ARM_GCC_484\Debug\CyLib.o .\CortexM3\ARM_GCC_484\Debug\cyPm.o .\CortexM3\ARM_GCC_484\Debug\CySpc.o .\CortexM3\ARM_GCC_484\Debug\cyutils.o .\CortexM3\ARM_GCC_484\Debug\LCD_Char_1.o .\CortexM3\ARM_GCC_484\Debug\LCD_Char_1_PM.o .\CortexM3\ARM_GCC_484\Debug\LCD_Char_1_LCDPort.o .\CortexM3\ARM_GCC_484\Debug\P0_0.o .\CortexM3\ARM_GCC_484\Debug\ADC_DelSig_1.o .\CortexM3\ARM_GCC_484\Debug\ADC_DelSig_1_PM.o .\CortexM3\ARM_GCC_484\Debug\ADC_DelSig_1_INT.o .\CortexM3\ARM_GCC_484\Debug\DMA_1_dma.o .\CortexM3\ARM_GCC_484\Debug\ADC_DelSig_1_AMux.o .\CortexM3\ARM_GCC_484\Debug\ADC_DelSig_1_Ext_CP_Clk.o .\CortexM3\ARM_GCC_484\Debug\ADC_DelSig_1_IRQ.o .\CortexM3\ARM_GCC_484\Debug\ADC_DelSig_1_theACLK.o .\CortexM3\ARM_GCC_484\Debug\Pin_1.o .\CortexM3\ARM_GCC_484\Debug\DMA_2_dma.o .\CortexM3\ARM_GCC_484\Debug\Pin_2.o .\CortexM3\ARM_GCC_484\Debug\isr_1.o .\CortexM3\ARM_GCC_484\Debug\isr_2.o .\CortexM3\ARM_GCC_484\Debug\Filter.o .\CortexM3\ARM_GCC_484\Debug\Filter_PM.o .\CortexM3\ARM_GCC_484\Debug\Filter_PVT.o .\CortexM3\ARM_GCC_484\Debug\Filter_RAM_Data.o .\CortexM3\ARM_GCC_484\Debug\Filter_Coefficients.o .\CortexM3\ARM_GCC_484\Debug\ADC2Filter_DMA_dma.o .\CortexM3\ARM_GCC_484\Debug\Pin_3.o .\CortexM3\ARM_GCC_484\Debug\Pin_4.o .\CortexM3\ARM_GCC_484\Debug\Pin_5.o .\CortexM3\ARM_GCC_484\Debug\DMA_4_dma.o .\CortexM3\ARM_GCC_484\Debug\DMA_3_dma.o .\CortexM3\ARM_GCC_484\Debug\Pin_6.o .\CortexM3\ARM_GCC_484\Debug\Pin_7.o .\CortexM3\ARM_GCC_484\Debug\Pin_8.o
+arm-none-eabi-ar.exe: creating .\CortexM3\ARM_GCC_484\Debug\Design01.a
+arm-none-eabi-gcc.exe -Wl,--start-group -o .\CortexM3\ARM_GCC_484\Debug\Design01.elf .\CortexM3\ARM_GCC_484\Debug\main.o .\CortexM3\ARM_GCC_484\Debug\math_helper.o .\CortexM3\ARM_GCC_484\Debug\cymetadata.o .\CortexM3\ARM_GCC_484\Debug\Cm3Start.o .\CortexM3\ARM_GCC_484\Debug\Design01.a "C:\Program Files\Cypress\PSoC Creator\3.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CortexM3\ARM_GCC_484\Debug\CyComponentLibrary.a" -mcpu=cortex-m3 -mthumb -g -ffunction-sections -O0 -l arm_cortexM3l_math -L "Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC" -Wl,-Map,.\CortexM3\ARM_GCC_484\Debug/Design01.map -T Generated_Source\PSoC5\cm3gcc.ld -specs=nano.specs -Wl,--gc-sections -lm -Wl,--end-group
 cyelftool.exe -C "\\vmware-host\Shared Folders\scottcarlson On My Mac\Code\repos\LED_controller\Design01.cydsn\CortexM3\ARM_GCC_484\Debug\Design01.elf" --flash_row_size 256 --flash_size 262144
 cyelftool.exe -S "\\vmware-host\Shared Folders\scottcarlson On My Mac\Code\repos\LED_controller\Design01.cydsn\CortexM3\ARM_GCC_484\Debug\Design01.elf"
-Flash used: 17920 of 262144 bytes (6.8 %).
-SRAM used: 30077 of 65536 bytes (45.9 %). Stack: 16384 bytes. Heap: 4096 bytes.
---------------- Build Succeeded: 10/30/2015 14:46:13 ---------------
+Flash used: 18176 of 262144 bytes (6.9 %).
+SRAM used: 25469 of 65536 bytes (38.9 %). Stack: 16384 bytes. Heap: 4096 bytes.
+--------------- Build Succeeded: 10/30/2015 17:21:07 ---------------

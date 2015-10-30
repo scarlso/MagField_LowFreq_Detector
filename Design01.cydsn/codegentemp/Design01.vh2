@@ -2,7 +2,7 @@
 --	Conversion of Design01.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Fri Oct 30 14:41:09 2015
+--	Fri Oct 30 17:08:53 2015
 --
 
 USE cypress.cypress.all;
@@ -84,7 +84,6 @@ SIGNAL tmpINTERRUPT_0__P0_0_net_0 : bit;
 SIGNAL Net_983 : bit;
 SIGNAL Net_557 : bit;
 SIGNAL tmpOE__Pin_5_net_0 : bit;
-SIGNAL Net_399 : bit;
 SIGNAL tmpFB_0__Pin_5_net_0 : bit;
 SIGNAL tmpIO_0__Pin_5_net_0 : bit;
 TERMINAL tmpSIOVREF__Pin_5_net_0 : bit;
@@ -94,8 +93,9 @@ SIGNAL \Filter:Net_4\ : bit;
 SIGNAL \Filter:Net_5\ : bit;
 SIGNAL \Filter:Net_8\ : bit;
 SIGNAL \Filter:Net_9\ : bit;
+SIGNAL Net_1188 : bit;
 SIGNAL Net_791 : bit;
-SIGNAL Net_635 : bit;
+SIGNAL Net_1189 : bit;
 SIGNAL tmpOE__Pin_1_net_0 : bit;
 SIGNAL tmpFB_0__Pin_1_net_0 : bit;
 SIGNAL tmpIO_0__Pin_1_net_0 : bit;
@@ -248,7 +248,7 @@ isr_1:cy_isr_v1_0
 		vout=>\ADC_DelSig_1:Net_20\);
 \ADC_DelSig_1:DSM\:cy_psoc3_ds_mod_v4_0
 	GENERIC MAP(cy_registers=>"",
-		resolution=>16)
+		resolution=>18)
 	PORT MAP(aclock=>\ADC_DelSig_1:Net_488\,
 		vplus=>Net_250,
 		vminus=>\ADC_DelSig_1:Net_520\,
@@ -309,7 +309,7 @@ isr_1:cy_isr_v1_0
 		id=>"9dab4c34-bef1-41bf-9abe-cae19058561d/edd15f43-b66b-457b-be3a-5342345270c8",
 		source_clock_id=>"61737EF6-3B74-48f9-8B91-F7473A442AE7",
 		divisor=>0,
-		period=>"5208333333.33333",
+		period=>"325520833.333333",
 		is_direct=>'0',
 		is_digital=>'0')
 	PORT MAP(clock_out=>\ADC_DelSig_1:Net_488\,
@@ -458,7 +458,7 @@ Pin_5:cy_psoc3_pins_v1_10
 		ovt_hyst_trim=>"0",
 		input_buffer_sel=>"00")
 	PORT MAP(oe=>(one),
-		y=>Net_399,
+		y=>Net_617,
 		fb=>(tmpFB_0__Pin_5_net_0),
 		analog=>(open),
 		io=>(tmpIO_0__Pin_5_net_0),
@@ -479,14 +479,14 @@ Pin_5:cy_psoc3_pins_v1_10
 		out_1=>\Filter:Net_8\,
 		out_2=>\Filter:Net_9\,
 		dmareq_1=>Net_983,
-		dmareq_2=>Net_399,
+		dmareq_2=>Net_1188,
 		interrupt=>Net_791);
 ADC2Filter_DMA:cy_dma_v1_0
 	GENERIC MAP(drq_type=>"00",
 		num_tds=>0)
 	PORT MAP(drq=>Net_617,
 		trq=>zero,
-		nrq=>Net_635);
+		nrq=>Net_1189);
 Pin_1:cy_psoc3_pins_v1_10
 	GENERIC MAP(id=>"5212cea6-68ce-4fa2-91f6-1df433381d39",
 		drive_mode=>"110",
@@ -543,7 +543,7 @@ Pin_1:cy_psoc3_pins_v1_10
 		ovt_hyst_trim=>"0",
 		input_buffer_sel=>"00")
 	PORT MAP(oe=>(one),
-		y=>Net_635,
+		y=>Net_1189,
 		fb=>(tmpFB_0__Pin_1_net_0),
 		analog=>(open),
 		io=>(tmpIO_0__Pin_1_net_0),
@@ -775,7 +775,7 @@ DMA_4:cy_dma_v1_0
 DMA_3:cy_dma_v1_0
 	GENERIC MAP(drq_type=>"00",
 		num_tds=>0)
-	PORT MAP(drq=>Net_399,
+	PORT MAP(drq=>Net_617,
 		trq=>zero,
 		nrq=>Net_974);
 Pin_6:cy_psoc3_pins_v1_10
