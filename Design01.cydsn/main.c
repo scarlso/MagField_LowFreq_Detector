@@ -2,9 +2,9 @@
 ** Include Files
 ** ------------------------------------------------------------------- */
 #include <project.h>
-//#include "arm_math.h"
-//#include "arm_const_structs.h"
-//#include "math_helper.h"
+#include "arm_math.h"
+#include "arm_const_structs.h"
+#include "math_helper.h"
 
 
 /* ----------------------------------------------------------------------
@@ -92,23 +92,26 @@ void main(void)
     ADC_DelSig_1_Start();
     ADC_DelSig_1_StartConvert();
 
+    ADC_DelSig_1_IRQ_Disable();
+    
     Configure_DMA(); 
     isr_1_StartEx(Buffer_complete);
     isr_2_StartEx(LPF_buffer_complete);
     
-    ADC_DelSig_1_SetCoherency(ADC_DelSig_1_COHER_HIGH);   
+    //ADC_DelSig_1_SetCoherency(ADC_DelSig_1_COHER_HIGH);   
+    ADC_DelSig_1_DEC_COHER_REG |= ADC_DelSig_1_DEC_SAMP_KEY_HIGH;
     
     Filter_SetDalign(Filter_STAGEA_DALIGN,Filter_DISABLED);
     Filter_SetDalign(Filter_HOLDA_DALIGN,Filter_DISABLED);
     Filter_SetCoherency(Filter_STAGEA_COHER,Filter_KEY_HIGH);
     Filter_SetCoherency(Filter_HOLDA_COHER,Filter_KEY_HIGH);
-    Filter_SetCoherency(Filter_CHANNEL_A,Filter_KEY_HIGH);  
+//    Filter_SetCoherency(Filter_CHANNEL_A,Filter_KEY_HIGH);  
     
     Filter_SetDalign(Filter_STAGEB_DALIGN,Filter_DISABLED);
     Filter_SetDalign(Filter_HOLDB_DALIGN,Filter_DISABLED);
     Filter_SetCoherency(Filter_STAGEB_COHER,Filter_KEY_HIGH);
     Filter_SetCoherency(Filter_HOLDB_COHER,Filter_KEY_HIGH);
-    Filter_SetCoherency(Filter_CHANNEL_B,Filter_KEY_HIGH);
+//    Filter_SetCoherency(Filter_CHANNEL_B,Filter_KEY_HIGH);
 
     CyGlobalIntEnable;
 
@@ -117,10 +120,12 @@ void main(void)
     /*Writes ADC values to ADC_samples array*/
     while(1){
     LCD_Char_1_Position(0u,0u);
-    LCD_Char_1_PrintInt32(LPF_samples);
+    LCD_Char_1_PrintInt32(ADC_DelSig_1_GetResult32());
+    LCD_Char_1_Position(0u,0u);
+    LCD_Char_1_PrintNumber(LPF_samples);
     if (isr_BC_flag==1){        
-//        arm_cfft_q31(&arm_cfft_sR_q15_len256, Buffer_samples, 0, 1); 
-//        arm_cmplx_mag_q31(Buffer_samples, magoutput, fftlength);         
+        arm_cfft_q31(&arm_cfft_sR_q15_len256, Buffer_samples, 0, 1); 
+        arm_cmplx_mag_q31(Buffer_samples, magoutput, fftlength);         
         isr_BC_flag=0;
         isr_1_ClearPending();
         CyDmaChEnable(DMA_2_Chan, 1);

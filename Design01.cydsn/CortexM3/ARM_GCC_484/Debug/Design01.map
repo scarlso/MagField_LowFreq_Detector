@@ -22,6 +22,8 @@ Archive member included because of file (symbol)
                               .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o) (ADC_DelSig_1_AMux_Select)
 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_Ext_CP_Clk.o)
                               .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o) (ADC_DelSig_1_Ext_CP_Clk_SetDividerRegister)
+.\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
+                              .\CortexM3\ARM_GCC_484\Debug\main.o (ADC_DelSig_1_IRQ_Disable)
 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
                               .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o) (ADC_DelSig_1_theACLK_SetDividerRegister)
 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_2_dma.o)
@@ -414,17 +416,15 @@ Discarded input sections
  .data          0x00000000        0x0 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
  .text.LCD_Char_1_Stop
                 0x00000000       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
- .text.LCD_Char_1_PrintString
-                0x00000000       0x38 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
  .text.LCD_Char_1_PrintInt16
                 0x00000000       0x28 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
- .text.LCD_Char_1_PrintU32Number
-                0x00000000       0xa4 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
  .text          0x00000000        0x0 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
  .text.ADC_DelSig_1_Stop
                 0x00000000      0x17c .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
  .text.ADC_DelSig_1_SetBufferGain
                 0x00000000       0x3c .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
+ .text.ADC_DelSig_1_SetCoherency
+                0x00000000       0x38 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
  .text.ADC_DelSig_1_SetGCOR
                 0x00000000       0xb8 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
  .text.ADC_DelSig_1_ReadGCOR
@@ -437,8 +437,6 @@ Discarded input sections
                 0x00000000       0x68 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
  .text.ADC_DelSig_1_GetResult16
                 0x00000000       0x7c .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
- .text.ADC_DelSig_1_GetResult32
-                0x00000000       0xa8 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
  .text.ADC_DelSig_1_SetOffset
                 0x00000000       0x1c .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
  .text.ADC_DelSig_1_SetGain
@@ -491,6 +489,33 @@ Discarded input sections
                 0x00000000       0x20 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_Ext_CP_Clk.o)
  .text.ADC_DelSig_1_Ext_CP_Clk_SetSourceRegister
                 0x00000000       0xbc .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_Ext_CP_Clk.o)
+ .text          0x00000000        0x0 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
+ .data          0x00000000        0x0 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
+ .bss           0x00000000        0x0 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
+ .text.ADC_DelSig_1_IRQ_Start
+                0x00000000       0x20 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
+ .text.ADC_DelSig_1_IRQ_StartEx
+                0x00000000       0x24 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
+ .text.ADC_DelSig_1_IRQ_Stop
+                0x00000000       0x14 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
+ .text.ADC_DelSig_1_IRQ_Interrupt
+                0x00000000        0xc .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
+ .text.ADC_DelSig_1_IRQ_SetVector
+                0x00000000       0x24 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
+ .text.ADC_DelSig_1_IRQ_GetVector
+                0x00000000       0x24 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
+ .text.ADC_DelSig_1_IRQ_SetPriority
+                0x00000000       0x24 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
+ .text.ADC_DelSig_1_IRQ_GetPriority
+                0x00000000       0x24 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
+ .text.ADC_DelSig_1_IRQ_Enable
+                0x00000000       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
+ .text.ADC_DelSig_1_IRQ_GetState
+                0x00000000       0x24 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
+ .text.ADC_DelSig_1_IRQ_SetPending
+                0x00000000       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
+ .text.ADC_DelSig_1_IRQ_ClearPending
+                0x00000000       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
  .text          0x00000000        0x0 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
  .data          0x00000000        0x0 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
  .bss           0x00000000        0x0 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
@@ -1000,7 +1025,7 @@ END GROUP
                 0x00000800                ee_size = (CY_APPL_LOADABLE && ! (CY_EE_IN_BTLDR))?(CY_EE_SIZE / CY_APPL_MAX):CY_EE_SIZE
                 0x00000000                PROVIDE (CY_ECC_OFFSET, ecc_offset)
 
-.text           0x00000000     0x3ace
+.text           0x00000000     0x3c4a
  CREATE_OBJECT_SYMBOLS
                 0x00000000                PROVIDE (__cy_interrupt_vector, RomVectors)
  *(.romvectors)
@@ -1023,296 +1048,305 @@ END GROUP
  .text.LPF_buffer_complete
                 0x0000009c       0x20 .\CortexM3\ARM_GCC_484\Debug\main.o
                 0x0000009c                LPF_buffer_complete
- .text.main     0x000000bc      0x100 .\CortexM3\ARM_GCC_484\Debug\main.o
+ .text.main     0x000000bc      0x118 .\CortexM3\ARM_GCC_484\Debug\main.o
                 0x000000bc                main
  .text.Configure_DMA
-                0x000001bc      0x27c .\CortexM3\ARM_GCC_484\Debug\main.o
-                0x000001bc                Configure_DMA
+                0x000001d4      0x27c .\CortexM3\ARM_GCC_484\Debug\main.o
+                0x000001d4                Configure_DMA
  .text.IntDefaultHandler
-                0x00000438        0x8 .\CortexM3\ARM_GCC_484\Debug\Cm3Start.o
-                0x00000438                IntDefaultHandler
- .text.Start_c  0x00000440       0x98 .\CortexM3\ARM_GCC_484\Debug\Cm3Start.o
-                0x00000440                Start_c
+                0x00000450        0x8 .\CortexM3\ARM_GCC_484\Debug\Cm3Start.o
+                0x00000450                IntDefaultHandler
+ .text.Start_c  0x00000458       0x98 .\CortexM3\ARM_GCC_484\Debug\Cm3Start.o
+                0x00000458                Start_c
  .text.initialize_psoc
-                0x000004d8       0x90 .\CortexM3\ARM_GCC_484\Debug\Cm3Start.o
-                0x000004d8                initialize_psoc
+                0x000004f0       0x90 .\CortexM3\ARM_GCC_484\Debug\Cm3Start.o
+                0x000004f0                initialize_psoc
  .text.CYMEMZERO
-                0x00000568       0x1c .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyfitter_cfg.o)
+                0x00000580       0x1c .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyfitter_cfg.o)
  .text.CYCONFIGCPY
-                0x00000584       0x1c .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyfitter_cfg.o)
+                0x0000059c       0x1c .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyfitter_cfg.o)
  .text.cfg_write_bytes32
-                0x000005a0       0x74 .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyfitter_cfg.o)
+                0x000005b8       0x74 .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyfitter_cfg.o)
  .text.ClockSetup
-                0x00000614      0x184 .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyfitter_cfg.o)
+                0x0000062c      0x184 .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyfitter_cfg.o)
  .text.AnalogSetDefault
-                0x00000798       0x58 .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyfitter_cfg.o)
+                0x000007b0       0x58 .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyfitter_cfg.o)
  .text.ADC_DelSig_1_AMux_Set
-                0x000007f0       0x40 .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyfitter_cfg.o)
-                0x000007f0                ADC_DelSig_1_AMux_Set
+                0x00000808       0x40 .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyfitter_cfg.o)
+                0x00000808                ADC_DelSig_1_AMux_Set
  .text.ADC_DelSig_1_AMux_Unset
-                0x00000830       0x44 .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyfitter_cfg.o)
-                0x00000830                ADC_DelSig_1_AMux_Unset
+                0x00000848       0x44 .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyfitter_cfg.o)
+                0x00000848                ADC_DelSig_1_AMux_Unset
  .text.cyfitter_cfg
-                0x00000874      0x170 .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyfitter_cfg.o)
-                0x00000874                cyfitter_cfg
- *fill*         0x000009e4        0x4 
- .text          0x000009e8       0x28 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyBootAsmGnu.o)
-                0x000009e8                CyDelayCycles
-                0x000009fc                CyEnterCriticalSection
-                0x00000a04                CyExitCriticalSection
+                0x0000088c      0x170 .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyfitter_cfg.o)
+                0x0000088c                cyfitter_cfg
+ *fill*         0x000009fc        0x4 
+ .text          0x00000a00       0x28 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyBootAsmGnu.o)
+                0x00000a00                CyDelayCycles
+                0x00000a14                CyEnterCriticalSection
+                0x00000a1c                CyExitCriticalSection
  .text.CyDmacConfigure
-                0x00000a10       0x5c .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyDmac.o)
-                0x00000a10                CyDmacConfigure
+                0x00000a28       0x5c .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyDmac.o)
+                0x00000a28                CyDmacConfigure
  .text.CyDmaChEnable
-                0x00000a6c       0x8c .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyDmac.o)
-                0x00000a6c                CyDmaChEnable
+                0x00000a84       0x8c .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyDmac.o)
+                0x00000a84                CyDmaChEnable
  .text.CyDmaChDisable
-                0x00000af8       0x64 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyDmac.o)
-                0x00000af8                CyDmaChDisable
+                0x00000b10       0x64 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyDmac.o)
+                0x00000b10                CyDmaChDisable
  .text.CyDmaChPriority
-                0x00000b5c       0x5c .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyDmac.o)
-                0x00000b5c                CyDmaChPriority
+                0x00000b74       0x5c .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyDmac.o)
+                0x00000b74                CyDmaChPriority
  .text.CyDmaChSetExtendedAddress
-                0x00000bb8       0x7c .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyDmac.o)
-                0x00000bb8                CyDmaChSetExtendedAddress
+                0x00000bd0       0x7c .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyDmac.o)
+                0x00000bd0                CyDmaChSetExtendedAddress
  .text.CyDmaChSetInitialTd
-                0x00000c34       0x3c .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyDmac.o)
-                0x00000c34                CyDmaChSetInitialTd
+                0x00000c4c       0x3c .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyDmac.o)
+                0x00000c4c                CyDmaChSetInitialTd
  .text.CyDmaChSetConfiguration
-                0x00000c70       0x90 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyDmac.o)
-                0x00000c70                CyDmaChSetConfiguration
+                0x00000c88       0x90 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyDmac.o)
+                0x00000c88                CyDmaChSetConfiguration
  .text.CyDmaTdAllocate
-                0x00000d00       0x5c .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyDmac.o)
-                0x00000d00                CyDmaTdAllocate
+                0x00000d18       0x5c .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyDmac.o)
+                0x00000d18                CyDmaTdAllocate
  .text.CyDmaTdSetConfiguration
-                0x00000d5c       0x70 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyDmac.o)
-                0x00000d5c                CyDmaTdSetConfiguration
+                0x00000d74       0x70 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyDmac.o)
+                0x00000d74                CyDmaTdSetConfiguration
  .text.CyDmaTdSetAddress
-                0x00000dcc       0x5c .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyDmac.o)
-                0x00000dcc                CyDmaTdSetAddress
- .text.CyHalt   0x00000e28       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyLib.o)
-                0x00000e28                CyHalt
- .text.CyDelay  0x00000e40       0x44 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyLib.o)
-                0x00000e40                CyDelay
+                0x00000de4       0x5c .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyDmac.o)
+                0x00000de4                CyDmaTdSetAddress
+ .text.CyHalt   0x00000e40       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyLib.o)
+                0x00000e40                CyHalt
+ .text.CyDelay  0x00000e58       0x44 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyLib.o)
+                0x00000e58                CyDelay
  .text.CyDelayUs
-                0x00000e84       0x24 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyLib.o)
-                0x00000e84                CyDelayUs
+                0x00000e9c       0x24 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyLib.o)
+                0x00000e9c                CyDelayUs
  .text.CyIntSetVector
-                0x00000ea8       0x50 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyLib.o)
-                0x00000ea8                CyIntSetVector
+                0x00000ec0       0x50 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyLib.o)
+                0x00000ec0                CyIntSetVector
  .text.CyIntSetPriority
-                0x00000ef8       0x44 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyLib.o)
-                0x00000ef8                CyIntSetPriority
+                0x00000f10       0x44 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyLib.o)
+                0x00000f10                CyIntSetPriority
  .text.LCD_Char_1_Init
-                0x00000f3c       0x6c .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
-                0x00000f3c                LCD_Char_1_Init
+                0x00000f54       0x6c .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
+                0x00000f54                LCD_Char_1_Init
  .text.LCD_Char_1_Enable
-                0x00000fa8       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
-                0x00000fa8                LCD_Char_1_Enable
+                0x00000fc0       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
+                0x00000fc0                LCD_Char_1_Enable
  .text.LCD_Char_1_Start
-                0x00000fc0       0x20 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
-                0x00000fc0                LCD_Char_1_Start
+                0x00000fd8       0x20 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
+                0x00000fd8                LCD_Char_1_Start
  .text.LCD_Char_1_Position
-                0x00000fe0       0x6c .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
-                0x00000fe0                LCD_Char_1_Position
+                0x00000ff8       0x6c .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
+                0x00000ff8                LCD_Char_1_Position
+ .text.LCD_Char_1_PrintString
+                0x00001064       0x38 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
+                0x00001064                LCD_Char_1_PrintString
  .text.LCD_Char_1_PutChar
-                0x0000104c       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
-                0x0000104c                LCD_Char_1_PutChar
+                0x0000109c       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
+                0x0000109c                LCD_Char_1_PutChar
  .text.LCD_Char_1_WriteData
-                0x00001064       0x34 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
-                0x00001064                LCD_Char_1_WriteData
+                0x000010b4       0x34 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
+                0x000010b4                LCD_Char_1_WriteData
  .text.LCD_Char_1_WriteControl
-                0x00001098       0x34 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
-                0x00001098                LCD_Char_1_WriteControl
+                0x000010e8       0x34 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
+                0x000010e8                LCD_Char_1_WriteControl
  .text.LCD_Char_1_IsReady
-                0x000010cc      0x178 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
-                0x000010cc                LCD_Char_1_IsReady
+                0x0000111c      0x178 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
+                0x0000111c                LCD_Char_1_IsReady
  .text.LCD_Char_1_WrDatNib
-                0x00001244       0x78 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
+                0x00001294       0x78 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
  .text.LCD_Char_1_WrCntrlNib
-                0x000012bc       0x60 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
+                0x0000130c       0x60 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
  .text.LCD_Char_1_PrintInt8
-                0x0000131c       0x34 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
-                0x0000131c                LCD_Char_1_PrintInt8
+                0x0000136c       0x34 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
+                0x0000136c                LCD_Char_1_PrintInt8
  .text.LCD_Char_1_PrintInt32
-                0x00001350       0x30 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
-                0x00001350                LCD_Char_1_PrintInt32
+                0x000013a0       0x30 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
+                0x000013a0                LCD_Char_1_PrintInt32
+ .text.LCD_Char_1_PrintU32Number
+                0x000013d0       0xa4 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
+                0x000013d0                LCD_Char_1_PrintU32Number
  .text.ADC_DelSig_1_Init
-                0x00001380      0x11c .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
-                0x00001380                ADC_DelSig_1_Init
+                0x00001474      0x11c .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
+                0x00001474                ADC_DelSig_1_Init
  .text.ADC_DelSig_1_Enable
-                0x0000149c      0x158 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
-                0x0000149c                ADC_DelSig_1_Enable
+                0x00001590      0x158 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
+                0x00001590                ADC_DelSig_1_Enable
  .text.ADC_DelSig_1_Start
-                0x000015f4       0x30 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
-                0x000015f4                ADC_DelSig_1_Start
- .text.ADC_DelSig_1_SetCoherency
-                0x00001624       0x38 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
-                0x00001624                ADC_DelSig_1_SetCoherency
+                0x000016e8       0x30 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
+                0x000016e8                ADC_DelSig_1_Start
  .text.ADC_DelSig_1_StartConvert
-                0x0000165c       0x20 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
-                0x0000165c                ADC_DelSig_1_StartConvert
+                0x00001718       0x20 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
+                0x00001718                ADC_DelSig_1_StartConvert
+ .text.ADC_DelSig_1_GetResult32
+                0x00001738       0xa8 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
+                0x00001738                ADC_DelSig_1_GetResult32
  .text.ADC_DelSig_1_InitConfig
-                0x0000167c      0x164 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
+                0x000017e0      0x164 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
  .text.ADC_DelSig_1_GainCompensation
-                0x000017e0      0x15c .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
+                0x00001944      0x15c .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
  .text.ADC_DelSig_1_SetDSMRef0Reg
-                0x0000193c       0x78 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
+                0x00001aa0       0x78 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
  .text.ADC_DelSig_1_ISR1
-                0x000019b4        0xc .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_INT.o)
-                0x000019b4                ADC_DelSig_1_ISR1
+                0x00001b18        0xc .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_INT.o)
+                0x00001b18                ADC_DelSig_1_ISR1
  .text.DMA_1_DmaInitialize
-                0x000019c0       0x60 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_1_dma.o)
-                0x000019c0                DMA_1_DmaInitialize
+                0x00001b24       0x60 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_1_dma.o)
+                0x00001b24                DMA_1_DmaInitialize
  .text.ADC_DelSig_1_AMux_Start
-                0x00001a20       0x30 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_AMux.o)
-                0x00001a20                ADC_DelSig_1_AMux_Start
+                0x00001b84       0x30 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_AMux.o)
+                0x00001b84                ADC_DelSig_1_AMux_Start
  .text.ADC_DelSig_1_AMux_Select
-                0x00001a50       0x28 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_AMux.o)
-                0x00001a50                ADC_DelSig_1_AMux_Select
+                0x00001bb4       0x28 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_AMux.o)
+                0x00001bb4                ADC_DelSig_1_AMux_Select
  .text.ADC_DelSig_1_Ext_CP_Clk_SetDividerRegister
-                0x00001a78      0x15c .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_Ext_CP_Clk.o)
-                0x00001a78                ADC_DelSig_1_Ext_CP_Clk_SetDividerRegister
+                0x00001bdc      0x15c .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_Ext_CP_Clk.o)
+                0x00001bdc                ADC_DelSig_1_Ext_CP_Clk_SetDividerRegister
  .text.ADC_DelSig_1_Ext_CP_Clk_GetDividerRegister
-                0x00001bd4       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_Ext_CP_Clk.o)
-                0x00001bd4                ADC_DelSig_1_Ext_CP_Clk_GetDividerRegister
+                0x00001d38       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_Ext_CP_Clk.o)
+                0x00001d38                ADC_DelSig_1_Ext_CP_Clk_GetDividerRegister
  .text.ADC_DelSig_1_Ext_CP_Clk_SetModeRegister
-                0x00001bec       0x34 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_Ext_CP_Clk.o)
-                0x00001bec                ADC_DelSig_1_Ext_CP_Clk_SetModeRegister
+                0x00001d50       0x34 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_Ext_CP_Clk.o)
+                0x00001d50                ADC_DelSig_1_Ext_CP_Clk_SetModeRegister
  .text.ADC_DelSig_1_Ext_CP_Clk_GetSourceRegister
-                0x00001c20       0x20 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_Ext_CP_Clk.o)
-                0x00001c20                ADC_DelSig_1_Ext_CP_Clk_GetSourceRegister
+                0x00001d84       0x20 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_Ext_CP_Clk.o)
+                0x00001d84                ADC_DelSig_1_Ext_CP_Clk_GetSourceRegister
+ .text.ADC_DelSig_1_IRQ_Disable
+                0x00001da4       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
+                0x00001da4                ADC_DelSig_1_IRQ_Disable
  .text.ADC_DelSig_1_theACLK_SetDividerRegister
-                0x00001c40      0x15c .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
-                0x00001c40                ADC_DelSig_1_theACLK_SetDividerRegister
+                0x00001dbc      0x15c .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
+                0x00001dbc                ADC_DelSig_1_theACLK_SetDividerRegister
  .text.ADC_DelSig_1_theACLK_GetDividerRegister
-                0x00001d9c       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
-                0x00001d9c                ADC_DelSig_1_theACLK_GetDividerRegister
+                0x00001f18       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
+                0x00001f18                ADC_DelSig_1_theACLK_GetDividerRegister
  .text.ADC_DelSig_1_theACLK_SetModeRegister
-                0x00001db4       0x34 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
-                0x00001db4                ADC_DelSig_1_theACLK_SetModeRegister
+                0x00001f30       0x34 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
+                0x00001f30                ADC_DelSig_1_theACLK_SetModeRegister
  .text.ADC_DelSig_1_theACLK_GetSourceRegister
-                0x00001de8       0x20 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
-                0x00001de8                ADC_DelSig_1_theACLK_GetSourceRegister
+                0x00001f64       0x20 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
+                0x00001f64                ADC_DelSig_1_theACLK_GetSourceRegister
  .text.DMA_2_DmaInitialize
-                0x00001e08       0x60 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_2_dma.o)
-                0x00001e08                DMA_2_DmaInitialize
+                0x00001f84       0x60 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_2_dma.o)
+                0x00001f84                DMA_2_DmaInitialize
  .text.isr_1_StartEx
-                0x00001e68       0x24 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
-                0x00001e68                isr_1_StartEx
+                0x00001fe4       0x24 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
+                0x00001fe4                isr_1_StartEx
  .text.isr_1_SetVector
-                0x00001e8c       0x24 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
-                0x00001e8c                isr_1_SetVector
+                0x00002008       0x24 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
+                0x00002008                isr_1_SetVector
  .text.isr_1_SetPriority
-                0x00001eb0       0x24 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
-                0x00001eb0                isr_1_SetPriority
+                0x0000202c       0x24 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
+                0x0000202c                isr_1_SetPriority
  .text.isr_1_Enable
-                0x00001ed4       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
-                0x00001ed4                isr_1_Enable
+                0x00002050       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
+                0x00002050                isr_1_Enable
  .text.isr_1_Disable
-                0x00001eec       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
-                0x00001eec                isr_1_Disable
+                0x00002068       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
+                0x00002068                isr_1_Disable
  .text.isr_1_ClearPending
-                0x00001f04       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
-                0x00001f04                isr_1_ClearPending
+                0x00002080       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
+                0x00002080                isr_1_ClearPending
  .text.isr_2_StartEx
-                0x00001f1c       0x24 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
-                0x00001f1c                isr_2_StartEx
+                0x00002098       0x24 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
+                0x00002098                isr_2_StartEx
  .text.isr_2_SetVector
-                0x00001f40       0x24 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
-                0x00001f40                isr_2_SetVector
+                0x000020bc       0x24 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
+                0x000020bc                isr_2_SetVector
  .text.isr_2_SetPriority
-                0x00001f64       0x24 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
-                0x00001f64                isr_2_SetPriority
+                0x000020e0       0x24 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
+                0x000020e0                isr_2_SetPriority
  .text.isr_2_Enable
-                0x00001f88       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
-                0x00001f88                isr_2_Enable
+                0x00002104       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
+                0x00002104                isr_2_Enable
  .text.isr_2_Disable
-                0x00001fa0       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
-                0x00001fa0                isr_2_Disable
+                0x0000211c       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
+                0x0000211c                isr_2_Disable
  .text.Filter_Init
-                0x00001fb8      0x11c .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
-                0x00001fb8                Filter_Init
+                0x00002134      0x11c .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
+                0x00002134                Filter_Init
  .text.Filter_Enable
-                0x000020d4       0x48 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
-                0x000020d4                Filter_Enable
+                0x00002250       0x48 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
+                0x00002250                Filter_Enable
  .text.Filter_Start
-                0x0000211c       0x20 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
-                0x0000211c                Filter_Start
+                0x00002298       0x20 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
+                0x00002298                Filter_Start
  .text.Filter_SetCoherency
-                0x0000213c       0x98 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
-                0x0000213c                Filter_SetCoherency
+                0x000022b8       0x98 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
+                0x000022b8                Filter_SetCoherency
  .text.Filter_SetDalign
-                0x000021d4       0x50 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
-                0x000021d4                Filter_SetDalign
+                0x00002350       0x50 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
+                0x00002350                Filter_SetDalign
  .text.Filter_SetInterruptMode
-                0x00002224       0x28 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_PVT.o)
-                0x00002224                Filter_SetInterruptMode
+                0x000023a0       0x28 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_PVT.o)
+                0x000023a0                Filter_SetInterruptMode
  .text.Filter_SetDMAMode
-                0x0000224c       0x28 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_PVT.o)
-                0x0000224c                Filter_SetDMAMode
+                0x000023c8       0x28 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_PVT.o)
+                0x000023c8                Filter_SetDMAMode
  .text.ADC2Filter_DMA_DmaInitialize
-                0x00002274       0x60 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC2Filter_DMA_dma.o)
-                0x00002274                ADC2Filter_DMA_DmaInitialize
+                0x000023f0       0x60 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC2Filter_DMA_dma.o)
+                0x000023f0                ADC2Filter_DMA_DmaInitialize
  .text.DMA_4_DmaInitialize
-                0x000022d4       0x60 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_4_dma.o)
-                0x000022d4                DMA_4_DmaInitialize
+                0x00002450       0x60 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_4_dma.o)
+                0x00002450                DMA_4_DmaInitialize
  .text.DMA_3_DmaInitialize
-                0x00002334       0x60 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_3_dma.o)
-                0x00002334                DMA_3_DmaInitialize
+                0x000024b0       0x60 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_3_dma.o)
+                0x000024b0                DMA_3_DmaInitialize
  .text.arm_cfft_radix4by2_q31
-                0x00002394      0x170 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_q31.o)
-                0x00002394                arm_cfft_radix4by2_q31
+                0x00002510      0x170 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_q31.o)
+                0x00002510                arm_cfft_radix4by2_q31
  .text.arm_cfft_radix4by2_inverse_q31
-                0x00002504      0x178 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_q31.o)
-                0x00002504                arm_cfft_radix4by2_inverse_q31
+                0x00002680      0x178 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_q31.o)
+                0x00002680                arm_cfft_radix4by2_inverse_q31
  .text.arm_cfft_q31
-                0x0000267c       0xbc Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_q31.o)
-                0x0000267c                arm_cfft_q31
- .text          0x00002738       0xc4 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal2.o)
-                0x00002738                arm_bitreversal_32
-                0x000027a4                arm_bitreversal_16
+                0x000027f8       0xbc Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_q31.o)
+                0x000027f8                arm_cfft_q31
+ .text          0x000028b4       0xc4 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal2.o)
+                0x000028b4                arm_bitreversal_32
+                0x00002920                arm_bitreversal_16
  .text.arm_radix4_butterfly_q31
-                0x000027fc      0x588 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_radix4_q31.o)
-                0x000027fc                arm_radix4_butterfly_q31
+                0x00002978      0x588 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_radix4_q31.o)
+                0x00002978                arm_radix4_butterfly_q31
  .text.arm_radix4_butterfly_inverse_q31
-                0x00002d84      0x598 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_radix4_q31.o)
-                0x00002d84                arm_radix4_butterfly_inverse_q31
+                0x00002f00      0x598 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_radix4_q31.o)
+                0x00002f00                arm_radix4_butterfly_inverse_q31
  .text.arm_cmplx_mag_q31
-                0x0000331c      0x138 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cmplx_mag_q31.o)
-                0x0000331c                arm_cmplx_mag_q31
+                0x00003498      0x138 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cmplx_mag_q31.o)
+                0x00003498                arm_cmplx_mag_q31
  .text.arm_sqrt_q31
-                0x00003454      0x104 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_sqrt_q31.o)
-                0x00003454                arm_sqrt_q31
- .text          0x00003558      0x21c c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_addsubsf3.o)
-                0x00003558                __aeabi_frsub
-                0x00003560                __subsf3
-                0x00003560                __aeabi_fsub
-                0x00003564                __aeabi_fadd
-                0x00003564                __addsf3
-                0x000036c4                __aeabi_ui2f
-                0x000036c4                __floatunsisf
-                0x000036cc                __aeabi_i2f
-                0x000036cc                __floatsisf
-                0x000036e8                __aeabi_ul2f
-                0x000036e8                __floatundisf
-                0x000036f8                __aeabi_l2f
-                0x000036f8                __floatdisf
- .text          0x00003774      0x2a0 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_muldivsf3.o)
-                0x00003774                __mulsf3
-                0x00003774                __aeabi_fmul
-                0x000038dc                __aeabi_fdiv
-                0x000038dc                __divsf3
- .text          0x00003a14       0x4c c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_fixsfsi.o)
-                0x00003a14                __aeabi_f2iz
-                0x00003a14                __fixsfsi
+                0x000035d0      0x104 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_sqrt_q31.o)
+                0x000035d0                arm_sqrt_q31
+ .text          0x000036d4      0x21c c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_addsubsf3.o)
+                0x000036d4                __aeabi_frsub
+                0x000036dc                __subsf3
+                0x000036dc                __aeabi_fsub
+                0x000036e0                __aeabi_fadd
+                0x000036e0                __addsf3
+                0x00003840                __aeabi_ui2f
+                0x00003840                __floatunsisf
+                0x00003848                __aeabi_i2f
+                0x00003848                __floatsisf
+                0x00003864                __aeabi_ul2f
+                0x00003864                __floatundisf
+                0x00003874                __aeabi_l2f
+                0x00003874                __floatdisf
+ .text          0x000038f0      0x2a0 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_muldivsf3.o)
+                0x000038f0                __mulsf3
+                0x000038f0                __aeabi_fmul
+                0x00003a58                __aeabi_fdiv
+                0x00003a58                __divsf3
+ .text          0x00003b90       0x4c c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_fixsfsi.o)
+                0x00003b90                __aeabi_f2iz
+                0x00003b90                __fixsfsi
  .text.__libc_init_array
-                0x00003a60       0x4c c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-init.o)
-                0x00003a60                __libc_init_array
- .text.memcpy   0x00003aac       0x12 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-memcpy-stub.o)
-                0x00003aac                memcpy
- .text.memset   0x00003abe       0x10 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-memset.o)
-                0x00003abe                memset
+                0x00003bdc       0x4c c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-init.o)
+                0x00003bdc                __libc_init_array
+ .text.memcpy   0x00003c28       0x12 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-memcpy-stub.o)
+                0x00003c28                memcpy
+ .text.memset   0x00003c3a       0x10 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-memset.o)
+                0x00003c3a                memset
  *(.plt)
  *(.gnu.warning)
  *(.glue_7t)
@@ -1325,93 +1359,92 @@ END GROUP
  *(.ARM.extab* .gnu.linkonce.armextab.*)
  *(.gcc_except_table)
 
-.v4_bx          0x00003ad0        0x0
+.v4_bx          0x00003c4c        0x0
  .v4_bx         0x00000000        0x0 linker stubs
 
-.iplt           0x00003ad0        0x0
+.iplt           0x00003c4c        0x0
  .iplt          0x00000000        0x0 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m/crtbegin.o
 
 .eh_frame_hdr
  *(.eh_frame_hdr)
 
-.eh_frame       0x00003ad0        0x4
+.eh_frame       0x00003c4c        0x4
  *(.eh_frame)
- .eh_frame      0x00003ad0        0x0 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m/crtbegin.o
- .eh_frame      0x00003ad0        0x4 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m/crtend.o
-                0x00003ad4                PROVIDE (__exidx_start, .)
+ .eh_frame      0x00003c4c        0x0 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m/crtbegin.o
+ .eh_frame      0x00003c4c        0x4 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m/crtend.o
+                0x00003c50                PROVIDE (__exidx_start, .)
 
 .ARM.exidx
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-                0x00003ad4                __exidx_end = .
+                0x00003c50                __exidx_end = .
 
-.rodata         0x00003ad4      0xbbc
+.rodata         0x00003c50      0xbb8
  *(.rodata .rodata.* .gnu.linkonce.r.*)
- .rodata        0x00003ad4       0x44 .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyfitter_cfg.o)
-                0x00003ad4                ADC_DelSig_1_AMux__addrTable
-                0x00003adc                ADC_DelSig_1_AMux__maskTable
- .rodata        0x00003b18       0x10 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
- .rodata        0x00003b28      0x640 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_RAM_Data.o)
-                0x00003b28                Filter_control
-                0x00003c28                Filter_data_a
-                0x00003e28                Filter_data_b
-                0x00004028                Filter_acu
-                0x00004068                Filter_cfsm
+ .rodata        0x00003c50       0x44 .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyfitter_cfg.o)
+                0x00003c50                ADC_DelSig_1_AMux__addrTable
+                0x00003c58                ADC_DelSig_1_AMux__maskTable
+ .rodata        0x00003c94       0x10 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
+ .rodata        0x00003ca4      0x640 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_RAM_Data.o)
+                0x00003ca4                Filter_control
+                0x00003da4                Filter_data_a
+                0x00003fa4                Filter_data_b
+                0x000041a4                Filter_acu
+                0x000041e4                Filter_cfsm
  .rodata.arm_cfft_sR_q15_len256
-                0x00004168       0x10 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_const_structs.o)
-                0x00004168                arm_cfft_sR_q15_len256
+                0x000042e4       0x10 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_const_structs.o)
+                0x000042e4                arm_cfft_sR_q15_len256
  .rodata.twiddleCoef_256_q15
-                0x00004178      0x300 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_common_tables.o)
-                0x00004178                twiddleCoef_256_q15
+                0x000042f4      0x300 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_common_tables.o)
+                0x000042f4                twiddleCoef_256_q15
  .rodata.armBitRevIndexTable_fixed_256
-                0x00004478      0x1e0 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_common_tables.o)
-                0x00004478                armBitRevIndexTable_fixed_256
-                0x00004658                . = ALIGN (0x4)
+                0x000045f4      0x1e0 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_common_tables.o)
+                0x000045f4                armBitRevIndexTable_fixed_256
+                0x000047d4                . = ALIGN (0x4)
  *(.init)
- .init          0x00004658        0x4 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m/crti.o
-                0x00004658                _init
- .init          0x0000465c        0x8 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m/crtn.o
-                0x00004664                . = ALIGN (0x4)
-                0x00004664                __preinit_array_start = .
+ .init          0x000047d4        0x4 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m/crti.o
+                0x000047d4                _init
+ .init          0x000047d8        0x8 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m/crtn.o
+                0x000047e0                . = ALIGN (0x4)
+                0x000047e0                __preinit_array_start = .
  *(.preinit_array)
-                0x00004664                __preinit_array_end = .
-                0x00004664                . = ALIGN (0x4)
-                0x00004664                __init_array_start = .
+                0x000047e0                __preinit_array_end = .
+                0x000047e0                . = ALIGN (0x4)
+                0x000047e0                __init_array_start = .
  *(SORT(.init_array.*))
  *(.init_array)
- .init_array    0x00004664        0x4 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m/crtbegin.o
- .init_array    0x00004668        0x4 .\CortexM3\ARM_GCC_484\Debug\Cm3Start.o
-                0x0000466c                __init_array_end = .
-                0x0000466c                . = ALIGN (0x4)
+ .init_array    0x000047e0        0x4 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m/crtbegin.o
+ .init_array    0x000047e4        0x4 .\CortexM3\ARM_GCC_484\Debug\Cm3Start.o
+                0x000047e8                __init_array_end = .
+                0x000047e8                . = ALIGN (0x4)
  *(.fini)
- .fini          0x0000466c        0x4 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m/crti.o
-                0x0000466c                _fini
- .fini          0x00004670        0x8 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m/crtn.o
-                0x00004678                . = ALIGN (0x4)
-                0x00004678                __fini_array_start = .
+ .fini          0x000047e8        0x4 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m/crti.o
+                0x000047e8                _fini
+ .fini          0x000047ec        0x8 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m/crtn.o
+                0x000047f4                . = ALIGN (0x4)
+                0x000047f4                __fini_array_start = .
  *(.fini_array)
- .fini_array    0x00004678        0x4 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m/crtbegin.o
+ .fini_array    0x000047f4        0x4 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m/crtbegin.o
  *(SORT(.fini_array.*))
-                0x0000467c                __fini_array_end = .
-                0x0000467c                . = ALIGN (0x4)
+                0x000047f8                __fini_array_end = .
+                0x000047f8                . = ALIGN (0x4)
  *crtbegin.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o) .ctors)
  *(SORT(.ctors.*))
  *crtend.o(.ctors)
-                0x0000467c                . = ALIGN (0x4)
+                0x000047f8                . = ALIGN (0x4)
  *crtbegin.o(.dtors)
  *(EXCLUDE_FILE(*crtend.o) .dtors)
  *(SORT(.dtors.*))
  *crtend.o(.dtors)
-                0x0000467c                . = ALIGN (0x4)
-                0x0000467c                __cy_regions = .
-                0x0000467c        0x4 LONG 0x4690 __cy_region_init_ram
-                0x00004680        0x4 LONG 0x1fff8108 __cy_region_start_data
-                0x00004684        0x4 LONG 0x28 __cy_region_init_size_ram
-                0x00004688        0x4 LONG 0x1250 __cy_region_zero_size_ram
-                0x0000468c                __cy_regions_end = .
-                0x00004690                . = ALIGN (0x8)
- *fill*         0x0000468c        0x4 
-                0x00004690                _etext = .
+                0x000047f8                . = ALIGN (0x4)
+                0x000047f8                __cy_regions = .
+                0x000047f8        0x4 LONG 0x4808 __cy_region_init_ram
+                0x000047fc        0x4 LONG 0x1fff8108 __cy_region_start_data
+                0x00004800        0x4 LONG 0x28 __cy_region_init_size_ram
+                0x00004804        0x4 LONG 0x1250 __cy_region_zero_size_ram
+                0x00004808                __cy_regions_end = .
+                0x00004808                . = ALIGN (0x8)
+                0x00004808                _etext = .
 
 .ramvectors     0x1fff8000      0x100
                 0x1fff8000                __cy_region_start_ram = .
@@ -1425,7 +1458,7 @@ END GROUP
  .noinit        0x1fff8104        0x1 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyLib.o)
                 0x1fff8104                CyResetStatus
 
-.data           0x1fff8108       0x28 load address 0x00004690
+.data           0x1fff8108       0x28 load address 0x00004808
                 0x1fff8108                __cy_region_start_data = .
  *(.jcr)
  .jcr           0x1fff8108        0x0 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m/crtbegin.o
@@ -1459,10 +1492,10 @@ END GROUP
  *(.ram)
                 0x1fff8130                _edata = .
 
-.igot.plt       0x1fff8130        0x0 load address 0x000046b8
+.igot.plt       0x1fff8130        0x0 load address 0x00004830
  .igot.plt      0x00000000        0x0 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m/crtbegin.o
 
-.bss            0x1fff8130     0x1250 load address 0x000046b8
+.bss            0x1fff8130     0x1250 load address 0x00004830
                 0x1fff8130                PROVIDE (__bss_start__, .)
  *(.shbss)
  *(.bss .bss.* .gnu.linkonce.b.*)
@@ -1506,11 +1539,11 @@ END GROUP
                 0x1fff9380                __end = .
                 0x1fff9380                PROVIDE (end, .)
                 0x1fff9380                PROVIDE (__bss_end__, .)
-                0x00004690                __cy_region_init_ram = LOADADDR (.data)
+                0x00004808                __cy_region_init_ram = LOADADDR (.data)
                 0x00000028                __cy_region_init_size_ram = (_edata - ADDR (.data))
                 0x00001250                __cy_region_zero_size_ram = (_end - _edata)
 
-.heap           0x1fff9380     0x1000 load address 0x000046b8
+.heap           0x1fff9380     0x1000 load address 0x00004830
                 0x1fff9380                . = _end
                 0x1fffa380                . = (. + 0x1000)
  *fill*         0x1fff9380     0x1000 
@@ -1559,7 +1592,7 @@ END GROUP
  .cymeta        0x90500000        0xc .\CortexM3\ARM_GCC_484\Debug\cymetadata.o
                 0x90500000                cy_metadata
 
-.rel.dyn        0x000046b8        0x0 load address 0x9050000c
+.rel.dyn        0x00004830        0x0 load address 0x9050000c
  .rel.iplt      0x00000000        0x0 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m/crtbegin.o
 
 .stab
@@ -1580,7 +1613,7 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0xd20
+.debug_aranges  0x00000000      0xda0
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x38 .\CortexM3\ARM_GCC_484\Debug\main.o
@@ -1613,50 +1646,52 @@ END GROUP
  .debug_aranges
                 0x000007b8       0x70 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_Ext_CP_Clk.o)
  .debug_aranges
-                0x00000828       0x80 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
+                0x00000828       0x80 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
  .debug_aranges
-                0x000008a8       0x28 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_2_dma.o)
+                0x000008a8       0x80 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
  .debug_aranges
-                0x000008d0       0x80 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
+                0x00000928       0x28 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_2_dma.o)
  .debug_aranges
-                0x00000950       0x80 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
+                0x00000950       0x80 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
  .debug_aranges
-                0x000009d0       0x80 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
+                0x000009d0       0x80 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
  .debug_aranges
-                0x00000a50       0x28 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_PVT.o)
+                0x00000a50       0x80 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
  .debug_aranges
-                0x00000a78       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_RAM_Data.o)
+                0x00000ad0       0x28 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_PVT.o)
  .debug_aranges
-                0x00000a90       0x28 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC2Filter_DMA_dma.o)
+                0x00000af8       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_RAM_Data.o)
  .debug_aranges
-                0x00000ab8       0x28 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_4_dma.o)
+                0x00000b10       0x28 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC2Filter_DMA_dma.o)
  .debug_aranges
-                0x00000ae0       0x28 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_3_dma.o)
+                0x00000b38       0x28 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_4_dma.o)
  .debug_aranges
-                0x00000b08       0x80 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyFlash.o)
+                0x00000b60       0x28 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_3_dma.o)
  .debug_aranges
-                0x00000b88       0x78 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CySpc.o)
+                0x00000b88       0x80 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyFlash.o)
  .debug_aranges
-                0x00000c00       0x18 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_const_structs.o)
+                0x00000c08       0x78 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CySpc.o)
  .debug_aranges
-                0x00000c18       0x18 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_common_tables.o)
+                0x00000c80       0x18 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_const_structs.o)
  .debug_aranges
-                0x00000c30       0x30 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_q31.o)
+                0x00000c98       0x18 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_common_tables.o)
  .debug_aranges
-                0x00000c60       0x20 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal2.o)
+                0x00000cb0       0x30 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_q31.o)
  .debug_aranges
-                0x00000c80       0x30 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_radix4_q31.o)
+                0x00000ce0       0x20 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal2.o)
  .debug_aranges
-                0x00000cb0       0x20 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cmplx_mag_q31.o)
+                0x00000d00       0x30 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_radix4_q31.o)
  .debug_aranges
-                0x00000cd0       0x20 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_sqrt_q31.o)
+                0x00000d30       0x20 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cmplx_mag_q31.o)
  .debug_aranges
-                0x00000cf0       0x30 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal.o)
+                0x00000d50       0x20 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_sqrt_q31.o)
+ .debug_aranges
+                0x00000d70       0x30 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal.o)
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x818a
+.debug_info     0x00000000     0x83c0
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x35d .\CortexM3\ARM_GCC_484\Debug\main.o
  .debug_info    0x0000035d      0x667 .\CortexM3\ARM_GCC_484\Debug\math_helper.o
@@ -1673,28 +1708,29 @@ END GROUP
  .debug_info    0x000039f8      0x112 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_1_dma.o)
  .debug_info    0x00003b0a      0x109 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_AMux.o)
  .debug_info    0x00003c13      0x25b .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_Ext_CP_Clk.o)
- .debug_info    0x00003e6e      0x297 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
- .debug_info    0x00004105      0x112 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_2_dma.o)
- .debug_info    0x00004217      0x236 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
- .debug_info    0x0000444d      0x236 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
- .debug_info    0x00004683      0x3a7 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
- .debug_info    0x00004a2a       0xe8 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_PVT.o)
- .debug_info    0x00004b12      0x12a .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_RAM_Data.o)
- .debug_info    0x00004c3c      0x112 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC2Filter_DMA_dma.o)
- .debug_info    0x00004d4e      0x112 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_4_dma.o)
- .debug_info    0x00004e60      0x112 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_3_dma.o)
- .debug_info    0x00004f72      0x36a .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyFlash.o)
- .debug_info    0x000052dc      0x456 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CySpc.o)
- .debug_info    0x00005732      0x9f5 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_const_structs.o)
- .debug_info    0x00006127      0x99d Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_common_tables.o)
- .debug_info    0x00006ac4      0x595 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_q31.o)
- .debug_info    0x00007059       0x85 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal2.o)
- .debug_info    0x000070de      0x821 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_radix4_q31.o)
- .debug_info    0x000078ff      0x321 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cmplx_mag_q31.o)
- .debug_info    0x00007c20      0x26f Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_sqrt_q31.o)
- .debug_info    0x00007e8f      0x2fb Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal.o)
+ .debug_info    0x00003e6e      0x236 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
+ .debug_info    0x000040a4      0x297 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
+ .debug_info    0x0000433b      0x112 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_2_dma.o)
+ .debug_info    0x0000444d      0x236 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
+ .debug_info    0x00004683      0x236 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
+ .debug_info    0x000048b9      0x3a7 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
+ .debug_info    0x00004c60       0xe8 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_PVT.o)
+ .debug_info    0x00004d48      0x12a .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_RAM_Data.o)
+ .debug_info    0x00004e72      0x112 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC2Filter_DMA_dma.o)
+ .debug_info    0x00004f84      0x112 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_4_dma.o)
+ .debug_info    0x00005096      0x112 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_3_dma.o)
+ .debug_info    0x000051a8      0x36a .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyFlash.o)
+ .debug_info    0x00005512      0x456 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CySpc.o)
+ .debug_info    0x00005968      0x9f5 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_const_structs.o)
+ .debug_info    0x0000635d      0x99d Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_common_tables.o)
+ .debug_info    0x00006cfa      0x595 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_q31.o)
+ .debug_info    0x0000728f       0x85 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal2.o)
+ .debug_info    0x00007314      0x821 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_radix4_q31.o)
+ .debug_info    0x00007b35      0x321 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cmplx_mag_q31.o)
+ .debug_info    0x00007e56      0x26f Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_sqrt_q31.o)
+ .debug_info    0x000080c5      0x2fb Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal.o)
 
-.debug_abbrev   0x00000000     0x225c
+.debug_abbrev   0x00000000     0x23b2
  *(.debug_abbrev)
  .debug_abbrev  0x00000000       0xf9 .\CortexM3\ARM_GCC_484\Debug\main.o
  .debug_abbrev  0x000000f9      0x170 .\CortexM3\ARM_GCC_484\Debug\math_helper.o
@@ -1711,66 +1747,68 @@ END GROUP
  .debug_abbrev  0x00000e7d       0x8b .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_1_dma.o)
  .debug_abbrev  0x00000f08       0x6f .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_AMux.o)
  .debug_abbrev  0x00000f77      0x12a .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_Ext_CP_Clk.o)
- .debug_abbrev  0x000010a1      0x12a .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
- .debug_abbrev  0x000011cb       0x8b .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_2_dma.o)
- .debug_abbrev  0x00001256      0x156 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
- .debug_abbrev  0x000013ac      0x156 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
- .debug_abbrev  0x00001502      0x16b .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
- .debug_abbrev  0x0000166d       0x8c .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_PVT.o)
- .debug_abbrev  0x000016f9       0x66 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_RAM_Data.o)
- .debug_abbrev  0x0000175f       0x8b .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC2Filter_DMA_dma.o)
- .debug_abbrev  0x000017ea       0x8b .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_4_dma.o)
- .debug_abbrev  0x00001875       0x8b .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_3_dma.o)
- .debug_abbrev  0x00001900      0x12d .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyFlash.o)
- .debug_abbrev  0x00001a2d      0x179 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CySpc.o)
- .debug_abbrev  0x00001ba6       0xa9 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_const_structs.o)
- .debug_abbrev  0x00001c4f       0x84 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_common_tables.o)
- .debug_abbrev  0x00001cd3      0x140 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_q31.o)
- .debug_abbrev  0x00001e13       0x14 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal2.o)
- .debug_abbrev  0x00001e27      0x155 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_radix4_q31.o)
- .debug_abbrev  0x00001f7c       0xea Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cmplx_mag_q31.o)
- .debug_abbrev  0x00002066      0x12a Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_sqrt_q31.o)
- .debug_abbrev  0x00002190       0xcc Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal.o)
+ .debug_abbrev  0x000010a1      0x156 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
+ .debug_abbrev  0x000011f7      0x12a .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
+ .debug_abbrev  0x00001321       0x8b .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_2_dma.o)
+ .debug_abbrev  0x000013ac      0x156 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
+ .debug_abbrev  0x00001502      0x156 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
+ .debug_abbrev  0x00001658      0x16b .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
+ .debug_abbrev  0x000017c3       0x8c .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_PVT.o)
+ .debug_abbrev  0x0000184f       0x66 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_RAM_Data.o)
+ .debug_abbrev  0x000018b5       0x8b .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC2Filter_DMA_dma.o)
+ .debug_abbrev  0x00001940       0x8b .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_4_dma.o)
+ .debug_abbrev  0x000019cb       0x8b .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_3_dma.o)
+ .debug_abbrev  0x00001a56      0x12d .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyFlash.o)
+ .debug_abbrev  0x00001b83      0x179 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CySpc.o)
+ .debug_abbrev  0x00001cfc       0xa9 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_const_structs.o)
+ .debug_abbrev  0x00001da5       0x84 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_common_tables.o)
+ .debug_abbrev  0x00001e29      0x140 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_q31.o)
+ .debug_abbrev  0x00001f69       0x14 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal2.o)
+ .debug_abbrev  0x00001f7d      0x155 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_radix4_q31.o)
+ .debug_abbrev  0x000020d2       0xea Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cmplx_mag_q31.o)
+ .debug_abbrev  0x000021bc      0x12a Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_sqrt_q31.o)
+ .debug_abbrev  0x000022e6       0xcc Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal.o)
 
-.debug_line     0x00000000     0x4d65
+.debug_line     0x00000000     0x4ed8
  *(.debug_line)
- .debug_line    0x00000000      0x23d .\CortexM3\ARM_GCC_484\Debug\main.o
- .debug_line    0x0000023d      0x40e .\CortexM3\ARM_GCC_484\Debug\math_helper.o
- .debug_line    0x0000064b       0x53 .\CortexM3\ARM_GCC_484\Debug\cymetadata.o
- .debug_line    0x0000069e      0x1c6 .\CortexM3\ARM_GCC_484\Debug\Cm3Start.o
- .debug_line    0x00000864      0x213 .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyfitter_cfg.o)
- .debug_line    0x00000a77       0x68 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyBootAsmGnu.o)
- .debug_line    0x00000adf      0x2af .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyDmac.o)
- .debug_line    0x00000d8e      0x839 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyLib.o)
- .debug_line    0x000015c7      0x366 .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyPm.o)
- .debug_line    0x0000192d      0x1f6 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
- .debug_line    0x00001b23      0x373 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
- .debug_line    0x00001e96       0x97 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_INT.o)
- .debug_line    0x00001f2d       0x91 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_1_dma.o)
- .debug_line    0x00001fbe       0xa8 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_AMux.o)
- .debug_line    0x00002066      0x1c6 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_Ext_CP_Clk.o)
- .debug_line    0x0000222c      0x1e7 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
- .debug_line    0x00002413       0x91 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_2_dma.o)
- .debug_line    0x000024a4      0x157 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
- .debug_line    0x000025fb      0x167 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
- .debug_line    0x00002762      0x182 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
- .debug_line    0x000028e4       0x78 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_PVT.o)
- .debug_line    0x0000295c       0x58 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_RAM_Data.o)
- .debug_line    0x000029b4       0x9a .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC2Filter_DMA_dma.o)
- .debug_line    0x00002a4e       0x91 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_4_dma.o)
- .debug_line    0x00002adf       0x91 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_3_dma.o)
- .debug_line    0x00002b70      0x217 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyFlash.o)
- .debug_line    0x00002d87      0x20c .\CortexM3\ARM_GCC_484\Debug\Design01.a(CySpc.o)
- .debug_line    0x00002f93      0x140 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_const_structs.o)
- .debug_line    0x000030d3      0x129 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_common_tables.o)
- .debug_line    0x000031fc      0x3f0 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_q31.o)
- .debug_line    0x000035ec       0x98 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal2.o)
- .debug_line    0x00003684     0x1186 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_radix4_q31.o)
- .debug_line    0x0000480a      0x1be Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cmplx_mag_q31.o)
- .debug_line    0x000049c8      0x19a Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_sqrt_q31.o)
- .debug_line    0x00004b62      0x203 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal.o)
+ .debug_line    0x00000000      0x23e .\CortexM3\ARM_GCC_484\Debug\main.o
+ .debug_line    0x0000023e      0x40e .\CortexM3\ARM_GCC_484\Debug\math_helper.o
+ .debug_line    0x0000064c       0x53 .\CortexM3\ARM_GCC_484\Debug\cymetadata.o
+ .debug_line    0x0000069f      0x1c6 .\CortexM3\ARM_GCC_484\Debug\Cm3Start.o
+ .debug_line    0x00000865      0x213 .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyfitter_cfg.o)
+ .debug_line    0x00000a78       0x68 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyBootAsmGnu.o)
+ .debug_line    0x00000ae0      0x2af .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyDmac.o)
+ .debug_line    0x00000d8f      0x839 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyLib.o)
+ .debug_line    0x000015c8      0x366 .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyPm.o)
+ .debug_line    0x0000192e      0x1f6 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
+ .debug_line    0x00001b24      0x373 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
+ .debug_line    0x00001e97       0x97 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_INT.o)
+ .debug_line    0x00001f2e       0x91 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_1_dma.o)
+ .debug_line    0x00001fbf       0xa8 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_AMux.o)
+ .debug_line    0x00002067      0x1c6 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_Ext_CP_Clk.o)
+ .debug_line    0x0000222d      0x172 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
+ .debug_line    0x0000239f      0x1e7 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
+ .debug_line    0x00002586       0x91 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_2_dma.o)
+ .debug_line    0x00002617      0x157 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
+ .debug_line    0x0000276e      0x167 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
+ .debug_line    0x000028d5      0x182 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
+ .debug_line    0x00002a57       0x78 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_PVT.o)
+ .debug_line    0x00002acf       0x58 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_RAM_Data.o)
+ .debug_line    0x00002b27       0x9a .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC2Filter_DMA_dma.o)
+ .debug_line    0x00002bc1       0x91 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_4_dma.o)
+ .debug_line    0x00002c52       0x91 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_3_dma.o)
+ .debug_line    0x00002ce3      0x217 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyFlash.o)
+ .debug_line    0x00002efa      0x20c .\CortexM3\ARM_GCC_484\Debug\Design01.a(CySpc.o)
+ .debug_line    0x00003106      0x140 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_const_structs.o)
+ .debug_line    0x00003246      0x129 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_common_tables.o)
+ .debug_line    0x0000336f      0x3f0 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_q31.o)
+ .debug_line    0x0000375f       0x98 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal2.o)
+ .debug_line    0x000037f7     0x1186 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_radix4_q31.o)
+ .debug_line    0x0000497d      0x1be Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cmplx_mag_q31.o)
+ .debug_line    0x00004b3b      0x19a Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_sqrt_q31.o)
+ .debug_line    0x00004cd5      0x203 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal.o)
 
-.debug_frame    0x00000000     0x2834
+.debug_frame    0x00000000     0x29b4
  *(.debug_frame)
  .debug_frame   0x00000000       0x80 .\CortexM3\ARM_GCC_484\Debug\main.o
  .debug_frame   0x00000080      0x208 .\CortexM3\ARM_GCC_484\Debug\math_helper.o
@@ -1785,101 +1823,104 @@ END GROUP
  .debug_frame   0x000017d8       0x4c .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_1_dma.o)
  .debug_frame   0x00001824       0x70 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_AMux.o)
  .debug_frame   0x00001894      0x14c .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_Ext_CP_Clk.o)
- .debug_frame   0x000019e0      0x184 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
- .debug_frame   0x00001b64       0x4c .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_2_dma.o)
- .debug_frame   0x00001bb0      0x180 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
- .debug_frame   0x00001d30      0x180 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
- .debug_frame   0x00001eb0      0x188 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
- .debug_frame   0x00002038       0x48 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_PVT.o)
- .debug_frame   0x00002080       0x4c .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC2Filter_DMA_dma.o)
- .debug_frame   0x000020cc       0x4c .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_4_dma.o)
- .debug_frame   0x00002118       0x4c .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_3_dma.o)
- .debug_frame   0x00002164      0x1a8 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyFlash.o)
- .debug_frame   0x0000230c      0x174 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CySpc.o)
- .debug_frame   0x00002480       0x7c Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_q31.o)
- .debug_frame   0x000024fc       0x7c Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_radix4_q31.o)
- .debug_frame   0x00002578       0x3c Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cmplx_mag_q31.o)
- .debug_frame   0x000025b4       0x38 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_sqrt_q31.o)
- .debug_frame   0x000025ec       0x84 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal.o)
- .debug_frame   0x00002670       0x34 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-w_log10.o)
- .debug_frame   0x000026a4       0x34 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-e_log10.o)
- .debug_frame   0x000026d8       0x28 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_fpclassify.o)
- .debug_frame   0x00002700       0x20 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_matherr.o)
- .debug_frame   0x00002720       0x20 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_nan.o)
- .debug_frame   0x00002740       0x38 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-e_log.o)
- .debug_frame   0x00002778       0x20 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-errno.o)
- .debug_frame   0x00002798       0x28 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-exit.o)
- .debug_frame   0x000027c0       0x2c c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-init.o)
- .debug_frame   0x000027ec       0x28 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-memcpy-stub.o)
- .debug_frame   0x00002814       0x20 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-memset.o)
+ .debug_frame   0x000019e0      0x180 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
+ .debug_frame   0x00001b60      0x184 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
+ .debug_frame   0x00001ce4       0x4c .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_2_dma.o)
+ .debug_frame   0x00001d30      0x180 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
+ .debug_frame   0x00001eb0      0x180 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
+ .debug_frame   0x00002030      0x188 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
+ .debug_frame   0x000021b8       0x48 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_PVT.o)
+ .debug_frame   0x00002200       0x4c .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC2Filter_DMA_dma.o)
+ .debug_frame   0x0000224c       0x4c .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_4_dma.o)
+ .debug_frame   0x00002298       0x4c .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_3_dma.o)
+ .debug_frame   0x000022e4      0x1a8 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyFlash.o)
+ .debug_frame   0x0000248c      0x174 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CySpc.o)
+ .debug_frame   0x00002600       0x7c Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_q31.o)
+ .debug_frame   0x0000267c       0x7c Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_radix4_q31.o)
+ .debug_frame   0x000026f8       0x3c Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cmplx_mag_q31.o)
+ .debug_frame   0x00002734       0x38 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_sqrt_q31.o)
+ .debug_frame   0x0000276c       0x84 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal.o)
+ .debug_frame   0x000027f0       0x34 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-w_log10.o)
+ .debug_frame   0x00002824       0x34 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-e_log10.o)
+ .debug_frame   0x00002858       0x28 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_fpclassify.o)
+ .debug_frame   0x00002880       0x20 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_matherr.o)
+ .debug_frame   0x000028a0       0x20 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_nan.o)
+ .debug_frame   0x000028c0       0x38 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-e_log.o)
+ .debug_frame   0x000028f8       0x20 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-errno.o)
+ .debug_frame   0x00002918       0x28 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-exit.o)
+ .debug_frame   0x00002940       0x2c c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-init.o)
+ .debug_frame   0x0000296c       0x28 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-memcpy-stub.o)
+ .debug_frame   0x00002994       0x20 c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-memset.o)
 
-.debug_str      0x00000000     0x36e3
+.debug_str      0x00000000     0x38cd
  *(.debug_str)
- .debug_str     0x00000000      0x311 .\CortexM3\ARM_GCC_484\Debug\main.o
-                                0x370 (size before relaxing)
- .debug_str     0x00000311      0x1db .\CortexM3\ARM_GCC_484\Debug\math_helper.o
-                                0x3b7 (size before relaxing)
- .debug_str     0x000004ec       0x77 .\CortexM3\ARM_GCC_484\Debug\cymetadata.o
+ .debug_str     0x00000000      0x31c .\CortexM3\ARM_GCC_484\Debug\main.o
+                                0x37b (size before relaxing)
+ .debug_str     0x0000031c      0x1db .\CortexM3\ARM_GCC_484\Debug\math_helper.o
+                                0x3c2 (size before relaxing)
+ .debug_str     0x000004f7       0xd4 .\CortexM3\ARM_GCC_484\Debug\cymetadata.o
                                 0x1f5 (size before relaxing)
- .debug_str     0x00000563      0x132 .\CortexM3\ARM_GCC_484\Debug\Cm3Start.o
+ .debug_str     0x000005cb      0x132 .\CortexM3\ARM_GCC_484\Debug\Cm3Start.o
                                 0x2d6 (size before relaxing)
- .debug_str     0x00000695      0x1a9 .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyfitter_cfg.o)
+ .debug_str     0x000006fd      0x1a9 .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyfitter_cfg.o)
                                 0x354 (size before relaxing)
- .debug_str     0x0000083e      0x36f .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyDmac.o)
+ .debug_str     0x000008a6      0x36f .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyDmac.o)
                                 0x51c (size before relaxing)
- .debug_str     0x00000bad      0x78d .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyLib.o)
+ .debug_str     0x00000c15      0x78d .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyLib.o)
                                 0x996 (size before relaxing)
- .debug_str     0x0000133a      0x371 .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyPm.o)
+ .debug_str     0x000013a2      0x371 .\CortexM3\ARM_GCC_484\Debug\Design01.a(cyPm.o)
                                 0x526 (size before relaxing)
- .debug_str     0x000016ab      0x1f6 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
+ .debug_str     0x00001713      0x1f6 .\CortexM3\ARM_GCC_484\Debug\Design01.a(LCD_Char_1.o)
                                 0x3a4 (size before relaxing)
- .debug_str     0x000018a1      0x440 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
-                                0x622 (size before relaxing)
- .debug_str     0x00001ce1       0x74 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_INT.o)
-                                0x1ec (size before relaxing)
- .debug_str     0x00001d55       0x95 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_1_dma.o)
+ .debug_str     0x00001909      0x440 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1.o)
+                                0x62d (size before relaxing)
+ .debug_str     0x00001d49       0x74 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_INT.o)
+                                0x1f7 (size before relaxing)
+ .debug_str     0x00001dbd       0x95 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_1_dma.o)
                                 0x21a (size before relaxing)
- .debug_str     0x00001dea       0x9e .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_AMux.o)
+ .debug_str     0x00001e52       0x9e .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_AMux.o)
                                 0x21b (size before relaxing)
- .debug_str     0x00001e88      0x21c .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_Ext_CP_Clk.o)
+ .debug_str     0x00001ef0      0x21c .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_Ext_CP_Clk.o)
                                 0x3b9 (size before relaxing)
- .debug_str     0x000020a4      0x20a .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
+ .debug_str     0x0000210c      0x182 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
+                                0x33f (size before relaxing)
+ .debug_str     0x0000228e      0x20a .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
                                 0x3ea (size before relaxing)
- .debug_str     0x000022ae       0x5a .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_2_dma.o)
+ .debug_str     0x00002498       0x5a .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_2_dma.o)
                                 0x21a (size before relaxing)
- .debug_str     0x00002308       0xe8 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
+ .debug_str     0x000024f2       0xe8 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
                                 0x2a5 (size before relaxing)
- .debug_str     0x000023f0       0xe8 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
+ .debug_str     0x000025da       0xe8 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
                                 0x2a5 (size before relaxing)
- .debug_str     0x000024d8      0x159 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
+ .debug_str     0x000026c2      0x159 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
                                 0x30a (size before relaxing)
- .debug_str     0x00002631       0x57 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_PVT.o)
+ .debug_str     0x0000281b       0x57 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_PVT.o)
                                 0x1da (size before relaxing)
- .debug_str     0x00002688       0x2b .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_RAM_Data.o)
+ .debug_str     0x00002872       0x2b .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_RAM_Data.o)
                                 0x1eb (size before relaxing)
- .debug_str     0x000026b3       0x7e .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC2Filter_DMA_dma.o)
+ .debug_str     0x0000289d       0x7e .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC2Filter_DMA_dma.o)
                                 0x23e (size before relaxing)
- .debug_str     0x00002731       0x5a .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_4_dma.o)
+ .debug_str     0x0000291b       0x5a .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_4_dma.o)
                                 0x21a (size before relaxing)
- .debug_str     0x0000278b       0x5a .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_3_dma.o)
+ .debug_str     0x00002975       0x5a .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_3_dma.o)
                                 0x21a (size before relaxing)
- .debug_str     0x000027e5      0x140 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyFlash.o)
+ .debug_str     0x000029cf      0x140 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyFlash.o)
                                 0x2f5 (size before relaxing)
- .debug_str     0x00002925      0x116 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CySpc.o)
+ .debug_str     0x00002b0f      0x116 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CySpc.o)
                                 0x2f2 (size before relaxing)
- .debug_str     0x00002a3b      0x757 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_const_structs.o)
+ .debug_str     0x00002c25      0x757 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_const_structs.o)
                                 0x8a7 (size before relaxing)
- .debug_str     0x00003192      0x125 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_common_tables.o)
+ .debug_str     0x0000337c      0x125 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_common_tables.o)
                                 0x6cf (size before relaxing)
- .debug_str     0x000032b7      0x100 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_q31.o)
+ .debug_str     0x000034a1      0x100 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_q31.o)
                                 0x317 (size before relaxing)
- .debug_str     0x000033b7       0xf4 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_radix4_q31.o)
+ .debug_str     0x000035a1       0xf4 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_radix4_q31.o)
                                 0x35f (size before relaxing)
- .debug_str     0x000034ab      0x144 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cmplx_mag_q31.o)
+ .debug_str     0x00003695      0x144 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cmplx_mag_q31.o)
                                 0x31f (size before relaxing)
- .debug_str     0x000035ef       0x74 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_sqrt_q31.o)
+ .debug_str     0x000037d9       0x74 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_sqrt_q31.o)
                                 0x31a (size before relaxing)
- .debug_str     0x00003663       0x80 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal.o)
+ .debug_str     0x0000384d       0x80 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal.o)
                                 0x2a3 (size before relaxing)
 
 .debug_loc      0x00000000     0x248b
@@ -1893,7 +1934,7 @@ END GROUP
 .debug_macinfo
  *(.debug_macinfo)
 
-.debug_ranges   0x00000000      0xab0
+.debug_ranges   0x00000000      0xb20
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x28 .\CortexM3\ARM_GCC_484\Debug\main.o
  .debug_ranges  0x00000028       0x80 .\CortexM3\ARM_GCC_484\Debug\math_helper.o
@@ -1908,22 +1949,23 @@ END GROUP
  .debug_ranges  0x00000688       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_1_dma.o)
  .debug_ranges  0x000006a0       0x20 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_AMux.o)
  .debug_ranges  0x000006c0       0x60 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_Ext_CP_Clk.o)
- .debug_ranges  0x00000720       0x70 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
- .debug_ranges  0x00000790       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_2_dma.o)
- .debug_ranges  0x000007a8       0x70 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
- .debug_ranges  0x00000818       0x70 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
- .debug_ranges  0x00000888       0x70 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
- .debug_ranges  0x000008f8       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_PVT.o)
- .debug_ranges  0x00000910       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC2Filter_DMA_dma.o)
- .debug_ranges  0x00000928       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_4_dma.o)
- .debug_ranges  0x00000940       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_3_dma.o)
- .debug_ranges  0x00000958       0x70 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyFlash.o)
- .debug_ranges  0x000009c8       0x68 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CySpc.o)
- .debug_ranges  0x00000a30       0x20 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_q31.o)
- .debug_ranges  0x00000a50       0x20 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_radix4_q31.o)
- .debug_ranges  0x00000a70       0x10 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cmplx_mag_q31.o)
- .debug_ranges  0x00000a80       0x10 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_sqrt_q31.o)
- .debug_ranges  0x00000a90       0x20 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal.o)
+ .debug_ranges  0x00000720       0x70 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
+ .debug_ranges  0x00000790       0x70 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
+ .debug_ranges  0x00000800       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_2_dma.o)
+ .debug_ranges  0x00000818       0x70 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
+ .debug_ranges  0x00000888       0x70 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
+ .debug_ranges  0x000008f8       0x70 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
+ .debug_ranges  0x00000968       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_PVT.o)
+ .debug_ranges  0x00000980       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC2Filter_DMA_dma.o)
+ .debug_ranges  0x00000998       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_4_dma.o)
+ .debug_ranges  0x000009b0       0x18 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_3_dma.o)
+ .debug_ranges  0x000009c8       0x70 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyFlash.o)
+ .debug_ranges  0x00000a38       0x68 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CySpc.o)
+ .debug_ranges  0x00000aa0       0x20 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_q31.o)
+ .debug_ranges  0x00000ac0       0x20 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_radix4_q31.o)
+ .debug_ranges  0x00000ae0       0x10 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cmplx_mag_q31.o)
+ .debug_ranges  0x00000af0       0x10 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_sqrt_q31.o)
+ .debug_ranges  0x00000b00       0x20 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal.o)
 
 .comment        0x00000000       0xe0
  .comment       0x00000000       0x70 .\CortexM3\ARM_GCC_484\Debug\main.o
@@ -1941,6 +1983,7 @@ END GROUP
  .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_1_dma.o)
  .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_AMux.o)
  .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_Ext_CP_Clk.o)
+ .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
  .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
  .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_2_dma.o)
  .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
@@ -2017,95 +2060,97 @@ END GROUP
  .ARM.attributes
                 0x0000031d       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_Ext_CP_Clk.o)
  .ARM.attributes
-                0x00000350       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
+                0x00000350       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_IRQ.o)
  .ARM.attributes
-                0x00000383       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_2_dma.o)
+                0x00000383       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC_DelSig_1_theACLK.o)
  .ARM.attributes
-                0x000003b6       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
+                0x000003b6       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_2_dma.o)
  .ARM.attributes
-                0x000003e9       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
+                0x000003e9       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_1.o)
  .ARM.attributes
-                0x0000041c       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
+                0x0000041c       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(isr_2.o)
  .ARM.attributes
-                0x0000044f       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_PVT.o)
+                0x0000044f       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter.o)
  .ARM.attributes
-                0x00000482       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_RAM_Data.o)
+                0x00000482       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_PVT.o)
  .ARM.attributes
-                0x000004b5       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC2Filter_DMA_dma.o)
+                0x000004b5       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(Filter_RAM_Data.o)
  .ARM.attributes
-                0x000004e8       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_4_dma.o)
+                0x000004e8       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(ADC2Filter_DMA_dma.o)
  .ARM.attributes
-                0x0000051b       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_3_dma.o)
+                0x0000051b       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_4_dma.o)
  .ARM.attributes
-                0x0000054e       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyFlash.o)
+                0x0000054e       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(DMA_3_dma.o)
  .ARM.attributes
-                0x00000581       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CySpc.o)
+                0x00000581       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CyFlash.o)
  .ARM.attributes
-                0x000005b4       0x33 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_const_structs.o)
+                0x000005b4       0x33 .\CortexM3\ARM_GCC_484\Debug\Design01.a(CySpc.o)
  .ARM.attributes
-                0x000005e7       0x33 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_common_tables.o)
+                0x000005e7       0x33 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_const_structs.o)
  .ARM.attributes
-                0x0000061a       0x33 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_q31.o)
+                0x0000061a       0x33 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_common_tables.o)
  .ARM.attributes
-                0x0000064d       0x21 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal2.o)
+                0x0000064d       0x33 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_q31.o)
  .ARM.attributes
-                0x0000066e       0x33 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_radix4_q31.o)
+                0x00000680       0x21 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal2.o)
  .ARM.attributes
-                0x000006a1       0x33 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cmplx_mag_q31.o)
+                0x000006a1       0x33 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cfft_radix4_q31.o)
  .ARM.attributes
-                0x000006d4       0x33 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_sqrt_q31.o)
+                0x000006d4       0x33 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_cmplx_mag_q31.o)
  .ARM.attributes
-                0x00000707       0x33 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal.o)
+                0x00000707       0x33 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_sqrt_q31.o)
  .ARM.attributes
-                0x0000073a       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-w_log10.o)
+                0x0000073a       0x33 Z:\scottcarlson On My Mac\Code\repos\LED_controller\CMSISfile\CMSIS\Lib\GCC\libarm_cortexM3l_math.a(arm_bitreversal.o)
  .ARM.attributes
-                0x00000767       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-e_log10.o)
+                0x0000076d       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-w_log10.o)
  .ARM.attributes
-                0x00000794       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_fpclassify.o)
+                0x0000079a       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-e_log10.o)
  .ARM.attributes
-                0x000007c1       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_lib_ver.o)
+                0x000007c7       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_fpclassify.o)
  .ARM.attributes
-                0x000007ee       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_matherr.o)
+                0x000007f4       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_lib_ver.o)
  .ARM.attributes
-                0x0000081b       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_nan.o)
+                0x00000821       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_matherr.o)
  .ARM.attributes
-                0x00000848       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-e_log.o)
+                0x0000084e       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_nan.o)
  .ARM.attributes
-                0x00000875       0x1d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_addsubdf3.o)
+                0x0000087b       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-e_log.o)
  .ARM.attributes
-                0x00000892       0x1d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_muldivdf3.o)
+                0x000008a8       0x1d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_addsubdf3.o)
  .ARM.attributes
-                0x000008af       0x1d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_cmpdf2.o)
+                0x000008c5       0x1d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_muldivdf3.o)
  .ARM.attributes
-                0x000008cc       0x1d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_fixdfsi.o)
+                0x000008e2       0x1d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_cmpdf2.o)
  .ARM.attributes
-                0x000008e9       0x1d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_truncdfsf2.o)
+                0x000008ff       0x1d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_fixdfsi.o)
  .ARM.attributes
-                0x00000906       0x1d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_addsubsf3.o)
+                0x0000091c       0x1d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_truncdfsf2.o)
  .ARM.attributes
-                0x00000923       0x1d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_muldivsf3.o)
+                0x00000939       0x1d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_addsubsf3.o)
  .ARM.attributes
-                0x00000940       0x1d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_cmpsf2.o)
+                0x00000956       0x1d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_muldivsf3.o)
  .ARM.attributes
-                0x0000095d       0x1d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_fixsfsi.o)
+                0x00000973       0x1d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_cmpsf2.o)
  .ARM.attributes
-                0x0000097a       0x1d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_fixunssfsi.o)
+                0x00000990       0x1d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_fixsfsi.o)
  .ARM.attributes
-                0x00000997       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-errno.o)
+                0x000009ad       0x1d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libgcc.a(_arm_fixunssfsi.o)
  .ARM.attributes
-                0x000009c4       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-exit.o)
+                0x000009ca       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-errno.o)
  .ARM.attributes
-                0x000009f1       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-impure.o)
+                0x000009f7       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-exit.o)
  .ARM.attributes
-                0x00000a1e       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-init.o)
+                0x00000a24       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-impure.o)
  .ARM.attributes
-                0x00000a4b       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-memcpy-stub.o)
+                0x00000a51       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-init.o)
  .ARM.attributes
-                0x00000a78       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-memset.o)
+                0x00000a7e       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-memcpy-stub.o)
  .ARM.attributes
-                0x00000aa5       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m/crtend.o
+                0x00000aab       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libg_s.a(lib_a-memset.o)
  .ARM.attributes
-                0x00000ad2       0x1d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m/crtn.o
+                0x00000ad8       0x2d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m/crtend.o
+ .ARM.attributes
+                0x00000b05       0x1d c:/program files/cypress/psoc creator/3.2/psoc creator/import/gnu/arm/4.8.4/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m/crtn.o
 
 /DISCARD/
  *(.note.GNU-stack)

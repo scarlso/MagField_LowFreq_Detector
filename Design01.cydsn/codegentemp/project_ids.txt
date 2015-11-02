@@ -1,4 +1,4 @@
-\\vmware-host\Shared Folders\scottcarlson On My Mac\Code\repos\LED_controller\Design01.cydsn\Design01.cyprj|188774d3-937a-4b54-a4b8-b3da14195e3c
+\\vmware-host\Shared Folders\scottcarlson On My Mac\Code\repos\MagField_LowFreq_Detector\Design01.cydsn\Design01.cyprj|ceea612e-c081-43b2-930e-639a733021a5
 \\vmware-host\Shared Folders\Downloads\cmsis_dsp_2\cmsis_dsp_2.cydsn\cmsis_dsp_2.cyprj|624845ae-7702-483f-9e35-f3859e991ab5
 C:\Program Files\Cypress\PSoC Creator\3.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|7768ba91-e291-4c1c-9f87-d1f3f298d3e7
 C:\Program Files\Cypress\PSoC Creator\3.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|455cf499-b97c-4871-92ba-6020d2dce02b

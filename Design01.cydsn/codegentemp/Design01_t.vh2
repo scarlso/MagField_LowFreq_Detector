@@ -1,5 +1,5 @@
--- Project:   \\vmware-host\Shared Folders\scottcarlson On My Mac\Code\repos\LED_controller\Design01.cydsn\Design01.cyprj
--- Generated: 10/30/2015 17:08:59
+-- Project:   \\vmware-host\Shared Folders\scottcarlson On My Mac\Code\repos\MagField_LowFreq_Detector\Design01.cydsn\Design01.cyprj
+-- Generated: 11/02/2015 16:04:43
 -- PSoC Creator  3.2 SP1
 
 ENTITY Design01 IS
