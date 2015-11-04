@@ -1,0 +1,10 @@
+//vmware-host/Shared\ Folders/scottcarlson\ On\ My\ Mac/Downloads/WIFI_MicroWebServer\ (1)/WIFI_MicroWebServer/WIFI_MicroWebServer.cydsn/ARM_GCC_484/Debug/CyBootAsmGnu.o : //vmware-host/Shared\ Folders/scottcarlson\ On\ My\ Mac/Downloads/WIFI_MicroWebServer\ (1)/WIFI_MicroWebServer/WIFI_MicroWebServer.cydsn/Generated_Source/PSoC5/CyBootAsmGnu.s //vmware-host/Shared\ Folders/scottcarlson\ On\ My\ Mac/Downloads/WIFI_MicroWebServer\ (1)/WIFI_MicroWebServer/WIFI_MicroWebServer.cydsn/Generated_Source/PSoC5/cydevicegnu.inc //vmware-host/Shared\ Folders/scottcarlson\ On\ My\ Mac/Downloads/WIFI_MicroWebServer\ (1)/WIFI_MicroWebServer/WIFI_MicroWebServer.cydsn/Generated_Source/PSoC5/cydevicegnu_trm.inc //vmware-host/Shared\ Folders/scottcarlson\ On\ My\ Mac/Downloads/WIFI_MicroWebServer\ (1)/WIFI_MicroWebServer/WIFI_MicroWebServer.cydsn/Generated_Source/PSoC5/cyfittergnu.inc 
+
+//vmware-host/Shared\ Folders/scottcarlson\ On\ My\ Mac/Downloads/WIFI_MicroWebServer\ (1)/WIFI_MicroWebServer/WIFI_MicroWebServer.cydsn/Generated_Source/PSoC5/CyBootAsmGnu.s : 
+
+//vmware-host/Shared\ Folders/scottcarlson\ On\ My\ Mac/Downloads/WIFI_MicroWebServer\ (1)/WIFI_MicroWebServer/WIFI_MicroWebServer.cydsn/Generated_Source/PSoC5/cydevicegnu.inc : 
+
+//vmware-host/Shared\ Folders/scottcarlson\ On\ My\ Mac/Downloads/WIFI_MicroWebServer\ (1)/WIFI_MicroWebServer/WIFI_MicroWebServer.cydsn/Generated_Source/PSoC5/cydevicegnu_trm.inc : 
+
+//vmware-host/Shared\ Folders/scottcarlson\ On\ My\ Mac/Downloads/WIFI_MicroWebServer\ (1)/WIFI_MicroWebServer/WIFI_MicroWebServer.cydsn/Generated_Source/PSoC5/cyfittergnu.inc : 
+

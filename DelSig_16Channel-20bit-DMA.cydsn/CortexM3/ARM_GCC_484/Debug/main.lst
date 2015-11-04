@@ -1,0 +1,1341 @@
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccUR7uIP.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"main.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.comm	adc_temp,4,4
+  19              		.comm	filter_temp,4,4
+  20              		.comm	result,1024,4
+  21              		.comm	Filtered_result,1024,4
+  22              		.section	.text.main,"ax",%progbits
+  23              		.align	2
+  24              		.global	main
+  25              		.thumb
+  26              		.thumb_func
+  27              		.type	main, %function
+  28              	main:
+  29              	.LFB56:
+  30              		.file 1 ".\\main.c"
+   1:.\main.c      **** /*******************************************************************************
+   2:.\main.c      **** * File Name: main.c
+   3:.\main.c      **** *
+   4:.\main.c      **** * Version: 1.00
+   5:.\main.c      **** *
+   6:.\main.c      **** * Description:
+   7:.\main.c      **** *   This is the source code for the DelSig_16Channel Example Project.
+   8:.\main.c      **** *	DelSig_16Channel Example Project intended to use as Creator starter design 
+   9:.\main.c      **** *	for PSoC 3/5LP devices. 
+  10:.\main.c      **** *
+  11:.\main.c      **** *   Note that this file contains the DMA_Config function as well.
+  12:.\main.c      **** *
+  13:.\main.c      **** ********************************************************************************
+  14:.\main.c      **** * Copyright 2012, Cypress Semiconductor Corporation. All rights reserved.
+  15:.\main.c      **** * This software is owned by Cypress Semiconductor Corporation and is protected
+  16:.\main.c      **** * by and subject to worldwide patent and copyright laws and treaties.
+  17:.\main.c      **** * Therefore, you may use this software only as provided in the license agreement
+  18:.\main.c      **** * accompanying the software package from which you obtained this software.
+  19:.\main.c      **** * CYPRESS AND ITS SUPPLIERS MAKE NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+  20:.\main.c      **** * WITH REGARD TO THIS SOFTWARE, INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT,
+  21:.\main.c      **** * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+  22:.\main.c      **** *******************************************************************************/
+  23:.\main.c      **** #include <project.h>
+  24:.\main.c      **** #include <device.h>
+  25:.\main.c      **** 
+  26:.\main.c      **** /* There are 16 input channels */
+  27:.\main.c      **** #define window_size (256u)
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccUR7uIP.s 			page 2
+
+
+  28:.\main.c      **** 
+  29:.\main.c      **** /* DMA Configuration for DMA_ADC2Mem */
+  30:.\main.c      **** #define DMA_ADC2Mem_BYTES_PER_BURST 4
+  31:.\main.c      **** #define DMA_ADC2Mem_REQUEST_PER_BURST 1
+  32:.\main.c      **** #define DMA_ADC2Mem_SRC_BASE (CYDEV_PERIPH_BASE)
+  33:.\main.c      **** #define DMA_ADC2Mem_DST_BASE (CYDEV_SRAM_BASE)
+  34:.\main.c      **** 
+  35:.\main.c      **** /* DMA Configuration for DMA_Mem2Mem */
+  36:.\main.c      **** #define DMA_Mem2Mem_BYTES_PER_BURST 4
+  37:.\main.c      **** #define DMA_Mem2Mem_REQUEST_PER_BURST 1
+  38:.\main.c      **** #define DMA_Mem2Mem_SRC_BASE (CYDEV_SRAM_BASE)
+  39:.\main.c      **** #define DMA_Mem2Mem_DST_BASE (CYDEV_SRAM_BASE)
+  40:.\main.c      **** 
+  41:.\main.c      **** /* DMA Configuration for DMA_ADC2Filter */
+  42:.\main.c      **** #define DMA_ADC2Filter_BYTES_PER_BURST 4
+  43:.\main.c      **** #define DMA_ADC2Filter_REQUEST_PER_BURST 1
+  44:.\main.c      **** #define DMA_ADC2Filter_SRC_BASE (CYDEV_PERIPH_BASE)
+  45:.\main.c      **** #define DMA_ADC2Filter_DST_BASE (CYDEV_PERIPH_BASE)
+  46:.\main.c      **** 
+  47:.\main.c      **** /* DMA Configuration for DMA_Filter2Mem */
+  48:.\main.c      **** #define DMA_Filter2Mem_BYTES_PER_BURST 4
+  49:.\main.c      **** #define DMA_Filter2Mem_REQUEST_PER_BURST 1
+  50:.\main.c      **** #define DMA_Filter2Mem_SRC_BASE (CYDEV_PERIPH_BASE)
+  51:.\main.c      **** #define DMA_Filter2Mem_DST_BASE (CYDEV_SRAM_BASE)
+  52:.\main.c      **** 
+  53:.\main.c      **** /* DMA Configuration for DMA_FilterMem2Mem */
+  54:.\main.c      **** #define DMA_FilterMem2Mem_BYTES_PER_BURST 4
+  55:.\main.c      **** #define DMA_FilterMem2Mem_REQUEST_PER_BURST 0
+  56:.\main.c      **** #define DMA_FilterMem2Mem_SRC_BASE (CYDEV_SRAM_BASE)
+  57:.\main.c      **** #define DMA_FilterMem2Mem_DST_BASE (CYDEV_SRAM_BASE)
+  58:.\main.c      **** 
+  59:.\main.c      **** 
+  60:.\main.c      **** 
+  61:.\main.c      **** /* Directive to place adc_temp at a particular location. The location is 
+  62:.\main.c      **** chosen as a multiple of 4 bytes (even boundary) */
+  63:.\main.c      **** 
+  64:.\main.c      **** #if(CY_PSOC3)	
+  65:.\main.c      **** 		int32 xdata adc_temp _at_ 0x100; 
+  66:.\main.c      **** #else /* PSoC5 being used */
+  67:.\main.c      **** 	int32 adc_temp;
+  68:.\main.c      ****     int32 filter_temp;
+  69:.\main.c      **** #endif
+  70:.\main.c      **** 
+  71:.\main.c      **** #if(CY_PSOC3)
+  72:.\main.c      **** 	int32 xdata result[window_size] _at_ 0x200;
+  73:.\main.c      **** #else /* PSoC5 being used */
+  74:.\main.c      **** 	int32 result[window_size];
+  75:.\main.c      ****     int32 Filtered_result[window_size];
+  76:.\main.c      **** #endif
+  77:.\main.c      **** 
+  78:.\main.c      **** 
+  79:.\main.c      **** 
+  80:.\main.c      **** void DMA_Config(void);
+  81:.\main.c      **** 
+  82:.\main.c      **** 
+  83:.\main.c      **** /*******************************************************************************
+  84:.\main.c      **** * Function Name: main
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccUR7uIP.s 			page 3
+
+
+  85:.\main.c      **** ********************************************************************************
+  86:.\main.c      **** *
+  87:.\main.c      **** * Summary:
+  88:.\main.c      **** *  main() performs following functions:
+  89:.\main.c      **** *  1: Starts the components
+  90:.\main.c      **** *  2: Calls function DMA_Config to setup the DMA.
+  91:.\main.c      **** *  3: Starts ADC continuous conversion.
+  92:.\main.c      **** *  4: Gets the converted result and displays it in LCD. Also displays VDAC data
+  93:.\main.c      **** *     register value on LCD.
+  94:.\main.c      **** *
+  95:.\main.c      **** * Parameters:
+  96:.\main.c      **** *  None.
+  97:.\main.c      **** *
+  98:.\main.c      **** * Return:
+  99:.\main.c      **** *  None.
+ 100:.\main.c      **** *
+ 101:.\main.c      **** *******************************************************************************/
+ 102:.\main.c      **** void main()
+ 103:.\main.c      **** {
+  31              		.loc 1 103 0
+  32              		.cfi_startproc
+  33              		@ args = 0, pretend = 0, frame = 8
+  34              		@ frame_needed = 1, uses_anonymous_args = 0
+  35 0000 80B5     		push	{r7, lr}
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 7, -8
+  38              		.cfi_offset 14, -4
+  39 0002 82B0     		sub	sp, sp, #8
+  40              		.cfi_def_cfa_offset 16
+  41 0004 00AF     		add	r7, sp, #0
+  42              		.cfi_def_cfa_register 7
+ 104:.\main.c      **** 	int16 temp;
+ 105:.\main.c      **** 	
+ 106:.\main.c      **** 
+ 107:.\main.c      ****     LCD_Start();
+  43              		.loc 1 107 0
+  44 0006 FFF7FEFF 		bl	LCD_Start
+ 108:.\main.c      ****     ADC_Start();
+  45              		.loc 1 108 0
+  46 000a FFF7FEFF 		bl	ADC_Start
+ 109:.\main.c      **** 	
+ 110:.\main.c      **** 	 /* Disable ADC interrupts */
+ 111:.\main.c      **** 	ADC_IRQ_Disable();
+  47              		.loc 1 111 0
+  48 000e FFF7FEFF 		bl	ADC_IRQ_Disable
+ 112:.\main.c      **** 
+ 113:.\main.c      **** 	/*Change the ADC coherent key to high byte*/
+ 114:.\main.c      **** 	ADC_DEC_COHER_REG |= ADC_DEC_SAMP_KEY_HIGH;
+  49              		.loc 1 114 0
+  50 0012 194B     		ldr	r3, .L3
+  51 0014 184A     		ldr	r2, .L3
+  52 0016 1278     		ldrb	r2, [r2]
+  53 0018 D2B2     		uxtb	r2, r2
+  54 001a 42F00302 		orr	r2, r2, #3
+  55 001e D2B2     		uxtb	r2, r2
+  56 0020 1A70     		strb	r2, [r3]
+ 115:.\main.c      **** 
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccUR7uIP.s 			page 4
+
+
+ 116:.\main.c      **** 	/*Start ADC conversions*/
+ 117:.\main.c      **** 	ADC_StartConvert();
+  57              		.loc 1 117 0
+  58 0022 FFF7FEFF 		bl	ADC_StartConvert
+ 118:.\main.c      **** 
+ 119:.\main.c      ****     Filter_SetDalign(Filter_STAGEA_DALIGN | Filter_HOLDA_DALIGN | Filter_HOLDB_DALIGN | Filter_STAG
+  59              		.loc 1 119 0
+  60 0026 0F20     		movs	r0, #15
+  61 0028 0021     		movs	r1, #0
+  62 002a FFF7FEFF 		bl	Filter_SetDalign
+ 120:.\main.c      ****     Filter_SetCoherency(Filter_STAGEA_COHER | Filter_HOLDA_COHER | Filter_STAGEB_COHER | Filter_HOL
+  63              		.loc 1 120 0
+  64 002e FF20     		movs	r0, #255
+  65 0030 0221     		movs	r1, #2
+  66 0032 FFF7FEFF 		bl	Filter_SetCoherency
+ 121:.\main.c      ****     Filter_SetCoherency(Filter_CHANNEL_A,Filter_KEY_HIGH);  
+  67              		.loc 1 121 0
+  68 0036 0020     		movs	r0, #0
+  69 0038 0221     		movs	r1, #2
+  70 003a FFF7FEFF 		bl	Filter_SetCoherency
+ 122:.\main.c      ****     Filter_SetCoherency(Filter_CHANNEL_B,Filter_KEY_HIGH);
+  71              		.loc 1 122 0
+  72 003e 0120     		movs	r0, #1
+  73 0040 0221     		movs	r1, #2
+  74 0042 FFF7FEFF 		bl	Filter_SetCoherency
+ 123:.\main.c      **** 
+ 124:.\main.c      ****     Filter_Start();
+  75              		.loc 1 124 0
+  76 0046 FFF7FEFF 		bl	Filter_Start
+ 125:.\main.c      ****     DMA_Config();
+  77              		.loc 1 125 0
+  78 004a FFF7FEFF 		bl	DMA_Config
+ 126:.\main.c      **** 
+ 127:.\main.c      ****      CYGlobalIntEnable;  /* Uncomment this line to enable global interrupts. */
+  79              		.loc 1 127 0
+  80              	@ 127 ".\main.c" 1
+  81 004e 62B6     		CPSIE   i
+  82              	@ 0 "" 2
+  83              		.thumb
+  84              	.L2:
+ 128:.\main.c      ****     for(;;)
+ 129:.\main.c      ****     {
+ 130:.\main.c      ****         LCD_ClearDisplay();
+  85              		.loc 1 130 0 discriminator 1
+  86 0050 0120     		movs	r0, #1
+  87 0052 FFF7FEFF 		bl	LCD_WriteControl
+ 131:.\main.c      ****         LCD_Position(0u, 0u);
+  88              		.loc 1 131 0 discriminator 1
+  89 0056 0020     		movs	r0, #0
+  90 0058 0021     		movs	r1, #0
+  91 005a FFF7FEFF 		bl	LCD_Position
+ 132:.\main.c      **** 		temp = ADC_CountsTo_mVolts(adc_temp);
+  92              		.loc 1 132 0 discriminator 1
+  93 005e 074B     		ldr	r3, .L3+4
+  94 0060 1B68     		ldr	r3, [r3]
+  95 0062 1846     		mov	r0, r3
+  96 0064 FFF7FEFF 		bl	ADC_CountsTo_mVolts
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccUR7uIP.s 			page 5
+
+
+  97 0068 0346     		mov	r3, r0
+  98 006a FB80     		strh	r3, [r7, #6]	@ movhi
+ 133:.\main.c      **** 		LCD_PrintNumber(temp);
+  99              		.loc 1 133 0 discriminator 1
+ 100 006c FB88     		ldrh	r3, [r7, #6]
+ 101 006e 1846     		mov	r0, r3
+ 102 0070 FFF7FEFF 		bl	LCD_PrintNumber
+ 134:.\main.c      **** 		
+ 135:.\main.c      ****     }
+ 103              		.loc 1 135 0 discriminator 1
+ 104 0074 ECE7     		b	.L2
+ 105              	.L4:
+ 106 0076 00BF     		.align	2
+ 107              	.L3:
+ 108 0078 144E0040 		.word	1073761812
+ 109 007c 00000000 		.word	adc_temp
+ 110              		.cfi_endproc
+ 111              	.LFE56:
+ 112              		.size	main, .-main
+ 113              		.section	.text.DMA_Config,"ax",%progbits
+ 114              		.align	2
+ 115              		.global	DMA_Config
+ 116              		.thumb
+ 117              		.thumb_func
+ 118              		.type	DMA_Config, %function
+ 119              	DMA_Config:
+ 120              	.LFB57:
+ 136:.\main.c      **** }
+ 137:.\main.c      **** 
+ 138:.\main.c      **** 
+ 139:.\main.c      **** /*******************************************************************************
+ 140:.\main.c      **** * Function Name:  DMA_Config
+ 141:.\main.c      **** ********************************************************************************
+ 142:.\main.c      **** *
+ 143:.\main.c      **** * Summary:
+ 144:.\main.c      **** *    Code generated by the DMA Wizard.
+ 145:.\main.c      **** *
+ 146:.\main.c      **** *    DMA_Config() performs following functions:
+ 147:.\main.c      **** *  1: Initializes the DMA channel
+ 148:.\main.c      **** *  2: Allocates Transfer Descriptors
+ 149:.\main.c      **** *  3: Configures the TD.
+ 150:.\main.c      **** *  4: Sets source and destination address for this TD.
+ 151:.\main.c      **** *  5: Initializes the TD.
+ 152:.\main.c      **** *  6: Enables the DMA channel.
+ 153:.\main.c      **** *
+ 154:.\main.c      **** * Parameters:
+ 155:.\main.c      **** *  None.
+ 156:.\main.c      **** *
+ 157:.\main.c      **** * Return:
+ 158:.\main.c      **** *  None.
+ 159:.\main.c      **** *
+ 160:.\main.c      **** *******************************************************************************/
+ 161:.\main.c      **** void DMA_Config()
+ 162:.\main.c      **** {
+ 121              		.loc 1 162 0
+ 122              		.cfi_startproc
+ 123              		@ args = 0, pretend = 0, frame = 24
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccUR7uIP.s 			page 6
+
+
+ 124              		@ frame_needed = 1, uses_anonymous_args = 0
+ 125 0000 80B5     		push	{r7, lr}
+ 126              		.cfi_def_cfa_offset 8
+ 127              		.cfi_offset 7, -8
+ 128              		.cfi_offset 14, -4
+ 129 0002 86B0     		sub	sp, sp, #24
+ 130              		.cfi_def_cfa_offset 32
+ 131 0004 00AF     		add	r7, sp, #0
+ 132              		.cfi_def_cfa_register 7
+ 163:.\main.c      **** /* Variable declarations for DMA_ADC2Mem */
+ 164:.\main.c      **** uint8 DMA_ADC2Mem_Chan;
+ 165:.\main.c      **** uint8 DMA_ADC2Mem_TD[1];
+ 166:.\main.c      **** 
+ 167:.\main.c      **** /* Variable declarations for DMA_Mem2Mem */
+ 168:.\main.c      **** uint8 DMA_Mem2Mem_Chan;
+ 169:.\main.c      **** uint8 DMA_Mem2Mem_TD[1];
+ 170:.\main.c      **** 
+ 171:.\main.c      **** /* Variable declarations for DMA_ADC2Filter */
+ 172:.\main.c      **** uint8 DMA_ADC2Filter_Chan;
+ 173:.\main.c      **** uint8 DMA_ADC2Filter_TD[1];
+ 174:.\main.c      **** 
+ 175:.\main.c      **** /* Variable declarations for DMA_Filter2Mem */
+ 176:.\main.c      **** uint8 DMA_Filter2Mem_Chan;
+ 177:.\main.c      **** uint8 DMA_Filter2Mem_TD[1];
+ 178:.\main.c      **** 
+ 179:.\main.c      **** /* Variable declarations for DMA_Filter2Filter */
+ 180:.\main.c      **** uint8 DMA_FilterMem2Mem_Chan;
+ 181:.\main.c      **** uint8 DMA_FilterMem2Mem_TD[1];
+ 182:.\main.c      **** 
+ 183:.\main.c      **** 
+ 184:.\main.c      **** /*DMA_ADC2Mem*/
+ 185:.\main.c      **** DMA_ADC2Mem_Chan = DMA_ADC2Mem_DmaInitialize(DMA_ADC2Mem_BYTES_PER_BURST, DMA_ADC2Mem_REQUEST_PER_B
+ 133              		.loc 1 185 0
+ 134 0006 0420     		movs	r0, #4
+ 135 0008 0121     		movs	r1, #1
+ 136 000a 4FF48042 		mov	r2, #16384
+ 137 000e 41F6FF73 		movw	r3, #8191
+ 138 0012 FFF7FEFF 		bl	DMA_ADC2Mem_DmaInitialize
+ 139 0016 0346     		mov	r3, r0
+ 140 0018 FB75     		strb	r3, [r7, #23]
+ 186:.\main.c      ****     HI16(DMA_ADC2Mem_SRC_BASE), HI16(DMA_ADC2Mem_DST_BASE));
+ 187:.\main.c      **** DMA_ADC2Mem_TD[0] = CyDmaTdAllocate();
+ 141              		.loc 1 187 0
+ 142 001a FFF7FEFF 		bl	CyDmaTdAllocate
+ 143 001e 0346     		mov	r3, r0
+ 144 0020 3B74     		strb	r3, [r7, #16]
+ 188:.\main.c      **** CyDmaTdSetConfiguration(DMA_ADC2Mem_TD[0], 4, DMA_ADC2Mem_TD[0], DMA_ADC2Mem__TD_TERMOUT_EN | TD_IN
+ 145              		.loc 1 188 0
+ 146 0022 3A7C     		ldrb	r2, [r7, #16]	@ zero_extendqisi2
+ 147 0024 3B7C     		ldrb	r3, [r7, #16]	@ zero_extendqisi2
+ 148 0026 1046     		mov	r0, r2
+ 149 0028 0421     		movs	r1, #4
+ 150 002a 1A46     		mov	r2, r3
+ 151 002c 0123     		movs	r3, #1
+ 152 002e FFF7FEFF 		bl	CyDmaTdSetConfiguration
+ 189:.\main.c      **** CyDmaTdSetAddress(DMA_ADC2Mem_TD[0], LO16((uint32)ADC_DEC_SAMP_PTR), LO16((uint32)Filter_STAGEA_PTR
+ 153              		.loc 1 189 0
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccUR7uIP.s 			page 7
+
+
+ 154 0032 3B7C     		ldrb	r3, [r7, #16]	@ zero_extendqisi2
+ 155 0034 1846     		mov	r0, r3
+ 156 0036 44F61061 		movw	r1, #19984
+ 157 003a 4CF2A072 		movw	r2, #51104
+ 158 003e FFF7FEFF 		bl	CyDmaTdSetAddress
+ 190:.\main.c      **** CyDmaChSetInitialTd(DMA_ADC2Mem_Chan, DMA_ADC2Mem_TD[0]);
+ 159              		.loc 1 190 0
+ 160 0042 3B7C     		ldrb	r3, [r7, #16]	@ zero_extendqisi2
+ 161 0044 FA7D     		ldrb	r2, [r7, #23]	@ zero_extendqisi2
+ 162 0046 1046     		mov	r0, r2
+ 163 0048 1946     		mov	r1, r3
+ 164 004a FFF7FEFF 		bl	CyDmaChSetInitialTd
+ 191:.\main.c      **** CyDmaChEnable(DMA_ADC2Mem_Chan, 1);
+ 165              		.loc 1 191 0
+ 166 004e FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 167 0050 1846     		mov	r0, r3
+ 168 0052 0121     		movs	r1, #1
+ 169 0054 FFF7FEFF 		bl	CyDmaChEnable
+ 192:.\main.c      **** 
+ 193:.\main.c      **** 
+ 194:.\main.c      **** /*DMA_Mem2Mem*/
+ 195:.\main.c      **** DMA_Mem2Mem_Chan = DMA_Mem2Mem_DmaInitialize(DMA_Mem2Mem_BYTES_PER_BURST, DMA_Mem2Mem_REQUEST_PER_B
+ 170              		.loc 1 195 0
+ 171 0058 0420     		movs	r0, #4
+ 172 005a 0121     		movs	r1, #1
+ 173 005c 41F6FF72 		movw	r2, #8191
+ 174 0060 41F6FF73 		movw	r3, #8191
+ 175 0064 FFF7FEFF 		bl	DMA_Mem2Mem_DmaInitialize
+ 176 0068 0346     		mov	r3, r0
+ 177 006a BB75     		strb	r3, [r7, #22]
+ 196:.\main.c      ****     HI16(DMA_Mem2Mem_SRC_BASE), HI16(DMA_Mem2Mem_DST_BASE));
+ 197:.\main.c      **** DMA_Mem2Mem_TD[0] = CyDmaTdAllocate();
+ 178              		.loc 1 197 0
+ 179 006c FFF7FEFF 		bl	CyDmaTdAllocate
+ 180 0070 0346     		mov	r3, r0
+ 181 0072 3B73     		strb	r3, [r7, #12]
+ 198:.\main.c      **** CyDmaTdSetConfiguration(DMA_Mem2Mem_TD[0], window_size*4, DMA_Mem2Mem_TD[0], TD_INC_DST_ADR);
+ 182              		.loc 1 198 0
+ 183 0074 3A7B     		ldrb	r2, [r7, #12]	@ zero_extendqisi2
+ 184 0076 3B7B     		ldrb	r3, [r7, #12]	@ zero_extendqisi2
+ 185 0078 1046     		mov	r0, r2
+ 186 007a 4FF48061 		mov	r1, #1024
+ 187 007e 1A46     		mov	r2, r3
+ 188 0080 0223     		movs	r3, #2
+ 189 0082 FFF7FEFF 		bl	CyDmaTdSetConfiguration
+ 199:.\main.c      **** CyDmaTdSetAddress(DMA_Mem2Mem_TD[0], LO16((uint32)&adc_temp), LO16((uint32)result));
+ 190              		.loc 1 199 0
+ 191 0086 397B     		ldrb	r1, [r7, #12]	@ zero_extendqisi2
+ 192 0088 4B4B     		ldr	r3, .L6
+ 193 008a 9AB2     		uxth	r2, r3
+ 194 008c 4B4B     		ldr	r3, .L6+4
+ 195 008e 9BB2     		uxth	r3, r3
+ 196 0090 0846     		mov	r0, r1
+ 197 0092 1146     		mov	r1, r2
+ 198 0094 1A46     		mov	r2, r3
+ 199 0096 FFF7FEFF 		bl	CyDmaTdSetAddress
+ 200:.\main.c      **** CyDmaChSetInitialTd(DMA_Mem2Mem_Chan, DMA_Mem2Mem_TD[0]);
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccUR7uIP.s 			page 8
+
+
+ 200              		.loc 1 200 0
+ 201 009a 3B7B     		ldrb	r3, [r7, #12]	@ zero_extendqisi2
+ 202 009c BA7D     		ldrb	r2, [r7, #22]	@ zero_extendqisi2
+ 203 009e 1046     		mov	r0, r2
+ 204 00a0 1946     		mov	r1, r3
+ 205 00a2 FFF7FEFF 		bl	CyDmaChSetInitialTd
+ 201:.\main.c      **** CyDmaChEnable(DMA_Mem2Mem_Chan, 1);
+ 206              		.loc 1 201 0
+ 207 00a6 BB7D     		ldrb	r3, [r7, #22]	@ zero_extendqisi2
+ 208 00a8 1846     		mov	r0, r3
+ 209 00aa 0121     		movs	r1, #1
+ 210 00ac FFF7FEFF 		bl	CyDmaChEnable
+ 202:.\main.c      **** 
+ 203:.\main.c      **** 
+ 204:.\main.c      **** /*DMA_ADC2Filter*/
+ 205:.\main.c      **** DMA_ADC2Filter_Chan = DMA_ADC2Filter_DmaInitialize(DMA_ADC2Filter_BYTES_PER_BURST, DMA_ADC2Filter_R
+ 211              		.loc 1 205 0
+ 212 00b0 0420     		movs	r0, #4
+ 213 00b2 0121     		movs	r1, #1
+ 214 00b4 4FF48042 		mov	r2, #16384
+ 215 00b8 4FF48043 		mov	r3, #16384
+ 216 00bc FFF7FEFF 		bl	DMA_ADC2Filter_DmaInitialize
+ 217 00c0 0346     		mov	r3, r0
+ 218 00c2 7B75     		strb	r3, [r7, #21]
+ 206:.\main.c      ****     HI16(DMA_ADC2Filter_SRC_BASE), HI16(DMA_ADC2Filter_DST_BASE));
+ 207:.\main.c      **** DMA_ADC2Filter_TD[0] = CyDmaTdAllocate();
+ 219              		.loc 1 207 0
+ 220 00c4 FFF7FEFF 		bl	CyDmaTdAllocate
+ 221 00c8 0346     		mov	r3, r0
+ 222 00ca 3B72     		strb	r3, [r7, #8]
+ 208:.\main.c      **** CyDmaTdSetConfiguration(DMA_ADC2Filter_TD[0], 4, DMA_ADC2Filter_TD[0], DMA_ADC2Filter__TD_TERMOUT_E
+ 223              		.loc 1 208 0
+ 224 00cc 3A7A     		ldrb	r2, [r7, #8]	@ zero_extendqisi2
+ 225 00ce 3B7A     		ldrb	r3, [r7, #8]	@ zero_extendqisi2
+ 226 00d0 1046     		mov	r0, r2
+ 227 00d2 0421     		movs	r1, #4
+ 228 00d4 1A46     		mov	r2, r3
+ 229 00d6 0523     		movs	r3, #5
+ 230 00d8 FFF7FEFF 		bl	CyDmaTdSetConfiguration
+ 209:.\main.c      **** CyDmaTdSetAddress(DMA_ADC2Filter_TD[0], LO16((uint32)ADC_DEC_SAMP_PTR), LO16((uint32)&adc_temp));
+ 231              		.loc 1 209 0
+ 232 00dc 3A7A     		ldrb	r2, [r7, #8]	@ zero_extendqisi2
+ 233 00de 364B     		ldr	r3, .L6
+ 234 00e0 9BB2     		uxth	r3, r3
+ 235 00e2 1046     		mov	r0, r2
+ 236 00e4 44F61061 		movw	r1, #19984
+ 237 00e8 1A46     		mov	r2, r3
+ 238 00ea FFF7FEFF 		bl	CyDmaTdSetAddress
+ 210:.\main.c      **** CyDmaChSetInitialTd(DMA_ADC2Filter_Chan, DMA_ADC2Filter_TD[0]);
+ 239              		.loc 1 210 0
+ 240 00ee 3B7A     		ldrb	r3, [r7, #8]	@ zero_extendqisi2
+ 241 00f0 7A7D     		ldrb	r2, [r7, #21]	@ zero_extendqisi2
+ 242 00f2 1046     		mov	r0, r2
+ 243 00f4 1946     		mov	r1, r3
+ 244 00f6 FFF7FEFF 		bl	CyDmaChSetInitialTd
+ 211:.\main.c      **** CyDmaChEnable(DMA_ADC2Filter_Chan, 1);
+ 245              		.loc 1 211 0
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccUR7uIP.s 			page 9
+
+
+ 246 00fa 7B7D     		ldrb	r3, [r7, #21]	@ zero_extendqisi2
+ 247 00fc 1846     		mov	r0, r3
+ 248 00fe 0121     		movs	r1, #1
+ 249 0100 FFF7FEFF 		bl	CyDmaChEnable
+ 212:.\main.c      **** 
+ 213:.\main.c      **** 
+ 214:.\main.c      **** /*DMA_Filter2Mem*/
+ 215:.\main.c      **** DMA_Filter2Mem_Chan = DMA_Filter2Mem_DmaInitialize(DMA_Filter2Mem_BYTES_PER_BURST, DMA_Filter2Mem_R
+ 250              		.loc 1 215 0
+ 251 0104 0420     		movs	r0, #4
+ 252 0106 0121     		movs	r1, #1
+ 253 0108 4FF48042 		mov	r2, #16384
+ 254 010c 41F6FF73 		movw	r3, #8191
+ 255 0110 FFF7FEFF 		bl	DMA_Filter2Mem_DmaInitialize
+ 256 0114 0346     		mov	r3, r0
+ 257 0116 3B75     		strb	r3, [r7, #20]
+ 216:.\main.c      ****     HI16(DMA_Filter2Mem_SRC_BASE), HI16(DMA_Filter2Mem_DST_BASE));
+ 217:.\main.c      **** DMA_Filter2Mem_TD[0] = CyDmaTdAllocate();
+ 258              		.loc 1 217 0
+ 259 0118 FFF7FEFF 		bl	CyDmaTdAllocate
+ 260 011c 0346     		mov	r3, r0
+ 261 011e 3B71     		strb	r3, [r7, #4]
+ 218:.\main.c      **** CyDmaTdSetConfiguration(DMA_Filter2Mem_TD[0], window_size*4, DMA_Filter2Mem_TD[0], DMA_Filter2Mem__
+ 262              		.loc 1 218 0
+ 263 0120 3A79     		ldrb	r2, [r7, #4]	@ zero_extendqisi2
+ 264 0122 3B79     		ldrb	r3, [r7, #4]	@ zero_extendqisi2
+ 265 0124 1046     		mov	r0, r2
+ 266 0126 4FF48061 		mov	r1, #1024
+ 267 012a 1A46     		mov	r2, r3
+ 268 012c 0623     		movs	r3, #6
+ 269 012e FFF7FEFF 		bl	CyDmaTdSetConfiguration
+ 219:.\main.c      **** CyDmaTdSetAddress(DMA_Filter2Mem_TD[0], LO16((uint32)Filter_HOLDA_PTR), LO16((uint32)&filter_temp))
+ 270              		.loc 1 219 0
+ 271 0132 3A79     		ldrb	r2, [r7, #4]	@ zero_extendqisi2
+ 272 0134 224B     		ldr	r3, .L6+8
+ 273 0136 9BB2     		uxth	r3, r3
+ 274 0138 1046     		mov	r0, r2
+ 275 013a 4CF2A871 		movw	r1, #51112
+ 276 013e 1A46     		mov	r2, r3
+ 277 0140 FFF7FEFF 		bl	CyDmaTdSetAddress
+ 220:.\main.c      **** CyDmaChSetInitialTd(DMA_Filter2Mem_Chan, DMA_Filter2Mem_TD[0]);
+ 278              		.loc 1 220 0
+ 279 0144 3B79     		ldrb	r3, [r7, #4]	@ zero_extendqisi2
+ 280 0146 3A7D     		ldrb	r2, [r7, #20]	@ zero_extendqisi2
+ 281 0148 1046     		mov	r0, r2
+ 282 014a 1946     		mov	r1, r3
+ 283 014c FFF7FEFF 		bl	CyDmaChSetInitialTd
+ 221:.\main.c      **** CyDmaChEnable(DMA_Filter2Mem_Chan, 1);
+ 284              		.loc 1 221 0
+ 285 0150 3B7D     		ldrb	r3, [r7, #20]	@ zero_extendqisi2
+ 286 0152 1846     		mov	r0, r3
+ 287 0154 0121     		movs	r1, #1
+ 288 0156 FFF7FEFF 		bl	CyDmaChEnable
+ 222:.\main.c      **** 
+ 223:.\main.c      **** /*DMA_FilterMem2Mem*/
+ 224:.\main.c      **** DMA_FilterMem2Mem_Chan = DMA_FilterMem2Mem_DmaInitialize(DMA_FilterMem2Mem_BYTES_PER_BURST, DMA_Fil
+ 289              		.loc 1 224 0
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccUR7uIP.s 			page 10
+
+
+ 290 015a 0420     		movs	r0, #4
+ 291 015c 0021     		movs	r1, #0
+ 292 015e 41F6FF72 		movw	r2, #8191
+ 293 0162 41F6FF73 		movw	r3, #8191
+ 294 0166 FFF7FEFF 		bl	DMA_FilterMem2Mem_DmaInitialize
+ 295 016a 0346     		mov	r3, r0
+ 296 016c FB74     		strb	r3, [r7, #19]
+ 225:.\main.c      ****     HI16(DMA_FilterMem2Mem_SRC_BASE), HI16(DMA_FilterMem2Mem_DST_BASE));
+ 226:.\main.c      **** DMA_Mem2Mem_TD[0] = CyDmaTdAllocate();
+ 297              		.loc 1 226 0
+ 298 016e FFF7FEFF 		bl	CyDmaTdAllocate
+ 299 0172 0346     		mov	r3, r0
+ 300 0174 3B73     		strb	r3, [r7, #12]
+ 227:.\main.c      **** CyDmaTdSetConfiguration(DMA_FilterMem2Mem_TD[0], window_size*4, DMA_FilterMem2Mem_TD[0], TD_INC_DST
+ 301              		.loc 1 227 0
+ 302 0176 3A78     		ldrb	r2, [r7]	@ zero_extendqisi2
+ 303 0178 3B78     		ldrb	r3, [r7]	@ zero_extendqisi2
+ 304 017a 1046     		mov	r0, r2
+ 305 017c 4FF48061 		mov	r1, #1024
+ 306 0180 1A46     		mov	r2, r3
+ 307 0182 0323     		movs	r3, #3
+ 308 0184 FFF7FEFF 		bl	CyDmaTdSetConfiguration
+ 228:.\main.c      **** CyDmaTdSetAddress(DMA_FilterMem2Mem_TD[0], LO16((uint32)&filter_temp), LO16((uint32)Filtered_result
+ 309              		.loc 1 228 0
+ 310 0188 3978     		ldrb	r1, [r7]	@ zero_extendqisi2
+ 311 018a 0D4B     		ldr	r3, .L6+8
+ 312 018c 9AB2     		uxth	r2, r3
+ 313 018e 0D4B     		ldr	r3, .L6+12
+ 314 0190 9BB2     		uxth	r3, r3
+ 315 0192 0846     		mov	r0, r1
+ 316 0194 1146     		mov	r1, r2
+ 317 0196 1A46     		mov	r2, r3
+ 318 0198 FFF7FEFF 		bl	CyDmaTdSetAddress
+ 229:.\main.c      **** CyDmaChSetInitialTd(DMA_FilterMem2Mem_Chan, DMA_FilterMem2Mem_TD[0]);
+ 319              		.loc 1 229 0
+ 320 019c 3B78     		ldrb	r3, [r7]	@ zero_extendqisi2
+ 321 019e FA7C     		ldrb	r2, [r7, #19]	@ zero_extendqisi2
+ 322 01a0 1046     		mov	r0, r2
+ 323 01a2 1946     		mov	r1, r3
+ 324 01a4 FFF7FEFF 		bl	CyDmaChSetInitialTd
+ 230:.\main.c      **** CyDmaChEnable(DMA_FilterMem2Mem_Chan, 1);
+ 325              		.loc 1 230 0
+ 326 01a8 FB7C     		ldrb	r3, [r7, #19]	@ zero_extendqisi2
+ 327 01aa 1846     		mov	r0, r3
+ 328 01ac 0121     		movs	r1, #1
+ 329 01ae FFF7FEFF 		bl	CyDmaChEnable
+ 231:.\main.c      **** }
+ 330              		.loc 1 231 0
+ 331 01b2 1837     		adds	r7, r7, #24
+ 332 01b4 BD46     		mov	sp, r7
+ 333              		@ sp needed
+ 334 01b6 80BD     		pop	{r7, pc}
+ 335              	.L7:
+ 336              		.align	2
+ 337              	.L6:
+ 338 01b8 00000000 		.word	adc_temp
+ 339 01bc 00000000 		.word	result
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccUR7uIP.s 			page 11
+
+
+ 340 01c0 00000000 		.word	filter_temp
+ 341 01c4 00000000 		.word	Filtered_result
+ 342              		.cfi_endproc
+ 343              	.LFE57:
+ 344              		.size	DMA_Config, .-DMA_Config
+ 345              		.text
+ 346              	.Letext0:
+ 347              		.file 2 "c:\\program files\\cypress\\psoc creator\\3.2\\psoc creator\\import\\gnu\\arm\\4.8.4\\arm
+ 348              		.file 3 "c:\\program files\\cypress\\psoc creator\\3.2\\psoc creator\\import\\gnu\\arm\\4.8.4\\arm
+ 349              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 350              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 351              		.section	.debug_info,"",%progbits
+ 352              	.Ldebug_info0:
+ 353 0000 1C020000 		.4byte	0x21c
+ 354 0004 0400     		.2byte	0x4
+ 355 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 356 000a 04       		.byte	0x4
+ 357 000b 01       		.uleb128 0x1
+ 358 000c 61010000 		.4byte	.LASF37
+ 359 0010 01       		.byte	0x1
+ 360 0011 95000000 		.4byte	.LASF38
+ 361 0015 4A020000 		.4byte	.LASF39
+ 362 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 363 001d 00000000 		.4byte	0
+ 364 0021 00000000 		.4byte	.Ldebug_line0
+ 365 0025 02       		.uleb128 0x2
+ 366 0026 01       		.byte	0x1
+ 367 0027 06       		.byte	0x6
+ 368 0028 2E020000 		.4byte	.LASF0
+ 369 002c 02       		.uleb128 0x2
+ 370 002d 01       		.byte	0x1
+ 371 002e 08       		.byte	0x8
+ 372 002f B6000000 		.4byte	.LASF1
+ 373 0033 02       		.uleb128 0x2
+ 374 0034 02       		.byte	0x2
+ 375 0035 05       		.byte	0x5
+ 376 0036 12020000 		.4byte	.LASF2
+ 377 003a 02       		.uleb128 0x2
+ 378 003b 02       		.byte	0x2
+ 379 003c 07       		.byte	0x7
+ 380 003d 68000000 		.4byte	.LASF3
+ 381 0041 03       		.uleb128 0x3
+ 382 0042 3B000000 		.4byte	.LASF9
+ 383 0046 02       		.byte	0x2
+ 384 0047 37       		.byte	0x37
+ 385 0048 4C000000 		.4byte	0x4c
+ 386 004c 02       		.uleb128 0x2
+ 387 004d 04       		.byte	0x4
+ 388 004e 05       		.byte	0x5
+ 389 004f 25020000 		.4byte	.LASF4
+ 390 0053 02       		.uleb128 0x2
+ 391 0054 04       		.byte	0x4
+ 392 0055 07       		.byte	0x7
+ 393 0056 CF000000 		.4byte	.LASF5
+ 394 005a 02       		.uleb128 0x2
+ 395 005b 08       		.byte	0x8
+ 396 005c 05       		.byte	0x5
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccUR7uIP.s 			page 12
+
+
+ 397 005d EE010000 		.4byte	.LASF6
+ 398 0061 02       		.uleb128 0x2
+ 399 0062 08       		.byte	0x8
+ 400 0063 07       		.byte	0x7
+ 401 0064 43010000 		.4byte	.LASF7
+ 402 0068 04       		.uleb128 0x4
+ 403 0069 04       		.byte	0x4
+ 404 006a 05       		.byte	0x5
+ 405 006b 696E7400 		.ascii	"int\000"
+ 406 006f 02       		.uleb128 0x2
+ 407 0070 04       		.byte	0x4
+ 408 0071 07       		.byte	0x7
+ 409 0072 36010000 		.4byte	.LASF8
+ 410 0076 03       		.uleb128 0x3
+ 411 0077 DD010000 		.4byte	.LASF10
+ 412 007b 03       		.byte	0x3
+ 413 007c 41       		.byte	0x41
+ 414 007d 41000000 		.4byte	0x41
+ 415 0081 03       		.uleb128 0x3
+ 416 0082 B0000000 		.4byte	.LASF11
+ 417 0086 04       		.byte	0x4
+ 418 0087 5B       		.byte	0x5b
+ 419 0088 2C000000 		.4byte	0x2c
+ 420 008c 03       		.uleb128 0x3
+ 421 008d 14010000 		.4byte	.LASF12
+ 422 0091 04       		.byte	0x4
+ 423 0092 5C       		.byte	0x5c
+ 424 0093 3A000000 		.4byte	0x3a
+ 425 0097 03       		.uleb128 0x3
+ 426 0098 1B010000 		.4byte	.LASF13
+ 427 009c 04       		.byte	0x4
+ 428 009d 5D       		.byte	0x5d
+ 429 009e 53000000 		.4byte	0x53
+ 430 00a2 03       		.uleb128 0x3
+ 431 00a3 C9000000 		.4byte	.LASF14
+ 432 00a7 04       		.byte	0x4
+ 433 00a8 5F       		.byte	0x5f
+ 434 00a9 33000000 		.4byte	0x33
+ 435 00ad 03       		.uleb128 0x3
+ 436 00ae E6000000 		.4byte	.LASF15
+ 437 00b2 04       		.byte	0x4
+ 438 00b3 60       		.byte	0x60
+ 439 00b4 4C000000 		.4byte	0x4c
+ 440 00b8 02       		.uleb128 0x2
+ 441 00b9 04       		.byte	0x4
+ 442 00ba 04       		.byte	0x4
+ 443 00bb AA000000 		.4byte	.LASF16
+ 444 00bf 02       		.uleb128 0x2
+ 445 00c0 08       		.byte	0x8
+ 446 00c1 04       		.byte	0x4
+ 447 00c2 08010000 		.4byte	.LASF17
+ 448 00c6 02       		.uleb128 0x2
+ 449 00c7 01       		.byte	0x1
+ 450 00c8 08       		.byte	0x8
+ 451 00c9 0D020000 		.4byte	.LASF18
+ 452 00cd 03       		.uleb128 0x3
+ 453 00ce C4000000 		.4byte	.LASF19
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccUR7uIP.s 			page 13
+
+
+ 454 00d2 04       		.byte	0x4
+ 455 00d3 F0       		.byte	0xf0
+ 456 00d4 D8000000 		.4byte	0xd8
+ 457 00d8 05       		.uleb128 0x5
+ 458 00d9 81000000 		.4byte	0x81
+ 459 00dd 02       		.uleb128 0x2
+ 460 00de 04       		.byte	0x4
+ 461 00df 07       		.byte	0x7
+ 462 00e0 E5010000 		.4byte	.LASF20
+ 463 00e4 06       		.uleb128 0x6
+ 464 00e5 0F010000 		.4byte	.LASF40
+ 465 00e9 01       		.byte	0x1
+ 466 00ea 66       		.byte	0x66
+ 467 00eb 00000000 		.4byte	.LFB56
+ 468 00ef 80000000 		.4byte	.LFE56-.LFB56
+ 469 00f3 01       		.uleb128 0x1
+ 470 00f4 9C       		.byte	0x9c
+ 471 00f5 08010000 		.4byte	0x108
+ 472 00f9 07       		.uleb128 0x7
+ 473 00fa E1000000 		.4byte	.LASF21
+ 474 00fe 01       		.byte	0x1
+ 475 00ff 68       		.byte	0x68
+ 476 0100 A2000000 		.4byte	0xa2
+ 477 0104 02       		.uleb128 0x2
+ 478 0105 91       		.byte	0x91
+ 479 0106 76       		.sleb128 -10
+ 480 0107 00       		.byte	0
+ 481 0108 08       		.uleb128 0x8
+ 482 0109 7B000000 		.4byte	.LASF41
+ 483 010d 01       		.byte	0x1
+ 484 010e A1       		.byte	0xa1
+ 485 010f 00000000 		.4byte	.LFB57
+ 486 0113 C8010000 		.4byte	.LFE57-.LFB57
+ 487 0117 01       		.uleb128 0x1
+ 488 0118 9C       		.byte	0x9c
+ 489 0119 AA010000 		.4byte	0x1aa
+ 490 011d 07       		.uleb128 0x7
+ 491 011e FC010000 		.4byte	.LASF22
+ 492 0122 01       		.byte	0x1
+ 493 0123 A4       		.byte	0xa4
+ 494 0124 81000000 		.4byte	0x81
+ 495 0128 02       		.uleb128 0x2
+ 496 0129 91       		.byte	0x91
+ 497 012a 77       		.sleb128 -9
+ 498 012b 07       		.uleb128 0x7
+ 499 012c 86000000 		.4byte	.LASF23
+ 500 0130 01       		.byte	0x1
+ 501 0131 A5       		.byte	0xa5
+ 502 0132 AA010000 		.4byte	0x1aa
+ 503 0136 02       		.uleb128 0x2
+ 504 0137 91       		.byte	0x91
+ 505 0138 70       		.sleb128 -16
+ 506 0139 07       		.uleb128 0x7
+ 507 013a 45000000 		.4byte	.LASF24
+ 508 013e 01       		.byte	0x1
+ 509 013f A8       		.byte	0xa8
+ 510 0140 81000000 		.4byte	0x81
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccUR7uIP.s 			page 14
+
+
+ 511 0144 02       		.uleb128 0x2
+ 512 0145 91       		.byte	0x91
+ 513 0146 76       		.sleb128 -10
+ 514 0147 07       		.uleb128 0x7
+ 515 0148 EC000000 		.4byte	.LASF25
+ 516 014c 01       		.byte	0x1
+ 517 014d A9       		.byte	0xa9
+ 518 014e AA010000 		.4byte	0x1aa
+ 519 0152 02       		.uleb128 0x2
+ 520 0153 91       		.byte	0x91
+ 521 0154 6C       		.sleb128 -20
+ 522 0155 07       		.uleb128 0x7
+ 523 0156 00000000 		.4byte	.LASF26
+ 524 015a 01       		.byte	0x1
+ 525 015b AC       		.byte	0xac
+ 526 015c 81000000 		.4byte	0x81
+ 527 0160 02       		.uleb128 0x2
+ 528 0161 91       		.byte	0x91
+ 529 0162 75       		.sleb128 -11
+ 530 0163 07       		.uleb128 0x7
+ 531 0164 56000000 		.4byte	.LASF27
+ 532 0168 01       		.byte	0x1
+ 533 0169 AD       		.byte	0xad
+ 534 016a AA010000 		.4byte	0x1aa
+ 535 016e 02       		.uleb128 0x2
+ 536 016f 91       		.byte	0x91
+ 537 0170 68       		.sleb128 -24
+ 538 0171 07       		.uleb128 0x7
+ 539 0172 22010000 		.4byte	.LASF28
+ 540 0176 01       		.byte	0x1
+ 541 0177 B0       		.byte	0xb0
+ 542 0178 81000000 		.4byte	0x81
+ 543 017c 02       		.uleb128 0x2
+ 544 017d 91       		.byte	0x91
+ 545 017e 74       		.sleb128 -12
+ 546 017f 07       		.uleb128 0x7
+ 547 0180 14000000 		.4byte	.LASF29
+ 548 0184 01       		.byte	0x1
+ 549 0185 B1       		.byte	0xb1
+ 550 0186 AA010000 		.4byte	0x1aa
+ 551 018a 02       		.uleb128 0x2
+ 552 018b 91       		.byte	0x91
+ 553 018c 64       		.sleb128 -28
+ 554 018d 07       		.uleb128 0x7
+ 555 018e C4020000 		.4byte	.LASF30
+ 556 0192 01       		.byte	0x1
+ 557 0193 B4       		.byte	0xb4
+ 558 0194 81000000 		.4byte	0x81
+ 559 0198 02       		.uleb128 0x2
+ 560 0199 91       		.byte	0x91
+ 561 019a 73       		.sleb128 -13
+ 562 019b 07       		.uleb128 0x7
+ 563 019c 26000000 		.4byte	.LASF31
+ 564 01a0 01       		.byte	0x1
+ 565 01a1 B5       		.byte	0xb5
+ 566 01a2 AA010000 		.4byte	0x1aa
+ 567 01a6 02       		.uleb128 0x2
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccUR7uIP.s 			page 15
+
+
+ 568 01a7 91       		.byte	0x91
+ 569 01a8 60       		.sleb128 -32
+ 570 01a9 00       		.byte	0
+ 571 01aa 09       		.uleb128 0x9
+ 572 01ab 81000000 		.4byte	0x81
+ 573 01af BA010000 		.4byte	0x1ba
+ 574 01b3 0A       		.uleb128 0xa
+ 575 01b4 DD000000 		.4byte	0xdd
+ 576 01b8 00       		.byte	0
+ 577 01b9 00       		.byte	0
+ 578 01ba 0B       		.uleb128 0xb
+ 579 01bb FB000000 		.4byte	.LASF32
+ 580 01bf 05       		.byte	0x5
+ 581 01c0 1606     		.2byte	0x616
+ 582 01c2 C6010000 		.4byte	0x1c6
+ 583 01c6 05       		.uleb128 0x5
+ 584 01c7 76000000 		.4byte	0x76
+ 585 01cb 0C       		.uleb128 0xc
+ 586 01cc 1C020000 		.4byte	.LASF33
+ 587 01d0 01       		.byte	0x1
+ 588 01d1 43       		.byte	0x43
+ 589 01d2 AD000000 		.4byte	0xad
+ 590 01d6 05       		.uleb128 0x5
+ 591 01d7 03       		.byte	0x3
+ 592 01d8 00000000 		.4byte	adc_temp
+ 593 01dc 0C       		.uleb128 0xc
+ 594 01dd 9E000000 		.4byte	.LASF34
+ 595 01e1 01       		.byte	0x1
+ 596 01e2 44       		.byte	0x44
+ 597 01e3 AD000000 		.4byte	0xad
+ 598 01e7 05       		.uleb128 0x5
+ 599 01e8 03       		.byte	0x3
+ 600 01e9 00000000 		.4byte	filter_temp
+ 601 01ed 09       		.uleb128 0x9
+ 602 01ee AD000000 		.4byte	0xad
+ 603 01f2 FD010000 		.4byte	0x1fd
+ 604 01f6 0A       		.uleb128 0xa
+ 605 01f7 DD000000 		.4byte	0xdd
+ 606 01fb FF       		.byte	0xff
+ 607 01fc 00       		.byte	0
+ 608 01fd 0C       		.uleb128 0xc
+ 609 01fe 5A010000 		.4byte	.LASF35
+ 610 0202 01       		.byte	0x1
+ 611 0203 4A       		.byte	0x4a
+ 612 0204 ED010000 		.4byte	0x1ed
+ 613 0208 05       		.uleb128 0x5
+ 614 0209 03       		.byte	0x3
+ 615 020a 00000000 		.4byte	result
+ 616 020e 0C       		.uleb128 0xc
+ 617 020f 3A020000 		.4byte	.LASF36
+ 618 0213 01       		.byte	0x1
+ 619 0214 4B       		.byte	0x4b
+ 620 0215 ED010000 		.4byte	0x1ed
+ 621 0219 05       		.uleb128 0x5
+ 622 021a 03       		.byte	0x3
+ 623 021b 00000000 		.4byte	Filtered_result
+ 624 021f 00       		.byte	0
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccUR7uIP.s 			page 16
+
+
+ 625              		.section	.debug_abbrev,"",%progbits
+ 626              	.Ldebug_abbrev0:
+ 627 0000 01       		.uleb128 0x1
+ 628 0001 11       		.uleb128 0x11
+ 629 0002 01       		.byte	0x1
+ 630 0003 25       		.uleb128 0x25
+ 631 0004 0E       		.uleb128 0xe
+ 632 0005 13       		.uleb128 0x13
+ 633 0006 0B       		.uleb128 0xb
+ 634 0007 03       		.uleb128 0x3
+ 635 0008 0E       		.uleb128 0xe
+ 636 0009 1B       		.uleb128 0x1b
+ 637 000a 0E       		.uleb128 0xe
+ 638 000b 55       		.uleb128 0x55
+ 639 000c 17       		.uleb128 0x17
+ 640 000d 11       		.uleb128 0x11
+ 641 000e 01       		.uleb128 0x1
+ 642 000f 10       		.uleb128 0x10
+ 643 0010 17       		.uleb128 0x17
+ 644 0011 00       		.byte	0
+ 645 0012 00       		.byte	0
+ 646 0013 02       		.uleb128 0x2
+ 647 0014 24       		.uleb128 0x24
+ 648 0015 00       		.byte	0
+ 649 0016 0B       		.uleb128 0xb
+ 650 0017 0B       		.uleb128 0xb
+ 651 0018 3E       		.uleb128 0x3e
+ 652 0019 0B       		.uleb128 0xb
+ 653 001a 03       		.uleb128 0x3
+ 654 001b 0E       		.uleb128 0xe
+ 655 001c 00       		.byte	0
+ 656 001d 00       		.byte	0
+ 657 001e 03       		.uleb128 0x3
+ 658 001f 16       		.uleb128 0x16
+ 659 0020 00       		.byte	0
+ 660 0021 03       		.uleb128 0x3
+ 661 0022 0E       		.uleb128 0xe
+ 662 0023 3A       		.uleb128 0x3a
+ 663 0024 0B       		.uleb128 0xb
+ 664 0025 3B       		.uleb128 0x3b
+ 665 0026 0B       		.uleb128 0xb
+ 666 0027 49       		.uleb128 0x49
+ 667 0028 13       		.uleb128 0x13
+ 668 0029 00       		.byte	0
+ 669 002a 00       		.byte	0
+ 670 002b 04       		.uleb128 0x4
+ 671 002c 24       		.uleb128 0x24
+ 672 002d 00       		.byte	0
+ 673 002e 0B       		.uleb128 0xb
+ 674 002f 0B       		.uleb128 0xb
+ 675 0030 3E       		.uleb128 0x3e
+ 676 0031 0B       		.uleb128 0xb
+ 677 0032 03       		.uleb128 0x3
+ 678 0033 08       		.uleb128 0x8
+ 679 0034 00       		.byte	0
+ 680 0035 00       		.byte	0
+ 681 0036 05       		.uleb128 0x5
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccUR7uIP.s 			page 17
+
+
+ 682 0037 35       		.uleb128 0x35
+ 683 0038 00       		.byte	0
+ 684 0039 49       		.uleb128 0x49
+ 685 003a 13       		.uleb128 0x13
+ 686 003b 00       		.byte	0
+ 687 003c 00       		.byte	0
+ 688 003d 06       		.uleb128 0x6
+ 689 003e 2E       		.uleb128 0x2e
+ 690 003f 01       		.byte	0x1
+ 691 0040 3F       		.uleb128 0x3f
+ 692 0041 19       		.uleb128 0x19
+ 693 0042 03       		.uleb128 0x3
+ 694 0043 0E       		.uleb128 0xe
+ 695 0044 3A       		.uleb128 0x3a
+ 696 0045 0B       		.uleb128 0xb
+ 697 0046 3B       		.uleb128 0x3b
+ 698 0047 0B       		.uleb128 0xb
+ 699 0048 11       		.uleb128 0x11
+ 700 0049 01       		.uleb128 0x1
+ 701 004a 12       		.uleb128 0x12
+ 702 004b 06       		.uleb128 0x6
+ 703 004c 40       		.uleb128 0x40
+ 704 004d 18       		.uleb128 0x18
+ 705 004e 9642     		.uleb128 0x2116
+ 706 0050 19       		.uleb128 0x19
+ 707 0051 01       		.uleb128 0x1
+ 708 0052 13       		.uleb128 0x13
+ 709 0053 00       		.byte	0
+ 710 0054 00       		.byte	0
+ 711 0055 07       		.uleb128 0x7
+ 712 0056 34       		.uleb128 0x34
+ 713 0057 00       		.byte	0
+ 714 0058 03       		.uleb128 0x3
+ 715 0059 0E       		.uleb128 0xe
+ 716 005a 3A       		.uleb128 0x3a
+ 717 005b 0B       		.uleb128 0xb
+ 718 005c 3B       		.uleb128 0x3b
+ 719 005d 0B       		.uleb128 0xb
+ 720 005e 49       		.uleb128 0x49
+ 721 005f 13       		.uleb128 0x13
+ 722 0060 02       		.uleb128 0x2
+ 723 0061 18       		.uleb128 0x18
+ 724 0062 00       		.byte	0
+ 725 0063 00       		.byte	0
+ 726 0064 08       		.uleb128 0x8
+ 727 0065 2E       		.uleb128 0x2e
+ 728 0066 01       		.byte	0x1
+ 729 0067 3F       		.uleb128 0x3f
+ 730 0068 19       		.uleb128 0x19
+ 731 0069 03       		.uleb128 0x3
+ 732 006a 0E       		.uleb128 0xe
+ 733 006b 3A       		.uleb128 0x3a
+ 734 006c 0B       		.uleb128 0xb
+ 735 006d 3B       		.uleb128 0x3b
+ 736 006e 0B       		.uleb128 0xb
+ 737 006f 27       		.uleb128 0x27
+ 738 0070 19       		.uleb128 0x19
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccUR7uIP.s 			page 18
+
+
+ 739 0071 11       		.uleb128 0x11
+ 740 0072 01       		.uleb128 0x1
+ 741 0073 12       		.uleb128 0x12
+ 742 0074 06       		.uleb128 0x6
+ 743 0075 40       		.uleb128 0x40
+ 744 0076 18       		.uleb128 0x18
+ 745 0077 9642     		.uleb128 0x2116
+ 746 0079 19       		.uleb128 0x19
+ 747 007a 01       		.uleb128 0x1
+ 748 007b 13       		.uleb128 0x13
+ 749 007c 00       		.byte	0
+ 750 007d 00       		.byte	0
+ 751 007e 09       		.uleb128 0x9
+ 752 007f 01       		.uleb128 0x1
+ 753 0080 01       		.byte	0x1
+ 754 0081 49       		.uleb128 0x49
+ 755 0082 13       		.uleb128 0x13
+ 756 0083 01       		.uleb128 0x1
+ 757 0084 13       		.uleb128 0x13
+ 758 0085 00       		.byte	0
+ 759 0086 00       		.byte	0
+ 760 0087 0A       		.uleb128 0xa
+ 761 0088 21       		.uleb128 0x21
+ 762 0089 00       		.byte	0
+ 763 008a 49       		.uleb128 0x49
+ 764 008b 13       		.uleb128 0x13
+ 765 008c 2F       		.uleb128 0x2f
+ 766 008d 0B       		.uleb128 0xb
+ 767 008e 00       		.byte	0
+ 768 008f 00       		.byte	0
+ 769 0090 0B       		.uleb128 0xb
+ 770 0091 34       		.uleb128 0x34
+ 771 0092 00       		.byte	0
+ 772 0093 03       		.uleb128 0x3
+ 773 0094 0E       		.uleb128 0xe
+ 774 0095 3A       		.uleb128 0x3a
+ 775 0096 0B       		.uleb128 0xb
+ 776 0097 3B       		.uleb128 0x3b
+ 777 0098 05       		.uleb128 0x5
+ 778 0099 49       		.uleb128 0x49
+ 779 009a 13       		.uleb128 0x13
+ 780 009b 3F       		.uleb128 0x3f
+ 781 009c 19       		.uleb128 0x19
+ 782 009d 3C       		.uleb128 0x3c
+ 783 009e 19       		.uleb128 0x19
+ 784 009f 00       		.byte	0
+ 785 00a0 00       		.byte	0
+ 786 00a1 0C       		.uleb128 0xc
+ 787 00a2 34       		.uleb128 0x34
+ 788 00a3 00       		.byte	0
+ 789 00a4 03       		.uleb128 0x3
+ 790 00a5 0E       		.uleb128 0xe
+ 791 00a6 3A       		.uleb128 0x3a
+ 792 00a7 0B       		.uleb128 0xb
+ 793 00a8 3B       		.uleb128 0x3b
+ 794 00a9 0B       		.uleb128 0xb
+ 795 00aa 49       		.uleb128 0x49
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccUR7uIP.s 			page 19
+
+
+ 796 00ab 13       		.uleb128 0x13
+ 797 00ac 3F       		.uleb128 0x3f
+ 798 00ad 19       		.uleb128 0x19
+ 799 00ae 02       		.uleb128 0x2
+ 800 00af 18       		.uleb128 0x18
+ 801 00b0 00       		.byte	0
+ 802 00b1 00       		.byte	0
+ 803 00b2 00       		.byte	0
+ 804              		.section	.debug_aranges,"",%progbits
+ 805 0000 24000000 		.4byte	0x24
+ 806 0004 0200     		.2byte	0x2
+ 807 0006 00000000 		.4byte	.Ldebug_info0
+ 808 000a 04       		.byte	0x4
+ 809 000b 00       		.byte	0
+ 810 000c 0000     		.2byte	0
+ 811 000e 0000     		.2byte	0
+ 812 0010 00000000 		.4byte	.LFB56
+ 813 0014 80000000 		.4byte	.LFE56-.LFB56
+ 814 0018 00000000 		.4byte	.LFB57
+ 815 001c C8010000 		.4byte	.LFE57-.LFB57
+ 816 0020 00000000 		.4byte	0
+ 817 0024 00000000 		.4byte	0
+ 818              		.section	.debug_ranges,"",%progbits
+ 819              	.Ldebug_ranges0:
+ 820 0000 00000000 		.4byte	.LFB56
+ 821 0004 80000000 		.4byte	.LFE56
+ 822 0008 00000000 		.4byte	.LFB57
+ 823 000c C8010000 		.4byte	.LFE57
+ 824 0010 00000000 		.4byte	0
+ 825 0014 00000000 		.4byte	0
+ 826              		.section	.debug_line,"",%progbits
+ 827              	.Ldebug_line0:
+ 828 0000 A9010000 		.section	.debug_str,"MS",%progbits,1
+ 828      02003D01 
+ 828      00000201 
+ 828      FB0E0D00 
+ 828      01010101 
+ 829              	.LASF26:
+ 830 0000 444D415F 		.ascii	"DMA_ADC2Filter_Chan\000"
+ 830      41444332 
+ 830      46696C74 
+ 830      65725F43 
+ 830      68616E00 
+ 831              	.LASF29:
+ 832 0014 444D415F 		.ascii	"DMA_Filter2Mem_TD\000"
+ 832      46696C74 
+ 832      6572324D 
+ 832      656D5F54 
+ 832      4400
+ 833              	.LASF31:
+ 834 0026 444D415F 		.ascii	"DMA_FilterMem2Mem_TD\000"
+ 834      46696C74 
+ 834      65724D65 
+ 834      6D324D65 
+ 834      6D5F5444 
+ 835              	.LASF9:
+ 836 003b 5F5F696E 		.ascii	"__int32_t\000"
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccUR7uIP.s 			page 20
+
+
+ 836      7433325F 
+ 836      7400
+ 837              	.LASF24:
+ 838 0045 444D415F 		.ascii	"DMA_Mem2Mem_Chan\000"
+ 838      4D656D32 
+ 838      4D656D5F 
+ 838      4368616E 
+ 838      00
+ 839              	.LASF27:
+ 840 0056 444D415F 		.ascii	"DMA_ADC2Filter_TD\000"
+ 840      41444332 
+ 840      46696C74 
+ 840      65725F54 
+ 840      4400
+ 841              	.LASF3:
+ 842 0068 73686F72 		.ascii	"short unsigned int\000"
+ 842      7420756E 
+ 842      7369676E 
+ 842      65642069 
+ 842      6E7400
+ 843              	.LASF41:
+ 844 007b 444D415F 		.ascii	"DMA_Config\000"
+ 844      436F6E66 
+ 844      696700
+ 845              	.LASF23:
+ 846 0086 444D415F 		.ascii	"DMA_ADC2Mem_TD\000"
+ 846      41444332 
+ 846      4D656D5F 
+ 846      544400
+ 847              	.LASF38:
+ 848 0095 2E5C6D61 		.ascii	".\\main.c\000"
+ 848      696E2E63 
+ 848      00
+ 849              	.LASF34:
+ 850 009e 66696C74 		.ascii	"filter_temp\000"
+ 850      65725F74 
+ 850      656D7000 
+ 851              	.LASF16:
+ 852 00aa 666C6F61 		.ascii	"float\000"
+ 852      7400
+ 853              	.LASF11:
+ 854 00b0 75696E74 		.ascii	"uint8\000"
+ 854      3800
+ 855              	.LASF1:
+ 856 00b6 756E7369 		.ascii	"unsigned char\000"
+ 856      676E6564 
+ 856      20636861 
+ 856      7200
+ 857              	.LASF19:
+ 858 00c4 72656738 		.ascii	"reg8\000"
+ 858      00
+ 859              	.LASF14:
+ 860 00c9 696E7431 		.ascii	"int16\000"
+ 860      3600
+ 861              	.LASF5:
+ 862 00cf 6C6F6E67 		.ascii	"long unsigned int\000"
+ 862      20756E73 
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccUR7uIP.s 			page 21
+
+
+ 862      69676E65 
+ 862      6420696E 
+ 862      7400
+ 863              	.LASF21:
+ 864 00e1 74656D70 		.ascii	"temp\000"
+ 864      00
+ 865              	.LASF15:
+ 866 00e6 696E7433 		.ascii	"int32\000"
+ 866      3200
+ 867              	.LASF25:
+ 868 00ec 444D415F 		.ascii	"DMA_Mem2Mem_TD\000"
+ 868      4D656D32 
+ 868      4D656D5F 
+ 868      544400
+ 869              	.LASF32:
+ 870 00fb 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 870      52784275 
+ 870      66666572 
+ 870      00
+ 871              	.LASF17:
+ 872 0108 646F7562 		.ascii	"double\000"
+ 872      6C6500
+ 873              	.LASF40:
+ 874 010f 6D61696E 		.ascii	"main\000"
+ 874      00
+ 875              	.LASF12:
+ 876 0114 75696E74 		.ascii	"uint16\000"
+ 876      313600
+ 877              	.LASF13:
+ 878 011b 75696E74 		.ascii	"uint32\000"
+ 878      333200
+ 879              	.LASF28:
+ 880 0122 444D415F 		.ascii	"DMA_Filter2Mem_Chan\000"
+ 880      46696C74 
+ 880      6572324D 
+ 880      656D5F43 
+ 880      68616E00 
+ 881              	.LASF8:
+ 882 0136 756E7369 		.ascii	"unsigned int\000"
+ 882      676E6564 
+ 882      20696E74 
+ 882      00
+ 883              	.LASF7:
+ 884 0143 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 884      206C6F6E 
+ 884      6720756E 
+ 884      7369676E 
+ 884      65642069 
+ 885              	.LASF35:
+ 886 015a 72657375 		.ascii	"result\000"
+ 886      6C7400
+ 887              	.LASF37:
+ 888 0161 474E5520 		.ascii	"GNU C 4.8.4 20140526 (release) [ARM/embedded-4_8-br"
+ 888      4320342E 
+ 888      382E3420 
+ 888      32303134 
+ 888      30353236 
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccUR7uIP.s 			page 22
+
+
+ 889 0194 616E6368 		.ascii	"anch revision 211358] -mcpu=cortex-m3 -mthumb -g -O"
+ 889      20726576 
+ 889      6973696F 
+ 889      6E203231 
+ 889      31333538 
+ 890 01c7 30202D66 		.ascii	"0 -ffunction-sections\000"
+ 890      66756E63 
+ 890      74696F6E 
+ 890      2D736563 
+ 890      74696F6E 
+ 891              	.LASF10:
+ 892 01dd 696E7433 		.ascii	"int32_t\000"
+ 892      325F7400 
+ 893              	.LASF20:
+ 894 01e5 73697A65 		.ascii	"sizetype\000"
+ 894      74797065 
+ 894      00
+ 895              	.LASF6:
+ 896 01ee 6C6F6E67 		.ascii	"long long int\000"
+ 896      206C6F6E 
+ 896      6720696E 
+ 896      7400
+ 897              	.LASF22:
+ 898 01fc 444D415F 		.ascii	"DMA_ADC2Mem_Chan\000"
+ 898      41444332 
+ 898      4D656D5F 
+ 898      4368616E 
+ 898      00
+ 899              	.LASF18:
+ 900 020d 63686172 		.ascii	"char\000"
+ 900      00
+ 901              	.LASF2:
+ 902 0212 73686F72 		.ascii	"short int\000"
+ 902      7420696E 
+ 902      7400
+ 903              	.LASF33:
+ 904 021c 6164635F 		.ascii	"adc_temp\000"
+ 904      74656D70 
+ 904      00
+ 905              	.LASF4:
+ 906 0225 6C6F6E67 		.ascii	"long int\000"
+ 906      20696E74 
+ 906      00
+ 907              	.LASF0:
+ 908 022e 7369676E 		.ascii	"signed char\000"
+ 908      65642063 
+ 908      68617200 
+ 909              	.LASF36:
+ 910 023a 46696C74 		.ascii	"Filtered_result\000"
+ 910      65726564 
+ 910      5F726573 
+ 910      756C7400 
+ 911              	.LASF39:
+ 912 024a 5C5C766D 		.ascii	"\\\\vmware-host\\Shared Folders\\scottcarlson On My"
+ 912      77617265 
+ 912      2D686F73 
+ 912      745C5368 
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccUR7uIP.s 			page 23
+
+
+ 912      61726564 
+ 913 0279 204D6163 		.ascii	" Mac\\Code\\repos\\MagField_LowFreq_Detector\\DelSi"
+ 913      5C436F64 
+ 913      655C7265 
+ 913      706F735C 
+ 913      4D616746 
+ 914 02a8 675F3136 		.ascii	"g_16Channel-20bit-DMA.cydsn\000"
+ 914      4368616E 
+ 914      6E656C2D 
+ 914      32306269 
+ 914      742D444D 
+ 915              	.LASF30:
+ 916 02c4 444D415F 		.ascii	"DMA_FilterMem2Mem_Chan\000"
+ 916      46696C74 
+ 916      65724D65 
+ 916      6D324D65 
+ 916      6D5F4368 
+ 917              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.8.4 20140526 (release) [ARM/embedded-4_8-br

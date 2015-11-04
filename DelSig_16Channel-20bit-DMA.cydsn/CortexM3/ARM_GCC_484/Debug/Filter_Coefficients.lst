@@ -1,0 +1,417 @@
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccJjh5aH.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"Filter_Coefficients.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.global	Filter_ChannelAFirCoefficients
+  19              		.section	.rodata
+  20              		.align	2
+  21              		.type	Filter_ChannelAFirCoefficients, %object
+  22              		.size	Filter_ChannelAFirCoefficients, 60
+  23              	Filter_ChannelAFirCoefficients:
+  24 0000 E9       		.byte	-23
+  25 0001 F5       		.byte	-11
+  26 0002 FF       		.byte	-1
+  27 0003 00       		.byte	0
+  28 0004 FE       		.byte	-2
+  29 0005 75       		.byte	117
+  30 0006 00       		.byte	0
+  31 0007 00       		.byte	0
+  32 0008 94       		.byte	-108
+  33 0009 BF       		.byte	-65
+  34 000a FE       		.byte	-2
+  35 000b 00       		.byte	0
+  36 000c AB       		.byte	-85
+  37 000d 3D       		.byte	61
+  38 000e 00       		.byte	0
+  39 000f 00       		.byte	0
+  40 0010 1F       		.byte	31
+  41 0011 1E       		.byte	30
+  42 0012 06       		.byte	6
+  43 0013 00       		.byte	0
+  44 0014 F3       		.byte	-13
+  45 0015 40       		.byte	64
+  46 0016 F0       		.byte	-16
+  47 0017 00       		.byte	0
+  48 0018 12       		.byte	18
+  49 0019 1A       		.byte	26
+  50 001a 0A       		.byte	10
+  51 001b 00       		.byte	0
+  52 001c CC       		.byte	-52
+  53 001d 92       		.byte	-110
+  54 001e 3D       		.byte	61
+  55 001f 00       		.byte	0
+  56 0020 12       		.byte	18
+  57 0021 1A       		.byte	26
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccJjh5aH.s 			page 2
+
+
+  58 0022 0A       		.byte	10
+  59 0023 00       		.byte	0
+  60 0024 F3       		.byte	-13
+  61 0025 40       		.byte	64
+  62 0026 F0       		.byte	-16
+  63 0027 00       		.byte	0
+  64 0028 1F       		.byte	31
+  65 0029 1E       		.byte	30
+  66 002a 06       		.byte	6
+  67 002b 00       		.byte	0
+  68 002c AB       		.byte	-85
+  69 002d 3D       		.byte	61
+  70 002e 00       		.byte	0
+  71 002f 00       		.byte	0
+  72 0030 94       		.byte	-108
+  73 0031 BF       		.byte	-65
+  74 0032 FE       		.byte	-2
+  75 0033 00       		.byte	0
+  76 0034 FE       		.byte	-2
+  77 0035 75       		.byte	117
+  78 0036 00       		.byte	0
+  79 0037 00       		.byte	0
+  80 0038 E9       		.byte	-23
+  81 0039 F5       		.byte	-11
+  82 003a FF       		.byte	-1
+  83 003b 00       		.byte	0
+  84              		.text
+  85              	.Letext0:
+  86              		.file 1 ".\\Generated_Source\\PSoC5\\cytypes.h"
+  87              		.file 2 ".\\Generated_Source\\PSoC5\\Filter_Coefficients.c"
+  88              		.section	.debug_info,"",%progbits
+  89              	.Ldebug_info0:
+  90 0000 AD000000 		.4byte	0xad
+  91 0004 0400     		.2byte	0x4
+  92 0006 00000000 		.4byte	.Ldebug_abbrev0
+  93 000a 04       		.byte	0x4
+  94 000b 01       		.uleb128 0x1
+  95 000c 3B010000 		.4byte	.LASF13
+  96 0010 01       		.byte	0x1
+  97 0011 0C010000 		.4byte	.LASF14
+  98 0015 63000000 		.4byte	.LASF15
+  99 0019 00000000 		.4byte	.Ldebug_line0
+ 100 001d 02       		.uleb128 0x2
+ 101 001e 04       		.byte	0x4
+ 102 001f 05       		.byte	0x5
+ 103 0020 696E7400 		.ascii	"int\000"
+ 104 0024 03       		.uleb128 0x3
+ 105 0025 04       		.byte	0x4
+ 106 0026 07       		.byte	0x7
+ 107 0027 0E000000 		.4byte	.LASF0
+ 108 002b 03       		.uleb128 0x3
+ 109 002c 01       		.byte	0x1
+ 110 002d 06       		.byte	0x6
+ 111 002e 00010000 		.4byte	.LASF1
+ 112 0032 03       		.uleb128 0x3
+ 113 0033 01       		.byte	0x1
+ 114 0034 08       		.byte	0x8
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccJjh5aH.s 			page 3
+
+
+ 115 0035 50000000 		.4byte	.LASF2
+ 116 0039 03       		.uleb128 0x3
+ 117 003a 02       		.byte	0x2
+ 118 003b 05       		.byte	0x5
+ 119 003c B7010000 		.4byte	.LASF3
+ 120 0040 03       		.uleb128 0x3
+ 121 0041 02       		.byte	0x2
+ 122 0042 07       		.byte	0x7
+ 123 0043 ED000000 		.4byte	.LASF4
+ 124 0047 03       		.uleb128 0x3
+ 125 0048 04       		.byte	0x4
+ 126 0049 05       		.byte	0x5
+ 127 004a DD000000 		.4byte	.LASF5
+ 128 004e 03       		.uleb128 0x3
+ 129 004f 04       		.byte	0x4
+ 130 0050 07       		.byte	0x7
+ 131 0051 21000000 		.4byte	.LASF6
+ 132 0055 03       		.uleb128 0x3
+ 133 0056 08       		.byte	0x8
+ 134 0057 05       		.byte	0x5
+ 135 0058 00000000 		.4byte	.LASF7
+ 136 005c 03       		.uleb128 0x3
+ 137 005d 08       		.byte	0x8
+ 138 005e 07       		.byte	0x7
+ 139 005f 33000000 		.4byte	.LASF8
+ 140 0063 03       		.uleb128 0x3
+ 141 0064 04       		.byte	0x4
+ 142 0065 07       		.byte	0x7
+ 143 0066 E0010000 		.4byte	.LASF9
+ 144 006a 03       		.uleb128 0x3
+ 145 006b 01       		.byte	0x1
+ 146 006c 08       		.byte	0x8
+ 147 006d 5E000000 		.4byte	.LASF10
+ 148 0071 04       		.uleb128 0x4
+ 149 0072 1B000000 		.4byte	.LASF16
+ 150 0076 01       		.byte	0x1
+ 151 0077 5B       		.byte	0x5b
+ 152 0078 32000000 		.4byte	0x32
+ 153 007c 03       		.uleb128 0x3
+ 154 007d 04       		.byte	0x4
+ 155 007e 04       		.byte	0x4
+ 156 007f 4A000000 		.4byte	.LASF11
+ 157 0083 03       		.uleb128 0x3
+ 158 0084 08       		.byte	0x8
+ 159 0085 04       		.byte	0x4
+ 160 0086 E6000000 		.4byte	.LASF12
+ 161 008a 05       		.uleb128 0x5
+ 162 008b 71000000 		.4byte	0x71
+ 163 008f 9A000000 		.4byte	0x9a
+ 164 0093 06       		.uleb128 0x6
+ 165 0094 63000000 		.4byte	0x63
+ 166 0098 3B       		.byte	0x3b
+ 167 0099 00       		.byte	0
+ 168 009a 07       		.uleb128 0x7
+ 169 009b C1010000 		.4byte	.LASF17
+ 170 009f 02       		.byte	0x2
+ 171 00a0 11       		.byte	0x11
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccJjh5aH.s 			page 4
+
+
+ 172 00a1 AB000000 		.4byte	0xab
+ 173 00a5 05       		.uleb128 0x5
+ 174 00a6 03       		.byte	0x3
+ 175 00a7 00000000 		.4byte	Filter_ChannelAFirCoefficients
+ 176 00ab 08       		.uleb128 0x8
+ 177 00ac 8A000000 		.4byte	0x8a
+ 178 00b0 00       		.byte	0
+ 179              		.section	.debug_abbrev,"",%progbits
+ 180              	.Ldebug_abbrev0:
+ 181 0000 01       		.uleb128 0x1
+ 182 0001 11       		.uleb128 0x11
+ 183 0002 01       		.byte	0x1
+ 184 0003 25       		.uleb128 0x25
+ 185 0004 0E       		.uleb128 0xe
+ 186 0005 13       		.uleb128 0x13
+ 187 0006 0B       		.uleb128 0xb
+ 188 0007 03       		.uleb128 0x3
+ 189 0008 0E       		.uleb128 0xe
+ 190 0009 1B       		.uleb128 0x1b
+ 191 000a 0E       		.uleb128 0xe
+ 192 000b 10       		.uleb128 0x10
+ 193 000c 17       		.uleb128 0x17
+ 194 000d 00       		.byte	0
+ 195 000e 00       		.byte	0
+ 196 000f 02       		.uleb128 0x2
+ 197 0010 24       		.uleb128 0x24
+ 198 0011 00       		.byte	0
+ 199 0012 0B       		.uleb128 0xb
+ 200 0013 0B       		.uleb128 0xb
+ 201 0014 3E       		.uleb128 0x3e
+ 202 0015 0B       		.uleb128 0xb
+ 203 0016 03       		.uleb128 0x3
+ 204 0017 08       		.uleb128 0x8
+ 205 0018 00       		.byte	0
+ 206 0019 00       		.byte	0
+ 207 001a 03       		.uleb128 0x3
+ 208 001b 24       		.uleb128 0x24
+ 209 001c 00       		.byte	0
+ 210 001d 0B       		.uleb128 0xb
+ 211 001e 0B       		.uleb128 0xb
+ 212 001f 3E       		.uleb128 0x3e
+ 213 0020 0B       		.uleb128 0xb
+ 214 0021 03       		.uleb128 0x3
+ 215 0022 0E       		.uleb128 0xe
+ 216 0023 00       		.byte	0
+ 217 0024 00       		.byte	0
+ 218 0025 04       		.uleb128 0x4
+ 219 0026 16       		.uleb128 0x16
+ 220 0027 00       		.byte	0
+ 221 0028 03       		.uleb128 0x3
+ 222 0029 0E       		.uleb128 0xe
+ 223 002a 3A       		.uleb128 0x3a
+ 224 002b 0B       		.uleb128 0xb
+ 225 002c 3B       		.uleb128 0x3b
+ 226 002d 0B       		.uleb128 0xb
+ 227 002e 49       		.uleb128 0x49
+ 228 002f 13       		.uleb128 0x13
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccJjh5aH.s 			page 5
+
+
+ 229 0030 00       		.byte	0
+ 230 0031 00       		.byte	0
+ 231 0032 05       		.uleb128 0x5
+ 232 0033 01       		.uleb128 0x1
+ 233 0034 01       		.byte	0x1
+ 234 0035 49       		.uleb128 0x49
+ 235 0036 13       		.uleb128 0x13
+ 236 0037 01       		.uleb128 0x1
+ 237 0038 13       		.uleb128 0x13
+ 238 0039 00       		.byte	0
+ 239 003a 00       		.byte	0
+ 240 003b 06       		.uleb128 0x6
+ 241 003c 21       		.uleb128 0x21
+ 242 003d 00       		.byte	0
+ 243 003e 49       		.uleb128 0x49
+ 244 003f 13       		.uleb128 0x13
+ 245 0040 2F       		.uleb128 0x2f
+ 246 0041 0B       		.uleb128 0xb
+ 247 0042 00       		.byte	0
+ 248 0043 00       		.byte	0
+ 249 0044 07       		.uleb128 0x7
+ 250 0045 34       		.uleb128 0x34
+ 251 0046 00       		.byte	0
+ 252 0047 03       		.uleb128 0x3
+ 253 0048 0E       		.uleb128 0xe
+ 254 0049 3A       		.uleb128 0x3a
+ 255 004a 0B       		.uleb128 0xb
+ 256 004b 3B       		.uleb128 0x3b
+ 257 004c 0B       		.uleb128 0xb
+ 258 004d 49       		.uleb128 0x49
+ 259 004e 13       		.uleb128 0x13
+ 260 004f 3F       		.uleb128 0x3f
+ 261 0050 19       		.uleb128 0x19
+ 262 0051 02       		.uleb128 0x2
+ 263 0052 18       		.uleb128 0x18
+ 264 0053 00       		.byte	0
+ 265 0054 00       		.byte	0
+ 266 0055 08       		.uleb128 0x8
+ 267 0056 26       		.uleb128 0x26
+ 268 0057 00       		.byte	0
+ 269 0058 49       		.uleb128 0x49
+ 270 0059 13       		.uleb128 0x13
+ 271 005a 00       		.byte	0
+ 272 005b 00       		.byte	0
+ 273 005c 00       		.byte	0
+ 274              		.section	.debug_aranges,"",%progbits
+ 275 0000 14000000 		.4byte	0x14
+ 276 0004 0200     		.2byte	0x2
+ 277 0006 00000000 		.4byte	.Ldebug_info0
+ 278 000a 04       		.byte	0x4
+ 279 000b 00       		.byte	0
+ 280 000c 0000     		.2byte	0
+ 281 000e 0000     		.2byte	0
+ 282 0010 00000000 		.4byte	0
+ 283 0014 00000000 		.4byte	0
+ 284              		.section	.debug_line,"",%progbits
+ 285              	.Ldebug_line0:
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccJjh5aH.s 			page 6
+
+
+ 286 0000 58000000 		.section	.debug_str,"MS",%progbits,1
+ 286      02005200 
+ 286      00000201 
+ 286      FB0E0D00 
+ 286      01010101 
+ 287              	.LASF7:
+ 288 0000 6C6F6E67 		.ascii	"long long int\000"
+ 288      206C6F6E 
+ 288      6720696E 
+ 288      7400
+ 289              	.LASF0:
+ 290 000e 756E7369 		.ascii	"unsigned int\000"
+ 290      676E6564 
+ 290      20696E74 
+ 290      00
+ 291              	.LASF16:
+ 292 001b 75696E74 		.ascii	"uint8\000"
+ 292      3800
+ 293              	.LASF6:
+ 294 0021 6C6F6E67 		.ascii	"long unsigned int\000"
+ 294      20756E73 
+ 294      69676E65 
+ 294      6420696E 
+ 294      7400
+ 295              	.LASF8:
+ 296 0033 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 296      206C6F6E 
+ 296      6720756E 
+ 296      7369676E 
+ 296      65642069 
+ 297              	.LASF11:
+ 298 004a 666C6F61 		.ascii	"float\000"
+ 298      7400
+ 299              	.LASF2:
+ 300 0050 756E7369 		.ascii	"unsigned char\000"
+ 300      676E6564 
+ 300      20636861 
+ 300      7200
+ 301              	.LASF10:
+ 302 005e 63686172 		.ascii	"char\000"
+ 302      00
+ 303              	.LASF15:
+ 304 0063 5C5C766D 		.ascii	"\\\\vmware-host\\Shared Folders\\scottcarlson On My"
+ 304      77617265 
+ 304      2D686F73 
+ 304      745C5368 
+ 304      61726564 
+ 305 0092 204D6163 		.ascii	" Mac\\Code\\repos\\MagField_LowFreq_Detector\\DelSi"
+ 305      5C436F64 
+ 305      655C7265 
+ 305      706F735C 
+ 305      4D616746 
+ 306 00c1 675F3136 		.ascii	"g_16Channel-20bit-DMA.cydsn\000"
+ 306      4368616E 
+ 306      6E656C2D 
+ 306      32306269 
+ 306      742D444D 
+ARM GAS  C:\Users\SCOTTC~1\AppData\Local\Temp\ccJjh5aH.s 			page 7
+
+
+ 307              	.LASF5:
+ 308 00dd 6C6F6E67 		.ascii	"long int\000"
+ 308      20696E74 
+ 308      00
+ 309              	.LASF12:
+ 310 00e6 646F7562 		.ascii	"double\000"
+ 310      6C6500
+ 311              	.LASF4:
+ 312 00ed 73686F72 		.ascii	"short unsigned int\000"
+ 312      7420756E 
+ 312      7369676E 
+ 312      65642069 
+ 312      6E7400
+ 313              	.LASF1:
+ 314 0100 7369676E 		.ascii	"signed char\000"
+ 314      65642063 
+ 314      68617200 
+ 315              	.LASF14:
+ 316 010c 2E5C4765 		.ascii	".\\Generated_Source\\PSoC5\\Filter_Coefficients.c\000"
+ 316      6E657261 
+ 316      7465645F 
+ 316      536F7572 
+ 316      63655C50 
+ 317              	.LASF13:
+ 318 013b 474E5520 		.ascii	"GNU C 4.8.4 20140526 (release) [ARM/embedded-4_8-br"
+ 318      4320342E 
+ 318      382E3420 
+ 318      32303134 
+ 318      30353236 
+ 319 016e 616E6368 		.ascii	"anch revision 211358] -mcpu=cortex-m3 -mthumb -g -O"
+ 319      20726576 
+ 319      6973696F 
+ 319      6E203231 
+ 319      31333538 
+ 320 01a1 30202D66 		.ascii	"0 -ffunction-sections\000"
+ 320      66756E63 
+ 320      74696F6E 
+ 320      2D736563 
+ 320      74696F6E 
+ 321              	.LASF3:
+ 322 01b7 73686F72 		.ascii	"short int\000"
+ 322      7420696E 
+ 322      7400
+ 323              	.LASF17:
+ 324 01c1 46696C74 		.ascii	"Filter_ChannelAFirCoefficients\000"
+ 324      65725F43 
+ 324      68616E6E 
+ 324      656C4146 
+ 324      6972436F 
+ 325              	.LASF9:
+ 326 01e0 73697A65 		.ascii	"sizetype\000"
+ 326      74797065 
+ 326      00
+ 327              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.8.4 20140526 (release) [ARM/embedded-4_8-br

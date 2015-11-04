@@ -1,0 +1,596 @@
+C51 COMPILER V9.51   MAIN                                                                  12/16/2013 12:48:00 PAGE 1   
+
+
+C51 COMPILER V9.51, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\DP8051\DP8051_Keil_951\Debug\main.obj
+COMPILER INVOKED BY: C:\Program Files\Cypress\PSoC Creator\3.0\PSoC Creator\import\keil\pk51\9.51\C51\BIN\c51.exe .\main
+                    -.c NOIV LARGE MODDP2 OMF2 VB(1) PR(.\DP8051\DP8051_Keil_951\Debug\main.lst) CD DB NOIP OT(2,SIZE) INCDIR(.,.\Generated_S
+                    -ource\PSoC3) OJ(.\DP8051\DP8051_Keil_951\Debug\main.obj)
+
+line level    source
+
+   1          /*******************************************************************************
+   2          * File Name: main.c
+   3          *
+   4          * Version: 1.00
+   5          *
+   6          * Description:
+   7          *   This is the source code for the DelSig_16Channel Example Project.
+   8          *       DelSig_16Channel Example Project intended to use as Creator starter design 
+   9          *       for PSoC 3/5LP devices. 
+  10          *
+  11          *   Note that this file contains the DMA_Config function as well.
+  12          *
+  13          ********************************************************************************
+  14          * Copyright 2012, Cypress Semiconductor Corporation. All rights reserved.
+  15          * This software is owned by Cypress Semiconductor Corporation and is protected
+  16          * by and subject to worldwide patent and copyright laws and treaties.
+  17          * Therefore, you may use this software only as provided in the license agreement
+  18          * accompanying the software package from which you obtained this software.
+  19          * CYPRESS AND ITS SUPPLIERS MAKE NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+  20          * WITH REGARD TO THIS SOFTWARE, INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT,
+  21          * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+  22          *******************************************************************************/
+  23          #include <project.h>
+  24          #include <device.h>
+  25          
+  26          /* There are 16 input channels */
+  27          #define NUMCHAN (16u)
+  28          
+  29          /* DMA Configuration for DMA_ADC2Mem */
+  30          #define DMA_ADC2Mem_BYTES_PER_BURST 4
+  31          #define DMA_ADC2Mem_REQUEST_PER_BURST 1
+  32          #define DMA_ADC2Mem_SRC_BASE (CYDEV_PERIPH_BASE)
+  33          #define DMA_ADC2Mem_DST_BASE (CYDEV_SRAM_BASE)
+  34          
+  35          
+  36          /* DMA Configuration for DMA_Mem2Mem */
+  37          #define DMA_Mem2Mem_BYTES_PER_BURST 4
+  38          #define DMA_Mem2Mem_REQUEST_PER_BURST 1
+  39          #define DMA_Mem2Mem_SRC_BASE (CYDEV_SRAM_BASE)
+  40          #define DMA_Mem2Mem_DST_BASE (CYDEV_SRAM_BASE)
+  41          
+  42          
+  43          
+  44          /* Directive to place adc_temp at a particular location. The location is 
+  45          chosen as a multiple of 4 bytes (even boundary) */
+  46          
+  47          #if(CY_PSOC3)   
+  48                          int32 xdata adc_temp _at_ 0x100; 
+  49          #else /* PSoC5 being used */
+                      int32 adc_temp;
+              #endif
+  52          
+  53          #if(CY_PSOC3)
+C51 COMPILER V9.51   MAIN                                                                  12/16/2013 12:48:00 PAGE 2   
+
+  54                  int32 xdata result[NUMCHAN] _at_ 0x200;
+  55          #else /* PSoC5 being used */
+                      int32 result[NUMCHAN];
+              #endif
+  58          
+  59          
+  60          
+  61          void DMA_Config(void);
+  62          
+  63          
+  64          /*******************************************************************************
+  65          * Function Name: main
+  66          ********************************************************************************
+  67          *
+  68          * Summary:
+  69          *  main() performs following functions:
+  70          *  1: Starts the components
+  71          *  2: Calls function DMA_Config to setup the DMA.
+  72          *  3: Starts ADC continuous conversion.
+  73          *  4: Gets the converted result and displays it in LCD. Also displays VDAC data
+  74          *     register value on LCD.
+  75          *
+  76          * Parameters:
+  77          *  None.
+  78          *
+  79          * Return:
+  80          *  None.
+  81          *
+  82          *******************************************************************************/
+  83          void main()
+  84          {
+  85   1          /* Initialize variable that indicates which mux channel is displayed on LCD */
+  86   1          uint8 curChan = 0u;
+  87   1              int16 temp;
+  88   1              
+  89   1      
+  90   1          LCD_Start();
+  91   1          ADC_Start();
+  92   1              
+  93   1               /* Disable ADC interrupts */
+  94   1              ADC_IRQ_Disable();
+  95   1      
+  96   1              /*Change the ADC coherent key to high byte*/
+  97   1              ADC_DEC_COHER_REG |= ADC_DEC_SAMP_KEY_HIGH;
+  98   1      
+  99   1              /*Start ADC conversions*/
+ 100   1              ADC_StartConvert();
+ 101   1              
+ 102   1              /* Enable ADC SOC to be triggered by PWM output */
+ 103   1          Start_Reg_Write(1u);
+ 104   1              
+ 105   1              
+ 106   1          Delay_PWM_Start();
+ 107   1      
+ 108   1          DMA_Config();
+ 109   1      
+ 110   1           CYGlobalIntEnable;  /* Uncomment this line to enable global interrupts. */
+ 111   1          for(;;)
+ 112   1          {
+ 113   2              LCD_ClearDisplay();
+ 114   2              LCD_PrintString("Channel: ");
+ 115   2              LCD_PrintNumber(curChan);
+C51 COMPILER V9.51   MAIN                                                                  12/16/2013 12:48:00 PAGE 3   
+
+ 116   2      
+ 117   2              LCD_Position(1u, 0u);
+ 118   2                      temp = ADC_CountsTo_mVolts(result[curChan]);
+ 119   2                      LCD_PrintNumber(temp);
+ 120   2                      
+ 121   2                      
+ 122   2              /* For ease of reading LCD */
+ 123   2              CyDelay(100u/*ms*/);
+ 124   2      
+ 125   2              /* If SW2 is pressed */
+ 126   2              if(!ChannelSelect_Read())
+ 127   2              {
+ 128   3                  /* Wait until button is released */
+ 129   3                  while(!ChannelSelect_Read())
+ 130   3                  {
+ 131   4                  }
+ 132   3      
+ 133   3                  /* Increment to next channel for display */
+ 134   3                  curChan++;
+ 135   3      
+ 136   3                  /* If we are at channel 16, reset to channel 0 */
+ 137   3                  if(curChan == NUMCHAN)
+ 138   3                  {
+ 139   4                      curChan = 0u;
+ 140   4                  }
+ 141   3              }
+ 142   2          }
+ 143   1      }
+ 144          
+ 145          
+ 146          /*******************************************************************************
+ 147          * Function Name:  DMA_Config
+ 148          ********************************************************************************
+ 149          *
+ 150          * Summary:
+ 151          *    Code generated by the DMA Wizard.
+ 152          *
+ 153          *    DMA_Config() performs following functions:
+ 154          *  1: Initializes the DMA channel
+ 155          *  2: Allocates Transfer Descriptors
+ 156          *  3: Configures the TD.
+ 157          *  4: Sets source and destination address for this TD.
+ 158          *  5: Initializes the TD.
+ 159          *  6: Enables the DMA channel.
+ 160          *
+ 161          * Parameters:
+ 162          *  None.
+ 163          *
+ 164          * Return:
+ 165          *  None.
+ 166          *
+ 167          *******************************************************************************/
+ 168          void DMA_Config()
+ 169          {
+ 170   1      /* Variable declarations for DMA_ADC2Mem */
+ 171   1      /* Move these variable declarations to the top of the function */
+ 172   1      uint8 DMA_ADC2Mem_Chan;
+ 173   1      uint8 DMA_ADC2Mem_TD[1];
+ 174   1      
+ 175   1      /* Variable declarations for DMA_Mem2Mem */
+ 176   1      /* Move these variable declarations to the top of the function */
+ 177   1      uint8 DMA_Mem2Mem_Chan;
+C51 COMPILER V9.51   MAIN                                                                  12/16/2013 12:48:00 PAGE 4   
+
+ 178   1      uint8 DMA_Mem2Mem_TD[1];
+ 179   1      
+ 180   1      
+ 181   1      /*DMA_ADC2Mem*/
+ 182   1      DMA_ADC2Mem_Chan = DMA_ADC2Mem_DmaInitialize(DMA_ADC2Mem_BYTES_PER_BURST, DMA_ADC2Mem_REQUEST_PER_BURST, 
+ 183   1          HI16(DMA_ADC2Mem_SRC_BASE), HI16(DMA_ADC2Mem_DST_BASE));
+ 184   1      DMA_ADC2Mem_TD[0] = CyDmaTdAllocate();
+ 185   1      
+ 186   1      #if(CY_PSOC3)   
+ 187   1              CyDmaTdSetConfiguration(DMA_ADC2Mem_TD[0], 4, DMA_ADC2Mem_TD[0], TD_SWAP_EN | TD_SWAP_SIZE4 | DMA_ADC2Mem
+             -__TD_TERMOUT_EN | TD_INC_SRC_ADR);
+ 188   1      #else /* PSoC5 being used */
+                      CyDmaTdSetConfiguration(DMA_ADC2Mem_TD[0], 4, DMA_ADC2Mem_TD[0], DMA_ADC2Mem__TD_TERMOUT_EN | TD_INC_SRC_
+             -ADR);
+              #endif
+ 191   1      
+ 192   1      CyDmaTdSetConfiguration(DMA_ADC2Mem_TD[0], 4, DMA_ADC2Mem_TD[0], TD_SWAP_EN | TD_SWAP_SIZE4 | DMA_ADC2Mem_
+             -_TD_TERMOUT_EN | TD_INC_SRC_ADR);
+ 193   1      CyDmaTdSetAddress(DMA_ADC2Mem_TD[0], LO16((uint32)ADC_DEC_SAMP_PTR), LO16((uint32)&adc_temp));
+ 194   1      CyDmaChSetInitialTd(DMA_ADC2Mem_Chan, DMA_ADC2Mem_TD[0]);
+ 195   1      CyDmaChEnable(DMA_ADC2Mem_Chan, 1);
+ 196   1      
+ 197   1      
+ 198   1      /*DMA_Mem2Mem*/
+ 199   1      DMA_Mem2Mem_Chan = DMA_Mem2Mem_DmaInitialize(DMA_Mem2Mem_BYTES_PER_BURST, DMA_Mem2Mem_REQUEST_PER_BURST, 
+ 200   1          HI16(DMA_Mem2Mem_SRC_BASE), HI16(DMA_Mem2Mem_DST_BASE));
+ 201   1      DMA_Mem2Mem_TD[0] = CyDmaTdAllocate();
+ 202   1      CyDmaTdSetConfiguration(DMA_Mem2Mem_TD[0], NUMCHAN*4, DMA_Mem2Mem_TD[0], TD_INC_DST_ADR);
+ 203   1      CyDmaTdSetAddress(DMA_Mem2Mem_TD[0], LO16((uint32)&adc_temp), LO16((uint32)result));
+ 204   1      CyDmaChSetInitialTd(DMA_Mem2Mem_Chan, DMA_Mem2Mem_TD[0]);
+ 205   1      CyDmaChEnable(DMA_Mem2Mem_Chan, 1);
+ 206   1      
+ 207   1      
+ 208   1      }
+ 209          
+ 210          
+ 211          /* [] END OF FILE */
+ 212          
+ 213          
+ 214          
+ 215          
+ 216          
+ 217          
+ 218          
+ 219          
+C51 COMPILER V9.51   MAIN                                                                  12/16/2013 12:48:00 PAGE 5   
+
+ASSEMBLY LISTING OF GENERATED OBJECT CODE
+
+
+             ; FUNCTION main (BEGIN)
+                                           ; SOURCE LINE # 83
+                                           ; SOURCE LINE # 84
+                                           ; SOURCE LINE # 86
+0000 900000      R     MOV     DPTR,#curChan
+0003 E4                CLR     A
+0004 F0                MOVX    @DPTR,A
+                                           ; SOURCE LINE # 90
+0005 120000      E     LCALL   LCD_Start
+                                           ; SOURCE LINE # 91
+0008 120000      E     LCALL   ADC_Start
+                                           ; SOURCE LINE # 94
+000B 120000      E     LCALL   ADC_IRQ_Disable
+                                           ; SOURCE LINE # 97
+000E 904E14            MOV     DPTR,#04E14H
+0011 E0                MOVX    A,@DPTR
+0012 FF                MOV     R7,A
+0013 EF                MOV     A,R7
+0014 4403              ORL     A,#03H
+0016 FF                MOV     R7,A
+0017 EF                MOV     A,R7
+0018 F0                MOVX    @DPTR,A
+                                           ; SOURCE LINE # 100
+0019 120000      E     LCALL   ADC_StartConvert
+                                           ; SOURCE LINE # 103
+001C 7F01              MOV     R7,#01H
+001E 120000      E     LCALL   _Start_Reg_Write
+                                           ; SOURCE LINE # 106
+0021 120000      E     LCALL   Delay_PWM_Start
+                                           ; SOURCE LINE # 108
+0024 120000      R     LCALL   DMA_Config
+                                           ; SOURCE LINE # 110
+0027 D2AF              SETB    EA
+0029 9044F4            MOV     DPTR,#044F4H
+002C 74FD              MOV     A,#0FDH
+002E F0                MOVX    @DPTR,A
+                                           ; SOURCE LINE # 111
+002F         ?C0001:
+                                           ; SOURCE LINE # 112
+                                           ; SOURCE LINE # 113
+002F 7F01              MOV     R7,#01H
+0031 120000      E     LCALL   _LCD_WriteControl
+                                           ; SOURCE LINE # 114
+0034 7BFF              MOV     R3,#0FFH
+0036 7A00        R     MOV     R2,#HIGH ?SC_0
+0038 7900        R     MOV     R1,#LOW ?SC_0
+003A 120000      E     LCALL   _LCD_PrintString
+                                           ; SOURCE LINE # 115
+003D 900000      R     MOV     DPTR,#curChan
+0040 E0                MOVX    A,@DPTR
+0041 FF                MOV     R7,A
+0042 7E00              MOV     R6,#00H
+0044 120000      E     LCALL   _LCD_PrintNumber
+                                           ; SOURCE LINE # 117
+0047 7D00              MOV     R5,#00H
+0049 7F01              MOV     R7,#01H
+004B 120000      E     LCALL   _LCD_Position
+                                           ; SOURCE LINE # 118
+004E 900000      R     MOV     DPTR,#curChan
+C51 COMPILER V9.51   MAIN                                                                  12/16/2013 12:48:00 PAGE 6   
+
+0051 E0                MOVX    A,@DPTR
+0052 FF                MOV     R7,A
+0053 EF                MOV     A,R7
+0054 25E0              ADD     A,ACC
+0056 25E0              ADD     A,ACC
+0058 2400        R     ADD     A,#LOW result
+005A F582              MOV     DPL,A
+005C E4                CLR     A
+005D 3400        R     ADDC    A,#HIGH result
+005F F583              MOV     DPH,A
+0061 120000      E     LCALL   ?C?LLDXDATA
+0064 120000      E     LCALL   _ADC_CountsTo_mVolts
+0067 900000      R     MOV     DPTR,#temp
+006A EE                MOV     A,R6
+006B F0                MOVX    @DPTR,A
+006C A3                INC     DPTR
+006D EF                MOV     A,R7
+006E F0                MOVX    @DPTR,A
+                                           ; SOURCE LINE # 119
+006F 900000      R     MOV     DPTR,#temp
+0072 E0                MOVX    A,@DPTR
+0073 FE                MOV     R6,A
+0074 A3                INC     DPTR
+0075 E0                MOVX    A,@DPTR
+0076 FF                MOV     R7,A
+0077 120000      E     LCALL   _LCD_PrintNumber
+                                           ; SOURCE LINE # 123
+007A 7F64              MOV     R7,#064H
+007C 7E00              MOV     R6,#00H
+007E 7D00              MOV     R5,#00H
+0080 7C00              MOV     R4,#00H
+0082 120000      E     LCALL   _?CyDelay
+                                           ; SOURCE LINE # 126
+0085 120000      E     LCALL   ChannelSelect_Read
+0088 EF                MOV     A,R7
+0089 70A4              JNZ     ?C0001
+                                           ; SOURCE LINE # 127
+008B         ?C0004:
+                                           ; SOURCE LINE # 129
+008B 120000      E     LCALL   ChannelSelect_Read
+008E EF                MOV     A,R7
+008F 60FA              JZ      ?C0004
+                                           ; SOURCE LINE # 130
+                                           ; SOURCE LINE # 131
+0091         ?C0005:
+                                           ; SOURCE LINE # 134
+0091 900000      R     MOV     DPTR,#curChan
+0094 E0                MOVX    A,@DPTR
+0095 04                INC     A
+0096 F0                MOVX    @DPTR,A
+                                           ; SOURCE LINE # 137
+0097 900000      R     MOV     DPTR,#curChan
+009A E0                MOVX    A,@DPTR
+009B FF                MOV     R7,A
+009C EF                MOV     A,R7
+009D B4108F            CJNE    A,#010H,?C0001
+                                           ; SOURCE LINE # 138
+                                           ; SOURCE LINE # 139
+00A0 900000      R     MOV     DPTR,#curChan
+00A3 E4                CLR     A
+00A4 F0                MOVX    @DPTR,A
+                                           ; SOURCE LINE # 140
+C51 COMPILER V9.51   MAIN                                                                  12/16/2013 12:48:00 PAGE 7   
+
+                                           ; SOURCE LINE # 141
+                                           ; SOURCE LINE # 142
+00A5 8088              SJMP    ?C0001
+00A7 22                RET     
+             ; FUNCTION main (END)
+
+             ; FUNCTION DMA_Config (BEGIN)
+                                           ; SOURCE LINE # 168
+                                           ; SOURCE LINE # 169
+                                           ; SOURCE LINE # 183
+0000 900000      E     MOV     DPTR,#?_DMA_ADC2Mem_DmaInitialize?BYTE+04H
+0003 E4                CLR     A
+0004 F0                MOVX    @DPTR,A
+0005 A3                INC     DPTR
+0006 E4                CLR     A
+0007 F0                MOVX    @DPTR,A
+0008 7B00              MOV     R3,#00H
+000A 7A00              MOV     R2,#00H
+000C 7D01              MOV     R5,#01H
+000E 7F04              MOV     R7,#04H
+0010 120000      E     LCALL   _DMA_ADC2Mem_DmaInitialize
+0013 900000      R     MOV     DPTR,#DMA_ADC2Mem_Chan
+0016 EF                MOV     A,R7
+0017 F0                MOVX    @DPTR,A
+                                           ; SOURCE LINE # 184
+0018 120000      E     LCALL   CyDmaTdAllocate
+001B 900000      R     MOV     DPTR,#DMA_ADC2Mem_TD
+001E EF                MOV     A,R7
+001F F0                MOVX    @DPTR,A
+                                           ; SOURCE LINE # 187
+0020 900000      R     MOV     DPTR,#DMA_ADC2Mem_TD
+0023 E0                MOVX    A,@DPTR
+0024 FF                MOV     R7,A
+0025 900000      R     MOV     DPTR,#DMA_ADC2Mem_TD
+0028 E0                MOVX    A,@DPTR
+0029 FB                MOV     R3,A
+002A 900000      E     MOV     DPTR,#?_CyDmaTdSetConfiguration?BYTE+04H
+002D 74C5              MOV     A,#0C5H
+002F F0                MOVX    @DPTR,A
+0030 7D04              MOV     R5,#04H
+0032 7C00              MOV     R4,#00H
+0034 120000      E     LCALL   _CyDmaTdSetConfiguration
+                                           ; SOURCE LINE # 192
+0037 900000      R     MOV     DPTR,#DMA_ADC2Mem_TD
+003A E0                MOVX    A,@DPTR
+003B FF                MOV     R7,A
+003C 900000      R     MOV     DPTR,#DMA_ADC2Mem_TD
+003F E0                MOVX    A,@DPTR
+0040 FB                MOV     R3,A
+0041 900000      E     MOV     DPTR,#?_CyDmaTdSetConfiguration?BYTE+04H
+0044 74C5              MOV     A,#0C5H
+0046 F0                MOVX    @DPTR,A
+0047 7D04              MOV     R5,#04H
+0049 7C00              MOV     R4,#00H
+004B 120000      E     LCALL   _CyDmaTdSetConfiguration
+                                           ; SOURCE LINE # 193
+004E 900000      R     MOV     DPTR,#DMA_ADC2Mem_TD
+0051 E0                MOVX    A,@DPTR
+0052 FF                MOV     R7,A
+0053 C007              PUSH    AR7
+0055 7B01              MOV     R3,#01H
+0057 7A00        R     MOV     R2,#HIGH adc_temp
+C51 COMPILER V9.51   MAIN                                                                  12/16/2013 12:48:00 PAGE 8   
+
+0059 7900        R     MOV     R1,#LOW adc_temp
+005B AF01              MOV     R7,AR1
+005D AE02              MOV     R6,AR2
+005F AD03              MOV     R5,AR3
+0061 7C00              MOV     R4,#00H
+0063 EF                MOV     A,R7
+0064 54FF              ANL     A,#0FFH
+0066 FF                MOV     R7,A
+0067 EE                MOV     A,R6
+0068 54FF              ANL     A,#0FFH
+006A FE                MOV     R6,A
+006B ED                MOV     A,R5
+006C 5400              ANL     A,#00H
+006E FD                MOV     R5,A
+006F EC                MOV     A,R4
+0070 5400              ANL     A,#00H
+0072 FC                MOV     R4,A
+0073 AB07              MOV     R3,AR7
+0075 AA06              MOV     R2,AR6
+0077 D007              POP     AR7
+0079 7D10              MOV     R5,#010H
+007B 7C4E              MOV     R4,#04EH
+007D 120000      E     LCALL   _CyDmaTdSetAddress
+                                           ; SOURCE LINE # 194
+0080 900000      R     MOV     DPTR,#DMA_ADC2Mem_Chan
+0083 E0                MOVX    A,@DPTR
+0084 FF                MOV     R7,A
+0085 900000      R     MOV     DPTR,#DMA_ADC2Mem_TD
+0088 E0                MOVX    A,@DPTR
+0089 FD                MOV     R5,A
+008A 120000      E     LCALL   _CyDmaChSetInitialTd
+                                           ; SOURCE LINE # 195
+008D 900000      R     MOV     DPTR,#DMA_ADC2Mem_Chan
+0090 E0                MOVX    A,@DPTR
+0091 FF                MOV     R7,A
+0092 7D01              MOV     R5,#01H
+0094 120000      E     LCALL   _CyDmaChEnable
+                                           ; SOURCE LINE # 200
+0097 900000      E     MOV     DPTR,#?_DMA_Mem2Mem_DmaInitialize?BYTE+04H
+009A E4                CLR     A
+009B F0                MOVX    @DPTR,A
+009C A3                INC     DPTR
+009D E4                CLR     A
+009E F0                MOVX    @DPTR,A
+009F 7B00              MOV     R3,#00H
+00A1 7A00              MOV     R2,#00H
+00A3 7D01              MOV     R5,#01H
+00A5 7F04              MOV     R7,#04H
+00A7 120000      E     LCALL   _DMA_Mem2Mem_DmaInitialize
+00AA 900000      R     MOV     DPTR,#DMA_Mem2Mem_Chan
+00AD EF                MOV     A,R7
+00AE F0                MOVX    @DPTR,A
+                                           ; SOURCE LINE # 201
+00AF 120000      E     LCALL   CyDmaTdAllocate
+00B2 900000      R     MOV     DPTR,#DMA_Mem2Mem_TD
+00B5 EF                MOV     A,R7
+00B6 F0                MOVX    @DPTR,A
+                                           ; SOURCE LINE # 202
+00B7 900000      R     MOV     DPTR,#DMA_Mem2Mem_TD
+00BA E0                MOVX    A,@DPTR
+00BB FF                MOV     R7,A
+00BC 900000      R     MOV     DPTR,#DMA_Mem2Mem_TD
+C51 COMPILER V9.51   MAIN                                                                  12/16/2013 12:48:00 PAGE 9   
+
+00BF E0                MOVX    A,@DPTR
+00C0 FB                MOV     R3,A
+00C1 900000      E     MOV     DPTR,#?_CyDmaTdSetConfiguration?BYTE+04H
+00C4 7402              MOV     A,#02H
+00C6 F0                MOVX    @DPTR,A
+00C7 7D40              MOV     R5,#040H
+00C9 7C00              MOV     R4,#00H
+00CB 120000      E     LCALL   _CyDmaTdSetConfiguration
+                                           ; SOURCE LINE # 203
+00CE 900000      R     MOV     DPTR,#DMA_Mem2Mem_TD
+00D1 E0                MOVX    A,@DPTR
+00D2 FF                MOV     R7,A
+00D3 C007              PUSH    AR7
+00D5 7B01              MOV     R3,#01H
+00D7 7A00        R     MOV     R2,#HIGH adc_temp
+00D9 7900        R     MOV     R1,#LOW adc_temp
+00DB AF01              MOV     R7,AR1
+00DD AE02              MOV     R6,AR2
+00DF AD03              MOV     R5,AR3
+00E1 7C00              MOV     R4,#00H
+00E3 EF                MOV     A,R7
+00E4 54FF              ANL     A,#0FFH
+00E6 FF                MOV     R7,A
+00E7 EE                MOV     A,R6
+00E8 54FF              ANL     A,#0FFH
+00EA FE                MOV     R6,A
+00EB ED                MOV     A,R5
+00EC 5400              ANL     A,#00H
+00EE FD                MOV     R5,A
+00EF EC                MOV     A,R4
+00F0 5400              ANL     A,#00H
+00F2 FC                MOV     R4,A
+00F3 AD07              MOV     R5,AR7
+00F5 AC06              MOV     R4,AR6
+00F7 C004              PUSH    AR4
+00F9 C005              PUSH    AR5
+00FB 7B01              MOV     R3,#01H
+00FD 7A00        R     MOV     R2,#HIGH result
+00FF 7900        R     MOV     R1,#LOW result
+0101 AF01              MOV     R7,AR1
+0103 AE02              MOV     R6,AR2
+0105 AD03              MOV     R5,AR3
+0107 7C00              MOV     R4,#00H
+0109 EF                MOV     A,R7
+010A 54FF              ANL     A,#0FFH
+010C FF                MOV     R7,A
+010D EE                MOV     A,R6
+010E 54FF              ANL     A,#0FFH
+0110 FE                MOV     R6,A
+0111 ED                MOV     A,R5
+0112 5400              ANL     A,#00H
+0114 FD                MOV     R5,A
+0115 EC                MOV     A,R4
+0116 5400              ANL     A,#00H
+0118 FC                MOV     R4,A
+0119 AB07              MOV     R3,AR7
+011B AA06              MOV     R2,AR6
+011D D005              POP     AR5
+011F D004              POP     AR4
+0121 D007              POP     AR7
+0123 120000      E     LCALL   _CyDmaTdSetAddress
+                                           ; SOURCE LINE # 204
+C51 COMPILER V9.51   MAIN                                                                  12/16/2013 12:48:00 PAGE 10  
+
+0126 900000      R     MOV     DPTR,#DMA_Mem2Mem_Chan
+0129 E0                MOVX    A,@DPTR
+012A FF                MOV     R7,A
+012B 900000      R     MOV     DPTR,#DMA_Mem2Mem_TD
+012E E0                MOVX    A,@DPTR
+012F FD                MOV     R5,A
+0130 120000      E     LCALL   _CyDmaChSetInitialTd
+                                           ; SOURCE LINE # 205
+0133 900000      R     MOV     DPTR,#DMA_Mem2Mem_Chan
+0136 E0                MOVX    A,@DPTR
+0137 FF                MOV     R7,A
+0138 7D01              MOV     R5,#01H
+013A 120000      E     LCALL   _CyDmaChEnable
+                                           ; SOURCE LINE # 208
+013D 22                RET     
+             ; FUNCTION DMA_Config (END)
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    486    ----
+   CONSTANT SIZE    =     10    ----
+   XDATA SIZE       =   ----       7
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

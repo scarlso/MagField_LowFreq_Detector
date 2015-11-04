@@ -1,0 +1,6 @@
+\\vmware-host\Shared Folders\scottcarlson On My Mac\Downloads\WIFI_MicroWebServer (1)\WIFI_MicroWebServer\WIFI_MicroWebServer.cydsn\WIFI_MicroWebServer.cyprj|2fa3d152-7a9a-46a2-96d4-4e800649291d
+C:\Program Files\Cypress\PSoC Creator\3.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|f6e0cb9f-9b2c-4e4b-a899-ffa182afa739
+C:\Program Files\Cypress\PSoC Creator\3.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|25f6d9bd-0945-4841-a844-e2944217a63e
+C:\Program Files\Cypress\PSoC Creator\3.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|c183df7e-8150-4608-85ad-9e9e6eaae7ae
+C:\Program Files\Cypress\PSoC Creator\3.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|63d47d14-ebd4-4251-8c11-2d8c99dd465a
+C:\Program Files\Cypress\PSoC Creator\3.2\PSoC Creator\psoc\content\default\CyReferenceLibrary\CyReferenceLibrary.cylib\CyReferenceLibrary.cyprj|8fb34ce6-b65c-4f35-a448-ec9f9b61249d

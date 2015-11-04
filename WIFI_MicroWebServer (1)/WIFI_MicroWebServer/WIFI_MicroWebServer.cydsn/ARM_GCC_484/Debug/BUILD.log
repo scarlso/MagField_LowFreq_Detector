@@ -1,0 +1,55 @@
+--------------- Build Started: 11/03/2015 20:58:44 Project: WIFI_MicroWebServer, Configuration: ARM GCC 4.8.4 Debug ---------------
+cydsfit.exe -.appdatapath "C:\Users\Scott Carlson\AppData\Local\Cypress Semiconductor\PSoC Creator\3.2" -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -p "\\vmware-host\Shared Folders\scottcarlson On My Mac\Downloads\WIFI_MicroWebServer (1)\WIFI_MicroWebServer\WIFI_MicroWebServer.cydsn\WIFI_MicroWebServer.cyprj" -d CY8C5868AXI-LP035 -s "\\vmware-host\Shared Folders\scottcarlson On My Mac\Downloads\WIFI_MicroWebServer (1)\WIFI_MicroWebServer\WIFI_MicroWebServer.cydsn\Generated_Source\PSoC5" -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE
+Elaborating Design...
+HDL Generation ...
+Synthesis ...
+Place and Route ...
+Tech mapping ...
+ADD: pft.M0040: information: The following 4 pin(s) will be assigned a location by the fitter: GPIO_0(0), GPIO_2(0), RST(0), VCC(0)
+Analog Placement ...
+Analog Routing ...
+Analog Code Generation ...
+Digital Placement ...
+Digital Routing ...
+Bitstream Generation ...
+Static timing analysis ...
+API Generation ...
+Dependency Generation ...
+Clean Temporary Files ...
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/main.lst -g -ffunction-sections -O0 -c .\main.c -o .\ARM_GCC_484\Debug\main.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/cyfitter_cfg.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\cyfitter_cfg.c -o .\ARM_GCC_484\Debug\cyfitter_cfg.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/cymetadata.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\cymetadata.c -o .\ARM_GCC_484\Debug\cymetadata.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/RX.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\RX.c -o .\ARM_GCC_484\Debug\RX.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/LCD_Char.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\LCD_Char.c -o .\ARM_GCC_484\Debug\LCD_Char.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/LCD_Char_PM.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\LCD_Char_PM.c -o .\ARM_GCC_484\Debug\LCD_Char_PM.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/UART.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\UART.c -o .\ARM_GCC_484\Debug\UART.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/UART_PM.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\UART_PM.c -o .\ARM_GCC_484\Debug\UART_PM.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/UART_INT.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\UART_INT.c -o .\ARM_GCC_484\Debug\UART_INT.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/UART_BOOT.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\UART_BOOT.c -o .\ARM_GCC_484\Debug\UART_BOOT.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/TX.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\TX.c -o .\ARM_GCC_484\Debug\TX.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/isr_UART.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\isr_UART.c -o .\ARM_GCC_484\Debug\isr_UART.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/LED.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\LED.c -o .\ARM_GCC_484\Debug\LED.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/GND.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\GND.c -o .\ARM_GCC_484\Debug\GND.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/GPIO_0.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\GPIO_0.c -o .\ARM_GCC_484\Debug\GPIO_0.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/VCC.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\VCC.c -o .\ARM_GCC_484\Debug\VCC.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/CH_PD.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\CH_PD.c -o .\ARM_GCC_484\Debug\CH_PD.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/GPIO_2.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\GPIO_2.c -o .\ARM_GCC_484\Debug\GPIO_2.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/RST.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\RST.c -o .\ARM_GCC_484\Debug\RST.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/LCD_Char_LCDPort.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\LCD_Char_LCDPort.c -o .\ARM_GCC_484\Debug\LCD_Char_LCDPort.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/UART_IntClock.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\UART_IntClock.c -o .\ARM_GCC_484\Debug\UART_IntClock.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/Cm3Start.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\Cm3Start.c -o .\ARM_GCC_484\Debug\Cm3Start.o
+arm-none-eabi-as.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -alh=.\ARM_GCC_484\Debug/CyBootAsmGnu.lst -g -o .\ARM_GCC_484\Debug\CyBootAsmGnu.o .\Generated_Source\PSoC5\CyBootAsmGnu.s
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/CyDmac.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\CyDmac.c -o .\ARM_GCC_484\Debug\CyDmac.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/CyFlash.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\CyFlash.c -o .\ARM_GCC_484\Debug\CyFlash.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/CyLib.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\CyLib.c -o .\ARM_GCC_484\Debug\CyLib.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/cyPm.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\cyPm.c -o .\ARM_GCC_484\Debug\cyPm.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/CySpc.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\CySpc.c -o .\ARM_GCC_484\Debug\CySpc.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\ARM_GCC_484\Debug/cyutils.lst -g -ffunction-sections -O0 -c .\Generated_Source\PSoC5\cyutils.c -o .\ARM_GCC_484\Debug\cyutils.o
+arm-none-eabi-ar.exe -rs .\ARM_GCC_484\Debug\WIFI_MicroWebServer.a .\ARM_GCC_484\Debug\cyfitter_cfg.o .\ARM_GCC_484\Debug\RX.o .\ARM_GCC_484\Debug\LCD_Char.o .\ARM_GCC_484\Debug\LCD_Char_PM.o .\ARM_GCC_484\Debug\UART.o .\ARM_GCC_484\Debug\UART_PM.o .\ARM_GCC_484\Debug\UART_INT.o .\ARM_GCC_484\Debug\UART_BOOT.o .\ARM_GCC_484\Debug\TX.o .\ARM_GCC_484\Debug\isr_UART.o .\ARM_GCC_484\Debug\LED.o .\ARM_GCC_484\Debug\GND.o .\ARM_GCC_484\Debug\GPIO_0.o .\ARM_GCC_484\Debug\VCC.o .\ARM_GCC_484\Debug\CH_PD.o .\ARM_GCC_484\Debug\GPIO_2.o .\ARM_GCC_484\Debug\RST.o .\ARM_GCC_484\Debug\LCD_Char_LCDPort.o .\ARM_GCC_484\Debug\UART_IntClock.o .\ARM_GCC_484\Debug\CyBootAsmGnu.o .\ARM_GCC_484\Debug\CyDmac.o .\ARM_GCC_484\Debug\CyFlash.o .\ARM_GCC_484\Debug\CyLib.o .\ARM_GCC_484\Debug\cyPm.o .\ARM_GCC_484\Debug\CySpc.o .\ARM_GCC_484\Debug\cyutils.o
+arm-none-eabi-ar.exe: creating .\ARM_GCC_484\Debug\WIFI_MicroWebServer.a
+arm-none-eabi-gcc.exe -Wl,--start-group -o .\ARM_GCC_484\Debug\WIFI_MicroWebServer.elf .\ARM_GCC_484\Debug\main.o .\ARM_GCC_484\Debug\cymetadata.o .\ARM_GCC_484\Debug\Cm3Start.o .\ARM_GCC_484\Debug\WIFI_MicroWebServer.a "C:\Program Files\Cypress\PSoC Creator\3.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CortexM3\ARM_GCC_484\Debug\CyComponentLibrary.a" -mcpu=cortex-m3 -mthumb -g -ffunction-sections -O0 -Wl,-Map,.\ARM_GCC_484\Debug/WIFI_MicroWebServer.map -T Generated_Source\PSoC5\cm3gcc.ld -nodefaultlibs -specs=nano.specs -Wl,--gc-sections -Wl,--end-group
+cyelftool.exe -C "\\vmware-host\Shared Folders\scottcarlson On My Mac\Downloads\WIFI_MicroWebServer (1)\WIFI_MicroWebServer\WIFI_MicroWebServer.cydsn\ARM_GCC_484\Debug\WIFI_MicroWebServer.elf" --flash_row_size 256 --flash_size 262144
+cyelftool.exe -S "\\vmware-host\Shared Folders\scottcarlson On My Mac\Downloads\WIFI_MicroWebServer (1)\WIFI_MicroWebServer\WIFI_MicroWebServer.cydsn\ARM_GCC_484\Debug\WIFI_MicroWebServer.elf"
+Flash used: 28416 of 262144 bytes (10.8 %).
+SRAM used: 5517 of 65536 bytes (8.4 %). Stack: 2048 bytes. Heap: 128 bytes.
+--------------- Build Succeeded: 11/03/2015 21:03:03 ---------------
